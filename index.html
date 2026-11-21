@@ -211,42 +211,44 @@
     let currentLang = "ms";
     let audioCtx = null, masterBus = null, isPlaying = false, seqTimer = null, stepIdx = 0;
 
-    function build3dGamelanGraph(ctx) {
+    function buildSmooth3dGamelan(ctx) {
       const comp = ctx.createDynamicsCompressor();
-      comp.threshold.value = -12;
-      comp.knee.value = 14;
-      comp.ratio.value = 4.5;
-      comp.attack.value = 0.004;
+      comp.threshold.value = -16;
+      comp.knee.value = 18;
+      comp.ratio.value = 6;
+      comp.attack.value = 0.002;
       comp.release.value = 0.16;
 
-      const boost = ctx.createGain();
-      boost.gain.value = 2.6;
+      const toneLp = ctx.createBiquadFilter();
+      toneLp.type = "lowpass";
+      toneLp.frequency.value = 3400;
+      toneLp.Q.value = 0.7;
 
       const splitter = ctx.createChannelSplitter(2);
       const merger = ctx.createChannelMerger(2);
 
       const dLeft = ctx.createDelay(1.0);
       const dRight = ctx.createDelay(1.0);
-      dLeft.delayTime.value = 0.21;
-      dRight.delayTime.value = 0.34;
+      dLeft.delayTime.value = 0.18;
+      dRight.delayTime.value = 0.29;
 
       const fbLeft = ctx.createGain();
       const fbRight = ctx.createGain();
-      fbLeft.gain.value = 0.44;
-      fbRight.gain.value = 0.46;
+      fbLeft.gain.value = 0.26;
+      fbRight.gain.value = 0.28;
 
-      const echoFilter = ctx.createBiquadFilter();
-      echoFilter.type = "lowpass";
-      echoFilter.frequency.value = 2600;
+      const echoLp = ctx.createBiquadFilter();
+      echoLp.type = "lowpass";
+      echoLp.frequency.value = 2100;
 
       const echoGain = ctx.createGain();
-      echoGain.gain.value = 0.68;
+      echoGain.gain.value = 0.42;
 
       const dryBus = ctx.createGain();
-      dryBus.gain.value = 1.4;
+      dryBus.gain.value = 0.92;
 
       const outGain = ctx.createGain();
-      outGain.gain.value = 1.5;
+      outGain.gain.value = 1.25;
 
       dryBus.connect(comp);
       dryBus.connect(splitter);
@@ -262,26 +264,27 @@
       dLeft.connect(merger, 0, 0);
       dRight.connect(merger, 0, 1);
 
-      merger.connect(echoFilter);
-      echoFilter.connect(echoGain);
+      merger.connect(echoLp);
+      echoLp.connect(echoGain);
       echoGain.connect(comp);
 
-      comp.connect(boost);
-      boost.connect(outGain);
+      comp.connect(toneLp);
+      toneLp.connect(outGain);
       outGain.connect(ctx.destination);
 
       return { dryBus, hasPan: !!ctx.createStereoPanner };
     }
 
-    function strikeBronze(ctx, dest, time, freq, dur, vel, panVal) {
+    function playLivelyBronze(ctx, dest, time, freq, glideFrom, dur, vel, panVal) {
       const partials = [
-        { ratio: 1.0,  amp: 1.0,  dec: dur },
-        { ratio: 2.0,  amp: 0.42, dec: dur * 0.72 },
-        { ratio: 2.76, amp: 0.34, dec: dur * 0.48 },
-        { ratio: 5.4,  amp: 0.16, dec: dur * 0.18 }
+        { ratio: 1.0,  amp: 0.62, dec: dur },
+        { ratio: 2.0,  amp: 0.22, dec: dur * 0.65 },
+        { ratio: 2.75, amp: 0.14, dec: dur * 0.35 }
       ];
       const noteGain = ctx.createGain();
-      noteGain.gain.setValueAtTime(vel, time);
+      noteGain.gain.setValueAtTime(0.0001, time);
+      noteGain.gain.linearRampToValueAtTime(vel, time + 0.012);
+      noteGain.gain.exponentialRampToValueAtTime(0.0001, time + dur);
 
       if (dest.hasPan) {
         const p = ctx.createStereoPanner();
@@ -296,71 +299,70 @@
         const osc = ctx.createOscillator();
         const g = ctx.createGain();
         osc.type = "sine";
-        osc.frequency.setValueAtTime(freq * pt.ratio, time);
-        g.gain.setValueAtTime(0.0008, time);
-        g.gain.linearRampToValueAtTime(pt.amp, time + 0.007);
-        g.gain.exponentialRampToValueAtTime(0.0008, time + pt.dec);
+        const targetF = freq * pt.ratio;
+        if (glideFrom && glideFrom > 0) {
+          osc.frequency.setValueAtTime(glideFrom * pt.ratio, time);
+          osc.frequency.exponentialRampToValueAtTime(targetF, time + 0.055);
+        } else {
+          osc.frequency.setValueAtTime(targetF, time);
+        }
+        g.gain.setValueAtTime(0.0001, time);
+        g.gain.linearRampToValueAtTime(pt.amp, time + 0.01);
+        g.gain.exponentialRampToValueAtTime(0.0001, time + pt.dec);
         osc.connect(g);
         g.connect(noteGain);
         osc.start(time);
-        osc.stop(time + pt.dec + 0.03);
+        osc.stop(time + pt.dec + 0.04);
       });
     }
 
-    function strikeGongAgung(ctx, dest, time) {
-      const osc1 = ctx.createOscillator();
-      const osc2 = ctx.createOscillator();
+    function playSoftGong(ctx, dest, time) {
+      const osc = ctx.createOscillator();
       const g = ctx.createGain();
-      osc1.type = "sine";
-      osc2.type = "triangle";
-      osc1.frequency.setValueAtTime(68, time);
-      osc1.frequency.exponentialRampToValueAtTime(63, time + 1.8);
-      osc2.frequency.setValueAtTime(132, time);
-      osc2.frequency.exponentialRampToValueAtTime(126, time + 1.4);
+      osc.type = "sine";
+      osc.frequency.setValueAtTime(76, time);
+      osc.frequency.exponentialRampToValueAtTime(66, time + 1.4);
 
-      g.gain.setValueAtTime(0.001, time);
-      g.gain.linearRampToValueAtTime(0.95, time + 0.045);
-      g.gain.exponentialRampToValueAtTime(0.001, time + 2.4);
+      g.gain.setValueAtTime(0.0001, time);
+      g.gain.linearRampToValueAtTime(0.45, time + 0.04);
+      g.gain.exponentialRampToValueAtTime(0.0001, time + 1.8);
 
-      osc1.connect(g);
-      osc2.connect(g);
+      osc.connect(g);
       g.connect(dest.dryBus);
 
-      osc1.start(time);
-      osc1.stop(time + 2.45);
-      osc2.start(time);
-      osc2.stop(time + 2.45);
+      osc.start(time);
+      osc.stop(time + 1.85);
     }
 
-    const P = {
-      D4: 293.66, Eb4: 311.13, G4: 392.00, A4: 440.00, Bb4: 466.16,
-      D5: 587.33, Eb5: 622.25, G5: 783.99, A5: 880.00
+    const N = {
+      G4: 392.00, A4: 440.00, Bb4: 466.16,
+      D5: 587.33, Eb5: 622.25, G5: 783.99, A5: 880.00, Bb5: 932.33
     };
 
-    const gamelanSeq = [
-      { f: P.D5,  d: 1.3, v: 0.78, pan: -0.55, gong: true,  sub: P.D4 },
-      { f: P.Eb5, d: 1.0, v: 0.62, pan:  0.45, gong: false, sub: 0 },
-      { f: P.G5,  d: 1.2, v: 0.72, pan: -0.35, gong: false, sub: P.G4 },
-      { f: P.A5,  d: 1.3, v: 0.75, pan:  0.60, gong: false, sub: 0 },
-      { f: P.G5,  d: 1.1, v: 0.68, pan: -0.50, gong: false, sub: P.A4 },
-      { f: P.Eb5, d: 1.0, v: 0.64, pan:  0.40, gong: false, sub: 0 },
-      { f: P.D5,  d: 1.2, v: 0.74, pan: -0.30, gong: false, sub: P.G4 },
-      { f: P.Bb4, d: 1.4, v: 0.70, pan:  0.55, gong: false, sub: 0 },
-      { f: P.A4,  d: 1.3, v: 0.76, pan: -0.60, gong: false, sub: P.D4 },
-      { f: P.G4,  d: 1.1, v: 0.65, pan:  0.50, gong: false, sub: 0 },
-      { f: P.A4,  d: 1.2, v: 0.70, pan: -0.40, gong: false, sub: P.G4 },
-      { f: P.D5,  d: 1.3, v: 0.74, pan:  0.45, gong: false, sub: 0 },
-      { f: P.Eb5, d: 1.2, v: 0.68, pan: -0.45, gong: false, sub: P.A4 },
-      { f: P.D5,  d: 1.1, v: 0.66, pan:  0.35, gong: false, sub: 0 },
-      { f: P.Bb4, d: 1.2, v: 0.70, pan: -0.50, gong: false, sub: P.G4 },
-      { f: P.A4,  d: 1.5, v: 0.75, pan:  0.60, gong: false, sub: 0 }
+    const livelyGamelan = [
+      { f: N.D5,  gl: N.A4,  d: 0.75, v: 0.24, pan: -0.55, gong: true,  bass: N.G4 },
+      { f: N.G5,  gl: N.D5,  d: 0.55, v: 0.20, pan:  0.45, gong: false, bass: 0 },
+      { f: N.A5,  gl: N.G5,  d: 0.65, v: 0.23, pan: -0.35, gong: false, bass: N.A4 },
+      { f: N.G5,  gl: N.A5,  d: 0.55, v: 0.19, pan:  0.55, gong: false, bass: 0 },
+      { f: N.Bb5, gl: N.A5,  d: 0.70, v: 0.24, pan: -0.50, gong: false, bass: N.Bb4 },
+      { f: N.A5,  gl: N.G5,  d: 0.55, v: 0.20, pan:  0.40, gong: false, bass: 0 },
+      { f: N.G5,  gl: N.Eb5, d: 0.65, v: 0.22, pan: -0.30, gong: false, bass: N.D5 },
+      { f: N.D5,  gl: N.Bb4, d: 0.80, v: 0.21, pan:  0.50, gong: false, bass: 0 },
+      { f: N.Eb5, gl: N.D5,  d: 0.65, v: 0.22, pan: -0.55, gong: false, bass: N.G4 },
+      { f: N.G5,  gl: N.Eb5, d: 0.55, v: 0.20, pan:  0.45, gong: false, bass: 0 },
+      { f: N.A5,  gl: N.G5,  d: 0.65, v: 0.23, pan: -0.40, gong: false, bass: N.A4 },
+      { f: N.Bb5, gl: N.A5,  d: 0.60, v: 0.22, pan:  0.50, gong: false, bass: 0 },
+      { f: N.A5,  gl: N.Bb5, d: 0.65, v: 0.23, pan: -0.45, gong: false, bass: N.D5 },
+      { f: N.G5,  gl: N.A5,  d: 0.55, v: 0.20, pan:  0.35, gong: false, bass: 0 },
+      { f: N.Eb5, gl: N.G5,  d: 0.65, v: 0.21, pan: -0.50, gong: false, bass: N.Bb4 },
+      { f: N.D5,  gl: N.A4,  d: 0.85, v: 0.22, pan:  0.55, gong: false, bass: 0 }
     ];
 
     function startAudio() {
       const AC = window.AudioContext || window.webkitAudioContext;
       if (!audioCtx) {
         audioCtx = new AC();
-        masterBus = build3dGamelanGraph(audioCtx);
+        masterBus = buildSmooth3dGamelan(audioCtx);
       }
       if (audioCtx.state === "suspended") {
         audioCtx.resume();
@@ -373,15 +375,15 @@
       const tickStep = () => {
         if (!isPlaying || !audioCtx) return;
         if (audioCtx.state === "suspended") audioCtx.resume();
-        const ev = gamelanSeq[stepIdx % gamelanSeq.length];
+        const ev = livelyGamelan[stepIdx % livelyGamelan.length];
         const now = audioCtx.currentTime;
-        strikeBronze(audioCtx, masterBus, now, ev.f, ev.d, ev.v, ev.pan);
-        if (ev.sub > 0) strikeBronze(audioCtx, masterBus, now, ev.sub, ev.d * 1.25, ev.v * 0.72, -ev.pan);
-        if (ev.gong) strikeGongAgung(audioCtx, masterBus, now);
+        playLivelyBronze(audioCtx, masterBus, now, ev.f, ev.gl, ev.d, ev.v, ev.pan);
+        if (ev.bass > 0) playLivelyBronze(audioCtx, masterBus, now, ev.bass, 0, ev.d * 1.15, ev.v * 0.65, -ev.pan * 0.6);
+        if (ev.gong) playSoftGong(audioCtx, masterBus, now);
         stepIdx++;
       };
       tickStep();
-      seqTimer = setInterval(tickStep, 430);
+      seqTimer = setInterval(tickStep, 310);
     }
 
     function stopAudio() {

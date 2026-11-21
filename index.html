@@ -134,7 +134,7 @@
     </div>
     <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
     <div class="badge" id="badgeText"></div>
-    <div class="hosts" id="hostsText"></div>
+    <div class="hosts" id="hostsText">Haji Bakhil &amp; Hajjah Bakhil &amp; Tok Siak &amp; Mak Siak</div>
     <div class="couple">Teruna<span class="amp">&amp;</span>Dara</div>
     <div class="art">
       <img src="wedding.jpg" alt="Wedding Artwork" onerror="this.style.display='none';document.getElementById('artFb').style.display='flex';" />
@@ -172,7 +172,6 @@
     const data = {
       ms: {
         badge: "Majlis Walimatulurus",
-        hosts: "Haji Bakhil & Hajjah Bakhil",
         intro: "Dengan penuh rasa kesyukuran, kami menjemput anda hadir ke majlis perkahwinan kami.",
         lblDayDate: "Tarikh:",
         valDayDate: "Sabtu, 16 Januari 2027",
@@ -188,7 +187,6 @@
       },
       en: {
         badge: "Wedding Reception",
-        hosts: "Tok Siak and Mak Siak",
         intro: "With great joy, we cordially invite you to celebrate our wedding day.",
         lblDayDate: "Date:",
         valDayDate: "Saturday, 16 January 2027",
@@ -210,7 +208,6 @@
       document.getElementById(lang === "ms" ? "btnMs" : "btnEn").classList.add("active");
       const t = data[lang];
       document.getElementById("badgeText").textContent = t.badge;
-      document.getElementById("hostsText").textContent = t.hosts;
       document.getElementById("introText").textContent = t.intro;
       document.getElementById("lblDayDate").textContent = t.lblDayDate;
       document.getElementById("valDayDate").textContent = t.valDayDate;

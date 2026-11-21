@@ -67,7 +67,7 @@
   <div class="wrap">
     <h1>Wedding Invitation E-Card Maker</h1>
     <p class="sub">
-      Nama keluarga pengantin lelaki &amp; perempuan kekal sama apabila suis BM / EN ditekan. Kotak kelabu dikemas kini automatik mengikut tarikh &amp; masa.
+      Nama keluarga pengantin lelaki &amp; perempuan dipaparkan dalam 2 baris kemas dan kekal sama apabila suis BM / EN ditekan. Kotak kelabu dikemas kini automatik.
     </p>
 
     <div class="card">
@@ -81,11 +81,11 @@
           <input type="text" id="wBride" value="Dara" />
         </div>
         <div class="grp">
-          <label>3. Keluarga Pengantin Lelaki (Groom's Family)</label>
+          <label>3. Keluarga Pengantin Lelaki (Baris 1)</label>
           <input type="text" id="wGroomFam" value="Haji Bakhil &amp; Hajjah Bakhil" />
         </div>
         <div class="grp">
-          <label>4. Keluarga Pengantin Perempuan (Bride's Family)</label>
+          <label>4. Keluarga Pengantin Perempuan (Baris 2)</label>
           <input type="text" id="wBrideFam" value="Tok Siak &amp; Mak Siak" />
         </div>
 
@@ -360,7 +360,10 @@
       document.getElementById('wFile').value = outFile;
 
       const coupleShort = groom + ' & ' + bride;
-      const bothFamilies = [groomFam, brideFam].filter(Boolean).join(' & ');
+      const hostsHtml = [groomFam, brideFam]
+        .filter(Boolean)
+        .map(line => '<span class="host-line">' + esc(line) + '</span>')
+        .join('');
 
       const envBlock = useEnv ?
         '<div class="env-overlay" id="envOverlay" onclick="openInvitation()">' +
@@ -412,7 +415,8 @@
       htmlLines.push('    .lang-btn.active { background: var(--text-accent); color: #17120d; font-weight: 700; border-color: var(--text-accent); }');
       htmlLines.push('    .bismillah { font-size: 17px; color: var(--text-accent); margin-bottom: 4px; line-height: 1.7; }');
       htmlLines.push('    .badge { font-family: system-ui, -apple-system, sans-serif; font-size: 10.5px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-accent); margin-bottom: 12px; }');
-      htmlLines.push('    .hosts { font-size: 12.5px; line-height: 1.55; opacity: 0.92; margin-bottom: 10px; }');
+      htmlLines.push('    .hosts { font-size: 12.5px; line-height: 1.65; opacity: 0.92; margin-bottom: 10px; }');
+      htmlLines.push('    .hosts .host-line { display: block; }');
       htmlLines.push('    .couple { font-size: 26px; font-weight: bold; color: var(--text-accent); line-height: 1.25; margin: 6px 0 16px; }');
       htmlLines.push('    .couple span.amp { display: block; font-size: 17px; font-style: italic; margin: 2px 0; color: var(--text-main); }');
       htmlLines.push('    .art {');
@@ -502,7 +506,7 @@
       htmlLines.push('    </div>');
       htmlLines.push('    <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>');
       htmlLines.push('    <div class="badge" id="badgeText"></div>');
-      htmlLines.push('    <div class="hosts" id="hostsText">' + esc(bothFamilies) + '</div>');
+      htmlLines.push('    <div class="hosts" id="hostsText">' + hostsHtml + '</div>');
       htmlLines.push('    <div class="couple">' + esc(groom) + '<span class="amp">&amp;</span>' + esc(bride) + '</div>');
       htmlLines.push('    <div class="art">');
       htmlLines.push('      <img src="' + esc(artFile) + '" alt="Wedding Artwork" onerror="this.style.display=\'none\';document.getElementById(\'artFb\').style.display=\'flex\';" />');

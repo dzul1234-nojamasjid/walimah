@@ -13,7 +13,7 @@
       font-family: system-ui, -apple-system, sans-serif;
       padding: 18px 14px 48px;
     }
-    .wrap { max-width: 860px; margin: 0 auto; }
+    .wrap { max-width: 880px; margin: 0 auto; }
     h1 { font-size: 20px; color: #facc15; margin-bottom: 4px; }
     .sub { font-size: 12.5px; color: #94a3b8; margin-bottom: 16px; line-height: 1.5; }
     .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
@@ -29,6 +29,22 @@
       width: 100%; padding: 9px 10px; border-radius: 9px;
       border: 1px solid #475569; background: #0f172a; color: #ffffff;
       font-size: 13px; font-family: inherit;
+    }
+    input.auto-field {
+      background: #162032;
+      color: #94a3b8;
+      border-color: #334155;
+      cursor: not-allowed;
+    }
+    .ymd-row {
+      display: grid;
+      grid-template-columns: 1fr 1.35fr 1fr;
+      gap: 8px;
+    }
+    .hm-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1.2fr;
+      gap: 8px;
     }
     textarea.code-out {
       min-height: 230px;
@@ -51,69 +67,98 @@
   <div class="wrap">
     <h1>Wedding Invitation E-Card Maker</h1>
     <p class="sub">
-      Isi maklumat majlis walimatulurus di bawah. Nama fail gambar automatik ditambah <strong>.jpg</strong> jika tiada sambungan (contoh: <code>wedding</code> → <code>wedding.jpg</code>).
+      Dilengkapi irama <strong>Gamelan Jawa Lembut + Echo Halus</strong> — skala slendro, tempo sederhana, tiada glide wobble.
+      Kotak kelabu dikemas kini automatik.
     </p>
 
     <div class="card">
       <div class="grid">
         <div class="grp">
-          <label>1. Nama Pengantin Lelaki</label>
-          <input type="text" id="wGroom" value="Aiman Hakim" />
+          <label>1. Nama Pengantin Lelaki (Groom)</label>
+          <input type="text" id="wGroom" value="Teruna" />
         </div>
         <div class="grp">
-          <label>2. Nama Pengantin Perempuan</label>
-          <input type="text" id="wBride" value="Nurul Huda" />
+          <label>2. Nama Pengantin Perempuan (Bride)</label>
+          <input type="text" id="wBride" value="Dara" />
         </div>
         <div class="grp">
-          <label>3. Tuan Rumah / Keluarga (BM)</label>
-          <input type="text" id="wHostsMs" value="Hj. Rahman &amp; Hjh. Salmah serta En. Halim &amp; Pn. Faridah" />
+          <label>3. Keluarga Pengantin Lelaki (Baris 1)</label>
+          <input type="text" id="wGroomFam" value="Haji Bakhil &amp; Hajjah Bakhil" />
         </div>
         <div class="grp">
-          <label>4. Hosts / Families (EN)</label>
-          <input type="text" id="wHostsEn" value="Hj. Rahman &amp; Hjh. Salmah and En. Halim &amp; Pn. Faridah" />
+          <label>4. Keluarga Pengantin Perempuan (Baris 2)</label>
+          <input type="text" id="wBrideFam" value="Tok Siak &amp; Mak Siak" />
         </div>
+
         <div class="grp">
-          <label>5. Hari &amp; Tarikh (BM)</label>
-          <input type="text" id="wDayDateMs" value="Sabtu, 16 Januari 2027" />
+          <label>5. Pilih Tarikh Penuh Kalendar (2026–2030)</label>
+          <div class="ymd-row">
+            <select id="selYear" onchange="populateDaysAndSync()"></select>
+            <select id="selMonth" onchange="populateDaysAndSync()"></select>
+            <select id="selDay" onchange="syncDateTime()"></select>
+          </div>
         </div>
+
         <div class="grp">
-          <label>6. Day &amp; Date (EN)</label>
-          <input type="text" id="wDayDateEn" value="Saturday, 16 January 2027" />
+          <label>6. Hari &amp; Tarikh (BM — Auto)</label>
+          <input type="text" id="wDayDateMs" class="auto-field" readonly tabindex="-1" value="Sabtu, 16 Januari 2027" />
         </div>
+
         <div class="grp">
-          <label>7. Masa / Sesi (BM)</label>
-          <input type="text" id="wTimeMs" value="Petang • 4:00 PTG – 8:00 MLM" />
+          <label>7. Day &amp; Date (EN — Auto)</label>
+          <input type="text" id="wDayDateEn" class="auto-field" readonly tabindex="-1" value="Saturday, 16 January 2027" />
         </div>
+
         <div class="grp">
-          <label>8. Time / Session (EN)</label>
-          <input type="text" id="wTimeEn" value="Evening • 4:00 PM – 8:00 PM" />
+          <label>8. Masa Mula (HH:MM setiap 5 minit &amp; Sesi)</label>
+          <div class="hm-row">
+            <select id="selHour" onchange="syncDateTime()"></select>
+            <select id="selMin" onchange="syncDateTime()"></select>
+            <select id="selDur" onchange="syncDateTime()">
+              <option value="2">2 Jam (+2h)</option>
+              <option value="3">3 Jam (+3h)</option>
+              <option value="4" selected>4 Jam (+4h)</option>
+              <option value="6">6 Jam (+6h)</option>
+            </select>
+          </div>
         </div>
+
         <div class="grp">
-          <label>9. Lokasi / Tempat (BM)</label>
+          <label>9. Masa / Sesi (BM — Auto)</label>
+          <input type="text" id="wTimeMs" class="auto-field" readonly tabindex="-1" value="Petang • 4:00 PTG – 8:00 MLM" />
+        </div>
+
+        <div class="grp">
+          <label>10. Time / Session (EN — Auto)</label>
+          <input type="text" id="wTimeEn" class="auto-field" readonly tabindex="-1" value="Evening • 4:00 PM – 8:00 PM" />
+        </div>
+
+        <div class="grp">
+          <label>11. Lokasi / Tempat (BM)</label>
           <input type="text" id="wLocMs" value="Dewan Serbaguna Community Centre, 12 Jalan Harmoni (Bukan kolong blok)" />
         </div>
         <div class="grp">
-          <label>10. Venue / Location (EN)</label>
+          <label>12. Venue / Location (EN)</label>
           <input type="text" id="wLocEn" value="Community Centre Hall, 12 Jalan Harmoni (Not void deck)" />
         </div>
         <div class="grp">
-          <label>11. Tarikh &amp; Masa Countdown (ISO +08:00)</label>
-          <input type="text" id="wIso" value="2027-01-16T16:00:00+08:00" />
+          <label>13. Tarikh &amp; Masa Countdown (ISO +08:00 — Auto)</label>
+          <input type="text" id="wIso" class="auto-field" readonly tabindex="-1" value="2027-01-16T16:00:00+08:00" />
         </div>
         <div class="grp">
-          <label>12. Pautan Google Maps</label>
+          <label>14. Pautan Google Maps</label>
           <input type="text" id="wMap" value="https://maps.google.com/?q=Community+Centre+12+Jalan+Harmoni" />
         </div>
         <div class="grp">
-          <label>13. Nama Fail Gambar Pengantin</label>
+          <label>15. Nama Fail Gambar Pengantin</label>
           <input type="text" id="wArt" value="wedding.jpg" />
         </div>
         <div class="grp">
-          <label>14. Nama Fail HTML Keluaran</label>
-          <input type="text" id="wFile" value="index.html" />
+          <label>16. Nama Fail HTML Keluaran (Default: temp.html)</label>
+          <input type="text" id="wFile" value="temp.html" />
         </div>
         <div class="grp">
-          <label>15. Tema Warna</label>
+          <label>17. Tema Warna</label>
           <select id="wTheme">
             <option value="gold-dark" selected>1. Classic Gold &amp; Dark Espresso</option>
             <option value="emerald-gold">2. Emerald Green &amp; Gold</option>
@@ -123,7 +168,7 @@
           </select>
         </div>
         <div class="grp">
-          <label>16. Sampul Pembuka (Envelope)?</label>
+          <label>18. Sampul Pembuka (Envelope)?</label>
           <select id="wEnv">
             <option value="1" selected>Yes — Interactive Envelope</option>
             <option value="0">No — Direct Card View</option>
@@ -146,6 +191,134 @@
   </div>
 
   <script>
+    const DAYS_MS = ["Ahad", "Isnin", "Selasa", "Rabu", "Khamis", "Jumaat", "Sabtu"];
+    const DAYS_EN = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const MONTHS_MS = ["Januari", "Februari", "Mac", "April", "Mei", "Jun", "Julai", "Ogos", "September", "Oktober", "November", "Disember"];
+    const MONTHS_EN = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+    function initDropdowns() {
+      const selYear = document.getElementById("selYear");
+      const selMonth = document.getElementById("selMonth");
+      const selHour = document.getElementById("selHour");
+      const selMin = document.getElementById("selMin");
+
+      for (let y = 2026; y <= 2030; y++) {
+        const opt = document.createElement("option");
+        opt.value = String(y);
+        opt.textContent = String(y);
+        if (y === 2027) opt.selected = true;
+        selYear.appendChild(opt);
+      }
+
+      for (let m = 0; m < 12; m++) {
+        const opt = document.createElement("option");
+        opt.value = String(m);
+        opt.textContent = `${String(m + 1).padStart(2, "0")} - ${MONTHS_MS[m]}`;
+        if (m === 0) opt.selected = true;
+        selMonth.appendChild(opt);
+      }
+
+      for (let h = 0; h < 24; h++) {
+        const opt = document.createElement("option");
+        opt.value = String(h);
+        opt.textContent = `${String(h).padStart(2, "0")}:00`;
+        if (h === 16) opt.selected = true;
+        selHour.appendChild(opt);
+      }
+
+      for (let mm = 0; mm < 60; mm += 5) {
+        const opt = document.createElement("option");
+        opt.value = String(mm);
+        opt.textContent = String(mm).padStart(2, "0");
+        if (mm === 0) opt.selected = true;
+        selMin.appendChild(opt);
+      }
+
+      populateDaysAndSync();
+    }
+
+    function daysInMonth(year, monthIndex) {
+      return new Date(Date.UTC(year, monthIndex + 1, 0)).getUTCDate();
+    }
+
+    function populateDaysAndSync() {
+      const y = parseInt(document.getElementById("selYear").value, 10);
+      const m = parseInt(document.getElementById("selMonth").value, 10);
+      const selDay = document.getElementById("selDay");
+      const prevDay = parseInt(selDay.value || "16", 10);
+      const maxD = daysInMonth(y, m);
+
+      selDay.innerHTML = "";
+      for (let d = 1; d <= maxD; d++) {
+        const dt = new Date(Date.UTC(y, m, d));
+        const dowShortMs = ["Ahd", "Isn", "Sel", "Rab", "Kha", "Jum", "Sab"][dt.getUTCDay()];
+        const opt = document.createElement("option");
+        opt.value = String(d);
+        opt.textContent = `${String(d).padStart(2, "0")} (${dowShortMs})`;
+        if (d === Math.min(prevDay, maxD)) opt.selected = true;
+        selDay.appendChild(opt);
+      }
+
+      syncDateTime();
+    }
+
+    function format12hMs(hour24, min) {
+      const mmStr = String(min).padStart(2, "0");
+      let period = "PG";
+      if (hour24 >= 12 && hour24 < 14) period = "TGH";
+      else if (hour24 >= 14 && hour24 < 19) period = "PTG";
+      else if (hour24 >= 19) period = "MLM";
+
+      let h12 = hour24 % 12;
+      if (h12 === 0) h12 = 12;
+      return `${h12}:${mmStr} ${period}`;
+    }
+
+    function format12hEn(hour24, min) {
+      const mmStr = String(min).padStart(2, "0");
+      const ampm = hour24 >= 12 ? "PM" : "AM";
+      let h12 = hour24 % 12;
+      if (h12 === 0) h12 = 12;
+      return `${h12}:${mmStr} ${ampm}`;
+    }
+
+    function sessionLabel(hour24) {
+      if (hour24 >= 6 && hour24 < 12) return { ms: "Pagi", en: "Morning" };
+      if (hour24 >= 12 && hour24 < 16) return { ms: "Tengah Hari", en: "Afternoon" };
+      if (hour24 >= 16 && hour24 < 19) return { ms: "Petang", en: "Evening" };
+      return { ms: "Malam", en: "Night" };
+    }
+
+    function syncDateTime() {
+      const y = parseInt(document.getElementById("selYear").value, 10);
+      const m = parseInt(document.getElementById("selMonth").value, 10);
+      const d = parseInt(document.getElementById("selDay").value, 10);
+
+      const dt = new Date(Date.UTC(y, m, d));
+      const dayIdx = dt.getUTCDay();
+
+      document.getElementById("wDayDateMs").value = `${DAYS_MS[dayIdx]}, ${d} ${MONTHS_MS[m]} ${y}`;
+      document.getElementById("wDayDateEn").value = `${DAYS_EN[dayIdx]}, ${d} ${MONTHS_EN[m]} ${y}`;
+
+      const startH = parseInt(document.getElementById("selHour").value, 10);
+      const startM = parseInt(document.getElementById("selMin").value, 10);
+      const durH = parseInt(document.getElementById("selDur").value, 10);
+
+      const totalEndMins = startH * 60 + startM + durH * 60;
+      const endH = Math.floor((totalEndMins % (24 * 60)) / 60);
+      const endM = totalEndMins % 60;
+
+      const ses = sessionLabel(startH);
+      document.getElementById("wTimeMs").value = `${ses.ms} • ${format12hMs(startH, startM)} – ${format12hMs(endH, endM)}`;
+      document.getElementById("wTimeEn").value = `${ses.en} • ${format12hEn(startH, startM)} – ${format12hEn(endH, endM)}`;
+
+      const mmIso = String(m + 1).padStart(2, "0");
+      const ddIso = String(d).padStart(2, "0");
+      const hhIso = String(startH).padStart(2, "0");
+      const minIso = String(startM).padStart(2, "0");
+      document.getElementById("wIso").value = `${y}-${mmIso}-${ddIso}T${hhIso}:${minIso}:00+08:00`;
+    }
+
     function normalizeArtFilename(raw) {
       let clean = (raw || '').trim().replace(/^\/+/, '');
       if (!clean) return 'wedding.jpg';
@@ -155,7 +328,7 @@
 
     function normalizeHtmlFilename(raw) {
       let clean = (raw || '').trim().replace(/[^a-zA-Z0-9._-]/g, '');
-      if (!clean) return 'index.html';
+      if (!clean) return 'temp.html';
       if (!/\.html?$/i.test(clean)) clean += '.html';
       return clean;
     }
@@ -167,10 +340,10 @@
     }
 
     function generateWedding() {
-      const groom = document.getElementById('wGroom').value.trim() || 'Pengantin Lelaki';
-      const bride = document.getElementById('wBride').value.trim() || 'Pengantin Perempuan';
-      const hostsMs = document.getElementById('wHostsMs').value.trim();
-      const hostsEn = document.getElementById('wHostsEn').value.trim();
+      const groom = document.getElementById('wGroom').value.trim() || 'Teruna';
+      const bride = document.getElementById('wBride').value.trim() || 'Dara';
+      const groomFam = document.getElementById('wGroomFam').value.trim();
+      const brideFam = document.getElementById('wBrideFam').value.trim();
       const dayDateMs = document.getElementById('wDayDateMs').value.trim();
       const dayDateEn = document.getElementById('wDayDateEn').value.trim();
       const timeMs = document.getElementById('wTimeMs').value.trim();
@@ -188,8 +361,12 @@
       document.getElementById('wFile').value = outFile;
 
       const coupleShort = groom + ' & ' + bride;
+      const hostsHtml = [groomFam, brideFam]
+        .filter(Boolean)
+        .map(line => '<span class="host-line">' + esc(line) + '</span>')
+        .join('');
 
-      const envBlock = useEnv ? 
+      const envBlock = useEnv ?
         '<div class="env-overlay" id="envOverlay" onclick="openInvitation()">' +
           '<div class="env-box">' +
             '<div class="env-label" id="envLabel">✦ Jemputan Walimatulurus ✦</div>' +
@@ -198,7 +375,6 @@
           '</div>' +
         '</div>' : '';
 
-      // We build the HTML string line by line using array joining to avoid backtick errors completely.
       let htmlLines = [];
       htmlLines.push('<!DOCTYPE html>');
       htmlLines.push('<html lang="ms">');
@@ -240,7 +416,8 @@
       htmlLines.push('    .lang-btn.active { background: var(--text-accent); color: #17120d; font-weight: 700; border-color: var(--text-accent); }');
       htmlLines.push('    .bismillah { font-size: 17px; color: var(--text-accent); margin-bottom: 4px; line-height: 1.7; }');
       htmlLines.push('    .badge { font-family: system-ui, -apple-system, sans-serif; font-size: 10.5px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-accent); margin-bottom: 12px; }');
-      htmlLines.push('    .hosts { font-size: 12.5px; line-height: 1.55; opacity: 0.92; margin-bottom: 10px; }');
+      htmlLines.push('    .hosts { font-size: 12.5px; line-height: 1.65; opacity: 0.92; margin-bottom: 10px; }');
+      htmlLines.push('    .hosts .host-line { display: block; }');
       htmlLines.push('    .couple { font-size: 26px; font-weight: bold; color: var(--text-accent); line-height: 1.25; margin: 6px 0 16px; }');
       htmlLines.push('    .couple span.amp { display: block; font-size: 17px; font-style: italic; margin: 2px 0; color: var(--text-main); }');
       htmlLines.push('    .art {');
@@ -263,8 +440,8 @@
       htmlLines.push('      font-family: system-ui, -apple-system, sans-serif;');
       htmlLines.push('    }');
       htmlLines.push('    .cd-heading { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-accent); margin-bottom: 8px; }');
-      htmlLines.push('    .cd-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; }');
-      htmlLines.push('    @media (max-width: 380px) { .cd-grid { grid-template-columns: repeat(2, 1fr); } }');
+      htmlLines.push('    .cd-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; }');
+      htmlLines.push('    @media (max-width: 380px) { .cd-grid { grid-template-columns: repeat(3, 1fr); } }');
       htmlLines.push('    .cd-cell { background: rgba(0, 0, 0, 0.25); border: 1px solid rgba(229, 190, 106, 0.28); border-radius: 10px; padding: 6px 3px; }');
       htmlLines.push('    .cd-num { font-size: 14.5px; font-weight: 700; color: var(--text-accent); line-height: 1.2; font-variant-numeric: tabular-nums; }');
       htmlLines.push('    .cd-unit { font-size: 9.5px; opacity: 0.85; margin-top: 2px; }');
@@ -330,7 +507,7 @@
       htmlLines.push('    </div>');
       htmlLines.push('    <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>');
       htmlLines.push('    <div class="badge" id="badgeText"></div>');
-      htmlLines.push('    <div class="hosts" id="hostsText"></div>');
+      htmlLines.push('    <div class="hosts" id="hostsText">' + hostsHtml + '</div>');
       htmlLines.push('    <div class="couple">' + esc(groom) + '<span class="amp">&amp;</span>' + esc(bride) + '</div>');
       htmlLines.push('    <div class="art">');
       htmlLines.push('      <img src="' + esc(artFile) + '" alt="Wedding Artwork" onerror="this.style.display=\'none\';document.getElementById(\'artFb\').style.display=\'flex\';" />');
@@ -349,6 +526,7 @@
       htmlLines.push('        <div class="cd-cell"><div class="cd-num" id="cdHours">00</div><div class="cd-unit" id="uHours"></div></div>');
       htmlLines.push('        <div class="cd-cell"><div class="cd-num" id="cdMins">00</div><div class="cd-unit" id="uMins"></div></div>');
       htmlLines.push('        <div class="cd-cell"><div class="cd-num" id="cdSecs">00</div><div class="cd-unit" id="uSecs"></div></div>');
+      htmlLines.push('        <div class="cd-cell"><div class="cd-num" id="cdMs">000</div><div class="cd-unit" id="uMs"></div></div>');
       htmlLines.push('      </div>');
       htmlLines.push('      <div class="cd-done" id="cdDone" style="display:none;"></div>');
       htmlLines.push('    </div>');
@@ -359,6 +537,7 @@
       htmlLines.push('    <div class="btn-row">');
       htmlLines.push('      <a class="action-btn" id="mapBtn" href="' + esc(mapUrl) + '" target="_blank" rel="noopener">📍 Lokasi</a>');
       htmlLines.push('      <button class="action-btn" onclick="showQr()">📱 Kongsi / QR</button>');
+      htmlLines.push('      <button class="sound-btn" id="soundBtn" onclick="toggleAudio()">🔊 Gamelan Jawa</button>');
       htmlLines.push('    </div>');
       htmlLines.push('    <div class="footer-note">Dzul Arts • Kad Jemputan Digital</div>');
       htmlLines.push('  </div>');
@@ -366,7 +545,6 @@
       htmlLines.push('    const data = {');
       htmlLines.push('      ms: {');
       htmlLines.push('        badge: "Majlis Walimatulurus",');
-      htmlLines.push('        hosts: "' + esc(hostsMs) + '",');
       htmlLines.push('        intro: "Dengan penuh rasa kesyukuran, kami menjemput anda hadir ke majlis perkahwinan kami.",');
       htmlLines.push('        lblDayDate: "Tarikh:",');
       htmlLines.push('        valDayDate: "' + esc(dayDateMs) + '",');
@@ -375,14 +553,14 @@
       htmlLines.push('        lblLoc: "Lokasi:",');
       htmlLines.push('        valLoc: "' + esc(locMs) + '",');
       htmlLines.push('        cdHeading: "Menghitung Hari",');
-      htmlLines.push('        doa: \'"Semoga Allah memberkati kamu berdua dan menghimpunkan kamu dalam kebaikan."\',');
-      htmlLines.push('        uDays: "Hari", uHours: "Jam", uMins: "Minit", uSecs: "Saat",');
+      htmlLines.push('        doa: \'"Semoga Allah memberkati kamu berdua dan menghimpunkan kamu dalam kebaikan."\','); 
+      htmlLines.push('        uDays: "Hari", uHours: "Jam", uMins: "Minit", uSecs: "Saat", uMs: "Milisaat",');
       htmlLines.push('        cdDone: "Majlis telah berlangsung",');
-      htmlLines.push('        envSub: "Tekan untuk membuka kad jemputan"');
+      htmlLines.push('        envSub: "Tekan untuk membuka kad jemputan",');
+      htmlLines.push('        soundOn: "🔊 Gamelan Jawa", soundOff: "🔇 Bisukan"');
       htmlLines.push('      },');
       htmlLines.push('      en: {');
       htmlLines.push('        badge: "Wedding Reception",');
-      htmlLines.push('        hosts: "' + esc(hostsEn) + '",');
       htmlLines.push('        intro: "With great joy, we cordially invite you to celebrate our wedding day.",');
       htmlLines.push('        lblDayDate: "Date:",');
       htmlLines.push('        valDayDate: "' + esc(dayDateEn) + '",');
@@ -391,20 +569,134 @@
       htmlLines.push('        lblLoc: "Venue:",');
       htmlLines.push('        valLoc: "' + esc(locEn) + '",');
       htmlLines.push('        cdHeading: "Countdown to the Big Day",');
-      htmlLines.push('        doa: \'"May Allah bless you both and unite you in goodness."\',');
-      htmlLines.push('        uDays: "Days", uHours: "Hours", uMins: "Mins", uSecs: "Secs",');
+      htmlLines.push('        doa: \'"May Allah bless you both and unite you in goodness."\','); 
+      htmlLines.push('        uDays: "Days", uHours: "Hours", uMins: "Mins", uSecs: "Secs", uMs: "Millisecs",');
       htmlLines.push('        cdDone: "The event has concluded",');
-      htmlLines.push('        envSub: "Tap to open invitation"');
+      htmlLines.push('        envSub: "Tap to open invitation",');
+      htmlLines.push('        soundOn: "🔊 Javanese Gamelan", soundOff: "🔇 Mute"');
       htmlLines.push('      }');
       htmlLines.push('    };');
       htmlLines.push('    let currentLang = "ms";');
+      htmlLines.push('    let audioCtx = null, masterBus = null, isPlaying = false, seqTimer = null, stepIdx = 0;');
+
+      // === ENJIN GAMELAN JAWA LEMBUT (BARU) ===
+      htmlLines.push('    // Skala slendro (5 not hampir sama rata), frekuensi dalam Hz');
+      htmlLines.push('    const SL = {');
+      htmlLines.push('      S1: 261.63, S2: 293.66, S3: 329.63, S5: 392.00, S6: 440.00,');
+      htmlLines.push('      S1h: 523.25, S2h: 587.33, S3h: 659.25, S5h: 783.99');
+      htmlLines.push('    };');
+      htmlLines.push('    // Partial inharmonic ciri gamelan (bukan 1:2:3 harmonik biasa)');
+      htmlLines.push('    const GAMELAN_PARTIALS = [');
+      htmlLines.push('      { ratio: 1.00, amp: 0.55, dec: 1.00 },');
+      htmlLines.push('      { ratio: 2.76, amp: 0.20, dec: 0.55 },');
+      htmlLines.push('      { ratio: 5.40, amp: 0.10, dec: 0.30 }');
+      htmlLines.push('    ];');
+      htmlLines.push('    // Corak melodi lembut, tempo sederhana (8 not, ulang)');
+      htmlLines.push('    const SMOOTH_GAMELAN = [');
+      htmlLines.push('      { f: SL.S3h, d: 1.10, v: 0.20, pan: -0.35 },');
+      htmlLines.push('      { f: SL.S2h, d: 0.90, v: 0.17, pan:  0.30 },');
+      htmlLines.push('      { f: SL.S1h, d: 1.00, v: 0.19, pan: -0.20 },');
+      htmlLines.push('      { f: SL.S2h, d: 0.85, v: 0.16, pan:  0.40 },');
+      htmlLines.push('      { f: SL.S3h, d: 1.10, v: 0.20, pan: -0.30 },');
+      htmlLines.push('      { f: SL.S5,  d: 1.00, v: 0.18, pan:  0.20 },');
+      htmlLines.push('      { f: SL.S3h, d: 0.90, v: 0.17, pan: -0.40 },');
+      htmlLines.push('      { f: SL.S2h, d: 1.15, v: 0.19, pan:  0.30 }');
+      htmlLines.push('    ];');
+
+      htmlLines.push('    function buildSoftGamelanBus(ctx) {');
+      htmlLines.push('      const comp = ctx.createDynamicsCompressor();');
+      htmlLines.push('      comp.threshold.value = -20; comp.knee.value = 20; comp.ratio.value = 4;');
+      htmlLines.push('      comp.attack.value = 0.003; comp.release.value = 0.20;');
+      htmlLines.push('      const toneLp = ctx.createBiquadFilter();');
+      htmlLines.push('      toneLp.type = "lowpass"; toneLp.frequency.value = 3200; toneLp.Q.value = 0.6;');
+      htmlLines.push('      const dryBus = ctx.createGain(); dryBus.gain.value = 1.0;');
+      htmlLines.push('      const delayL = ctx.createDelay(1.0); const delayR = ctx.createDelay(1.0);');
+      htmlLines.push('      delayL.delayTime.value = 0.28; delayR.delayTime.value = 0.41;');
+      htmlLines.push('      const fbL = ctx.createGain(); const fbR = ctx.createGain();');
+      htmlLines.push('      fbL.gain.value = 0.12; fbR.gain.value = 0.14;'); // echo halus
+      htmlLines.push('      const echoLp = ctx.createBiquadFilter(); echoLp.type = "lowpass"; echoLp.frequency.value = 1800;');
+      htmlLines.push('      const echoWet = ctx.createGain(); echoWet.gain.value = 0.22;'); // wet rendah
+      htmlLines.push('      const outGain = ctx.createGain(); outGain.gain.value = 1.0;');
+      htmlLines.push('      dryBus.connect(comp);');
+      htmlLines.push('      dryBus.connect(delayL); dryBus.connect(delayR);');
+      htmlLines.push('      delayL.connect(fbL); fbL.connect(delayR);');
+      htmlLines.push('      delayR.connect(fbR); fbR.connect(delayL);');
+      htmlLines.push('      delayL.connect(echoLp); delayR.connect(echoLp);');
+      htmlLines.push('      echoLp.connect(echoWet); echoWet.connect(comp);');
+      htmlLines.push('      comp.connect(toneLp); toneLp.connect(outGain); outGain.connect(ctx.destination);');
+      htmlLines.push('      return { dryBus, hasPan: !!ctx.createStereoPanner };');
+      htmlLines.push('    }');
+
+      htmlLines.push('    function playGamelanNote(ctx, dest, time, freq, dur, vel, panVal) {');
+      htmlLines.push('      const noteGain = ctx.createGain();');
+      htmlLines.push('      noteGain.gain.setValueAtTime(0.0001, time);');
+      htmlLines.push('      noteGain.gain.linearRampToValueAtTime(vel, time + 0.008);');
+      htmlLines.push('      noteGain.gain.exponentialRampToValueAtTime(0.0001, time + dur);');
+      htmlLines.push('      if (dest.hasPan) {');
+      htmlLines.push('        const p = ctx.createStereoPanner(); p.pan.setValueAtTime(panVal, time);');
+      htmlLines.push('        noteGain.connect(p); p.connect(dest.dryBus);');
+      htmlLines.push('      } else { noteGain.connect(dest.dryBus); }');
+      htmlLines.push('      GAMELAN_PARTIALS.forEach(pt => {');
+      htmlLines.push('        const osc = ctx.createOscillator(); const g = ctx.createGain();');
+      htmlLines.push('        osc.type = "sine";');
+      htmlLines.push('        osc.frequency.setValueAtTime(freq * pt.ratio, time);'); // tiada glide
+      htmlLines.push('        g.gain.setValueAtTime(0.0001, time);');
+      htmlLines.push('        g.gain.linearRampToValueAtTime(pt.amp, time + 0.006);');
+      htmlLines.push('        g.gain.exponentialRampToValueAtTime(0.0001, time + pt.dec * dur);');
+      htmlLines.push('        osc.connect(g); g.connect(noteGain);');
+      htmlLines.push('        osc.start(time); osc.stop(time + pt.dec * dur + 0.05);');
+      htmlLines.push('      });');
+      htmlLines.push('    }');
+
+      htmlLines.push('    function playSoftGong(ctx, dest, time) {');
+      htmlLines.push('      const osc = ctx.createOscillator(); const g = ctx.createGain();');
+      htmlLines.push('      osc.type = "sine";');
+      htmlLines.push('      osc.frequency.setValueAtTime(72, time);');
+      htmlLines.push('      osc.frequency.exponentialRampToValueAtTime(64, time + 1.6);');
+      htmlLines.push('      g.gain.setValueAtTime(0.0001, time);');
+      htmlLines.push('      g.gain.linearRampToValueAtTime(0.35, time + 0.05);');
+      htmlLines.push('      g.gain.exponentialRampToValueAtTime(0.0001, time + 1.9);');
+      htmlLines.push('      osc.connect(g); g.connect(dest.dryBus);');
+      htmlLines.push('      osc.start(time); osc.stop(time + 1.95);');
+      htmlLines.push('    }');
+
+      htmlLines.push('    function startAudio() {');
+      htmlLines.push('      const AC = window.AudioContext || window.webkitAudioContext;');
+      htmlLines.push('      if (!audioCtx) { audioCtx = new AC(); masterBus = buildSoftGamelanBus(audioCtx); }');
+      htmlLines.push('      if (audioCtx.state === "suspended") { audioCtx.resume(); }');
+      htmlLines.push('      if (isPlaying) return;');
+      htmlLines.push('      isPlaying = true; updateSoundLabel();');
+      htmlLines.push('      if (seqTimer) clearInterval(seqTimer);');
+      htmlLines.push('      const tickStep = () => {');
+      htmlLines.push('        if (!isPlaying || !audioCtx) return;');
+      htmlLines.push('        if (audioCtx.state === "suspended") audioCtx.resume();');
+      htmlLines.push('        const ev = SMOOTH_GAMELAN[stepIdx % SMOOTH_GAMELAN.length];');
+      htmlLines.push('        const now = audioCtx.currentTime + 0.02;');
+      htmlLines.push('        playGamelanNote(audioCtx, masterBus, now, ev.f, ev.d, ev.v, ev.pan);');
+      htmlLines.push('        if (stepIdx % 4 === 0) playSoftGong(audioCtx, masterBus, now);');
+      htmlLines.push('        stepIdx++;');
+      htmlLines.push('      };');
+      htmlLines.push('      tickStep();');
+      htmlLines.push('      seqTimer = setInterval(tickStep, 750);'); // tempo sederhana ~80 BPM
+      htmlLines.push('    }');
+      htmlLines.push('    function stopAudio() {');
+      htmlLines.push('      isPlaying = false;');
+      htmlLines.push('      if (seqTimer) { clearInterval(seqTimer); seqTimer = null; }');
+      htmlLines.push('      updateSoundLabel();');
+      htmlLines.push('    }');
+      htmlLines.push('    function toggleAudio() { if (isPlaying) stopAudio(); else startAudio(); }');
+      htmlLines.push('    function updateSoundLabel() {');
+      htmlLines.push('      const btn = document.getElementById("soundBtn");');
+      htmlLines.push('      if (!btn) return;');
+      htmlLines.push('      const t = data[currentLang];');
+      htmlLines.push('      btn.textContent = isPlaying ? t.soundOff : t.soundOn;');
+      htmlLines.push('    }');
       htmlLines.push('    function setLang(lang) {');
       htmlLines.push('      currentLang = lang;');
       htmlLines.push('      document.querySelectorAll(".lang-btn").forEach(b => b.classList.remove("active"));');
       htmlLines.push('      document.getElementById(lang === "ms" ? "btnMs" : "btnEn").classList.add("active");');
       htmlLines.push('      const t = data[lang];');
       htmlLines.push('      document.getElementById("badgeText").textContent = t.badge;');
-      htmlLines.push('      document.getElementById("hostsText").textContent = t.hosts;');
       htmlLines.push('      document.getElementById("introText").textContent = t.intro;');
       htmlLines.push('      document.getElementById("lblDayDate").textContent = t.lblDayDate;');
       htmlLines.push('      document.getElementById("valDayDate").textContent = t.valDayDate;');
@@ -418,34 +710,48 @@
       htmlLines.push('      document.getElementById("uHours").textContent = t.uHours;');
       htmlLines.push('      document.getElementById("uMins").textContent = t.uMins;');
       htmlLines.push('      document.getElementById("uSecs").textContent = t.uSecs;');
+      htmlLines.push('      document.getElementById("uMs").textContent = t.uMs;');
       htmlLines.push('      document.getElementById("cdDone").textContent = t.cdDone;');
       htmlLines.push('      const envSub = document.getElementById("envSub");');
       htmlLines.push('      if (envSub) envSub.textContent = t.envSub;');
+      htmlLines.push('      updateSoundLabel();');
       htmlLines.push('    }');
       htmlLines.push('    function openInvitation() {');
+      htmlLines.push('      startAudio();');
       htmlLines.push('      const ov = document.getElementById("envOverlay");');
       htmlLines.push('      if (ov) { ov.style.opacity = "0"; setTimeout(() => { ov.style.display = "none"; }, 350); }');
       htmlLines.push('    }');
+      htmlLines.push('    window.addEventListener("load", () => {');
+      htmlLines.push('      if (!document.getElementById("envOverlay")) { startAudio(); }');
+      htmlLines.push('      document.addEventListener("pointerdown", function unlockOnce() {');
+      htmlLines.push('        if (!isPlaying) startAudio();');
+      htmlLines.push('        document.removeEventListener("pointerdown", unlockOnce);');
+      htmlLines.push('      }, { passive: true });');
+      htmlLines.push('    });');
       htmlLines.push('    const cdTarget = new Date("' + iso + '").getTime();');
       htmlLines.push('    function updateCountdown() {');
-      htmlLines.push('      const now = new Date().getTime();');
+      htmlLines.push('      const now = Date.now();');
       htmlLines.push('      const distance = cdTarget - now;');
-      htmlLines.push('      if (distance < 0) {');
+      htmlLines.push('      if (isNaN(cdTarget) || distance <= 0) {');
       htmlLines.push('        document.getElementById("cdGrid").style.display = "none";');
       htmlLines.push('        document.getElementById("cdDone").style.display = "block";');
       htmlLines.push('        return;');
       htmlLines.push('      }');
-      htmlLines.push('      const days = Math.floor(distance / (1000 * 60 * 60 * 24));');
-      htmlLines.push('      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));');
-      htmlLines.push('      const mins = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));');
-      htmlLines.push('      const secs = Math.floor((distance % (1000 * 60)) / 1000);');
-      htmlLines.push('      document.getElementById("cdDays").innerText = String(days).padStart(2, "0");');
-      htmlLines.push('      document.getElementById("cdHours").innerText = String(hours).padStart(2, "0");');
-      htmlLines.push('      document.getElementById("cdMins").innerText = String(mins).padStart(2, "0");');
-      htmlLines.push('      document.getElementById("cdSecs").innerText = String(secs).padStart(2, "0");');
+      htmlLines.push('      document.getElementById("cdGrid").style.display = "grid";');
+      htmlLines.push('      document.getElementById("cdDone").style.display = "none";');
+      htmlLines.push('      const days = Math.floor(distance / 86400000);');
+      htmlLines.push('      const hours = Math.floor((distance / 3600000) % 24);');
+      htmlLines.push('      const mins = Math.floor((distance / 60000) % 60);');
+      htmlLines.push('      const secs = Math.floor((distance / 1000) % 60);');
+      htmlLines.push('      const ms = Math.floor(distance % 1000);');
+      htmlLines.push('      document.getElementById("cdDays").textContent = String(days).padStart(2, "0");');
+      htmlLines.push('      document.getElementById("cdHours").textContent = String(hours).padStart(2, "0");');
+      htmlLines.push('      document.getElementById("cdMins").textContent = String(mins).padStart(2, "0");');
+      htmlLines.push('      document.getElementById("cdSecs").textContent = String(secs).padStart(2, "0");');
+      htmlLines.push('      document.getElementById("cdMs").textContent = String(ms).padStart(3, "0");');
+      htmlLines.push('      requestAnimationFrame(updateCountdown);');
       htmlLines.push('    }');
-      htmlLines.push('    setInterval(updateCountdown, 1000);');
-      htmlLines.push('    updateCountdown();');
+      htmlLines.push('    requestAnimationFrame(updateCountdown);');
       htmlLines.push('    setLang("ms");');
       htmlLines.push('    function showQr() {');
       htmlLines.push('      const modal = document.getElementById("qrModal");');
@@ -477,7 +783,7 @@
       const finalHtml = htmlLines.join('\n');
 
       document.getElementById('outCode').value = finalHtml;
-      document.getElementById('statusMsg').textContent = "HTML berjaya dijana! Sedia untuk dimuat turun.";
+      document.getElementById('statusMsg').textContent = "HTML berjaya dijana (" + outFile + ")! Sedia untuk dimuat turun.";
     }
 
     function copyCode() {
@@ -491,7 +797,7 @@
     function downloadHtml() {
       const code = document.getElementById('outCode').value;
       if (!code) { generateWedding(); }
-      
+
       const filename = normalizeHtmlFilename(document.getElementById('wFile').value);
       const blob = new Blob([document.getElementById('outCode').value], { type: 'text/html' });
       const url = URL.createObjectURL(blob);
@@ -502,9 +808,12 @@
       a.click();
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
-      
+
       document.getElementById('statusMsg').textContent = 'Fail ' + filename + ' berjaya dimuat turun!';
     }
+
+    initDropdowns();
+    generateWedding();
   </script>
 </body>
 </html>

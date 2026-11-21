@@ -579,11 +579,12 @@
       htmlLines.push('    let currentLang = "ms";');
       htmlLines.push('    let audioCtx = null, masterBus = null, isPlaying = false, seqTimer = null, stepIdx = 0;');
 
-      // === ENJIN GAMELAN JAWA LEMBUT (BARU) ===
+      // === ENJIN GAMELAN JAWA LEMBUT — MELODI WALIMAH 32-STEP (BARU) ===
       htmlLines.push('    // Skala slendro (5 not hampir sama rata), frekuensi dalam Hz');
       htmlLines.push('    const SL = {');
-      htmlLines.push('      S1: 261.63, S2: 293.66, S3: 329.63, S5: 392.00, S6: 440.00,');
-      htmlLines.push('      S1h: 523.25, S2h: 587.33, S3h: 659.25, S5h: 783.99');
+      htmlLines.push('      L1: 130.81, L2: 146.83, L3: 164.81, L5: 196.00, L6: 220.00,'); // bass
+      htmlLines.push('      S1: 261.63, S2: 293.66, S3: 329.63, S5: 392.00, S6: 440.00,'); // tengah
+      htmlLines.push('      S1h: 523.25, S2h: 587.33, S3h: 659.25, S5h: 783.99, S6h: 880.00'); // tinggi
       htmlLines.push('    };');
       htmlLines.push('    // Partial inharmonic ciri gamelan (bukan 1:2:3 harmonik biasa)');
       htmlLines.push('    const GAMELAN_PARTIALS = [');
@@ -591,38 +592,83 @@
       htmlLines.push('      { ratio: 2.76, amp: 0.20, dec: 0.55 },');
       htmlLines.push('      { ratio: 5.40, amp: 0.10, dec: 0.30 }');
       htmlLines.push('    ];');
-      htmlLines.push('    // Corak melodi lembut, tempo sederhana (8 not, ulang)');
-      htmlLines.push('    const SMOOTH_GAMELAN = [');
-      htmlLines.push('      { f: SL.S3h, d: 1.10, v: 0.20, pan: -0.35 },');
-      htmlLines.push('      { f: SL.S2h, d: 0.90, v: 0.17, pan:  0.30 },');
-      htmlLines.push('      { f: SL.S1h, d: 1.00, v: 0.19, pan: -0.20 },');
-      htmlLines.push('      { f: SL.S2h, d: 0.85, v: 0.16, pan:  0.40 },');
-      htmlLines.push('      { f: SL.S3h, d: 1.10, v: 0.20, pan: -0.30 },');
-      htmlLines.push('      { f: SL.S5,  d: 1.00, v: 0.18, pan:  0.20 },');
-      htmlLines.push('      { f: SL.S3h, d: 0.90, v: 0.17, pan: -0.40 },');
-      htmlLines.push('      { f: SL.S2h, d: 1.15, v: 0.19, pan:  0.30 }');
+      htmlLines.push('    // === MELODI WALIMAH 32-STEP: A (8) + B (8) + A\' (8) + C (8) ===');
+      htmlLines.push('    const WALIMAH_MELODY = [');
+      htmlLines.push('      // --- Ayat A: pembuka lembut, naik perlahan ---');
+      htmlLines.push('      { f: SL.S3h, d: 1.2, v: 0.18, pan: -0.30 },');
+      htmlLines.push('      { f: SL.S2h, d: 1.0, v: 0.15, pan:  0.25 },');
+      htmlLines.push('      { f: SL.S1h, d: 1.3, v: 0.20, pan: -0.20 },');
+      htmlLines.push('      { f: SL.S2h, d: 0.9, v: 0.14, pan:  0.35 },');
+      htmlLines.push('      { f: SL.S3h, d: 1.1, v: 0.19, pan: -0.35 },');
+      htmlLines.push('      { f: SL.S5,  d: 1.2, v: 0.17, pan:  0.20 },');
+      htmlLines.push('      { f: SL.S3h, d: 1.0, v: 0.16, pan: -0.25 },');
+      htmlLines.push('      { f: SL.S2h, d: 1.4, v: 0.20, pan:  0.30 },');
+      htmlLines.push('      // --- Ayat B: jawapan lebih tinggi, ada "tanya-jawab" ---');
+      htmlLines.push('      { f: SL.S5h, d: 1.2, v: 0.19, pan:  0.40 },');
+      htmlLines.push('      { f: SL.S3h, d: 1.0, v: 0.16, pan: -0.30 },');
+      htmlLines.push('      { f: SL.S5h, d: 1.3, v: 0.20, pan:  0.35 },');
+      htmlLines.push('      { f: SL.S2h, d: 0.9, v: 0.15, pan: -0.20 },');
+      htmlLines.push('      { f: SL.S1h, d: 1.1, v: 0.18, pan:  0.25 },');
+      htmlLines.push('      { f: SL.S2h, d: 1.2, v: 0.17, pan: -0.35 },');
+      htmlLines.push('      { f: SL.S3h, d: 1.0, v: 0.16, pan:  0.30 },');
+      htmlLines.push('      { f: SL.S1h, d: 1.5, v: 0.21, pan: -0.25 },');
+      htmlLines.push('      // --- Ayat A\': ulangan A tapi lebih penuh ---');
+      htmlLines.push('      { f: SL.S3h, d: 1.2, v: 0.19, pan: -0.30 },');
+      htmlLines.push('      { f: SL.S2h, d: 1.0, v: 0.16, pan:  0.25 },');
+      htmlLines.push('      { f: SL.S1h, d: 1.3, v: 0.21, pan: -0.20 },');
+      htmlLines.push('      { f: SL.S5,  d: 0.9, v: 0.17, pan:  0.35 },');
+      htmlLines.push('      { f: SL.S3h, d: 1.1, v: 0.20, pan: -0.35 },');
+      htmlLines.push('      { f: SL.S5h, d: 1.2, v: 0.19, pan:  0.20 },');
+      htmlLines.push('      { f: SL.S3h, d: 1.0, v: 0.17, pan: -0.25 },');
+      htmlLines.push('      { f: SL.S2h, d: 1.4, v: 0.22, pan:  0.30 },');
+      htmlLines.push('      // --- Ayat C: penutup lembut, turun ke tonik ---');
+      htmlLines.push('      { f: SL.S1h, d: 1.3, v: 0.20, pan: -0.20 },');
+      htmlLines.push('      { f: SL.S2h, d: 1.0, v: 0.16, pan:  0.30 },');
+      htmlLines.push('      { f: SL.S3h, d: 1.2, v: 0.18, pan: -0.30 },');
+      htmlLines.push('      { f: SL.S2h, d: 0.9, v: 0.15, pan:  0.25 },');
+      htmlLines.push('      { f: SL.S1h, d: 1.4, v: 0.19, pan: -0.25 },');
+      htmlLines.push('      { f: SL.S5,  d: 1.1, v: 0.16, pan:  0.20 },');
+      htmlLines.push('      { f: SL.S2h, d: 1.2, v: 0.17, pan: -0.35 },');
+      htmlLines.push('      { f: SL.S1h, d: 1.8, v: 0.22, pan:  0.00 }');
       htmlLines.push('    ];');
 
       htmlLines.push('    function buildSoftGamelanBus(ctx) {');
       htmlLines.push('      const comp = ctx.createDynamicsCompressor();');
-      htmlLines.push('      comp.threshold.value = -20; comp.knee.value = 20; comp.ratio.value = 4;');
-      htmlLines.push('      comp.attack.value = 0.003; comp.release.value = 0.20;');
+      htmlLines.push('      comp.threshold.value = -22; comp.knee.value = 24; comp.ratio.value = 4;');
+      htmlLines.push('      comp.attack.value = 0.003; comp.release.value = 0.25;');
       htmlLines.push('      const toneLp = ctx.createBiquadFilter();');
-      htmlLines.push('      toneLp.type = "lowpass"; toneLp.frequency.value = 3200; toneLp.Q.value = 0.6;');
+      htmlLines.push('      toneLp.type = "lowpass"; toneLp.frequency.value = 4200; toneLp.Q.value = 0.5;');
       htmlLines.push('      const dryBus = ctx.createGain(); dryBus.gain.value = 1.0;');
+      htmlLines.push('      // Ping-pong delay stereo lebar');
       htmlLines.push('      const delayL = ctx.createDelay(1.0); const delayR = ctx.createDelay(1.0);');
-      htmlLines.push('      delayL.delayTime.value = 0.28; delayR.delayTime.value = 0.41;');
+      htmlLines.push('      delayL.delayTime.value = 0.26; delayR.delayTime.value = 0.39;');
+      htmlLines.push('      const panL = ctx.createStereoPanner(); panL.pan.value = -0.7;');
+      htmlLines.push('      const panR = ctx.createStereoPanner(); panR.pan.value = 0.7;');
       htmlLines.push('      const fbL = ctx.createGain(); const fbR = ctx.createGain();');
-      htmlLines.push('      fbL.gain.value = 0.12; fbR.gain.value = 0.14;'); // echo halus
-      htmlLines.push('      const echoLp = ctx.createBiquadFilter(); echoLp.type = "lowpass"; echoLp.frequency.value = 1800;');
-      htmlLines.push('      const echoWet = ctx.createGain(); echoWet.gain.value = 0.22;'); // wet rendah
+      htmlLines.push('      fbL.gain.value = 0.10; fbR.gain.value = 0.12;');
+      htmlLines.push('      const echoLp = ctx.createBiquadFilter(); echoLp.type = "lowpass"; echoLp.frequency.value = 2200;');
+      htmlLines.push('      const echoWet = ctx.createGain(); echoWet.gain.value = 0.18;');
+      htmlLines.push('      // Reverb convolution ringan (IR sintetik 1.6s)');
+      htmlLines.push('      const revLen = Math.floor(ctx.sampleRate * 1.6);');
+      htmlLines.push('      const revIR = ctx.createBuffer(2, revLen, ctx.sampleRate);');
+      htmlLines.push('      for (let ch = 0; ch < 2; ch++) {');
+      htmlLines.push('        const d = revIR.getChannelData(ch);');
+      htmlLines.push('        for (let i = 0; i < revLen; i++) {');
+      htmlLines.push('          d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / revLen, 2.6);');
+      htmlLines.push('        }');
+      htmlLines.push('      }');
+      htmlLines.push('      const conv = ctx.createConvolver(); conv.buffer = revIR;');
+      htmlLines.push('      const revWet = ctx.createGain(); revWet.gain.value = 0.22;');
       htmlLines.push('      const outGain = ctx.createGain(); outGain.gain.value = 1.0;');
+      htmlLines.push('      // Routing');
       htmlLines.push('      dryBus.connect(comp);');
-      htmlLines.push('      dryBus.connect(delayL); dryBus.connect(delayR);');
+      htmlLines.push('      dryBus.connect(delayL);');
+      htmlLines.push('      delayL.connect(panL); delayR.connect(panR);');
       htmlLines.push('      delayL.connect(fbL); fbL.connect(delayR);');
       htmlLines.push('      delayR.connect(fbR); fbR.connect(delayL);');
       htmlLines.push('      delayL.connect(echoLp); delayR.connect(echoLp);');
       htmlLines.push('      echoLp.connect(echoWet); echoWet.connect(comp);');
+      htmlLines.push('      dryBus.connect(conv); conv.connect(revWet); revWet.connect(comp);');
       htmlLines.push('      comp.connect(toneLp); toneLp.connect(outGain); outGain.connect(ctx.destination);');
       htmlLines.push('      return { dryBus, hasPan: !!ctx.createStereoPanner };');
       htmlLines.push('    }');
@@ -639,7 +685,7 @@
       htmlLines.push('      GAMELAN_PARTIALS.forEach(pt => {');
       htmlLines.push('        const osc = ctx.createOscillator(); const g = ctx.createGain();');
       htmlLines.push('        osc.type = "sine";');
-      htmlLines.push('        osc.frequency.setValueAtTime(freq * pt.ratio, time);'); // tiada glide
+      htmlLines.push('        osc.frequency.setValueAtTime(freq * pt.ratio, time);');
       htmlLines.push('        g.gain.setValueAtTime(0.0001, time);');
       htmlLines.push('        g.gain.linearRampToValueAtTime(pt.amp, time + 0.006);');
       htmlLines.push('        g.gain.exponentialRampToValueAtTime(0.0001, time + pt.dec * dur);');
@@ -660,6 +706,27 @@
       htmlLines.push('      osc.start(time); osc.stop(time + 1.95);');
       htmlLines.push('    }');
 
+      htmlLines.push('    function playKenong(ctx, dest, time, freq) {');
+      htmlLines.push('      const osc = ctx.createOscillator(); const g = ctx.createGain();');
+      htmlLines.push('      osc.type = "sine";');
+      htmlLines.push('      osc.frequency.setValueAtTime(freq, time);');
+      htmlLines.push('      g.gain.setValueAtTime(0.0001, time);');
+      htmlLines.push('      g.gain.linearRampToValueAtTime(0.14, time + 0.01);');
+      htmlLines.push('      g.gain.exponentialRampToValueAtTime(0.0001, time + 0.9);');
+      htmlLines.push('      osc.connect(g); g.connect(dest.dryBus);');
+      htmlLines.push('      osc.start(time); osc.stop(time + 0.95);');
+      htmlLines.push('    }');
+      htmlLines.push('    function playCounterBass(ctx, dest, time, freq) {');
+      htmlLines.push('      const osc = ctx.createOscillator(); const g = ctx.createGain();');
+      htmlLines.push('      osc.type = "sine";');
+      htmlLines.push('      osc.frequency.setValueAtTime(freq, time);');
+      htmlLines.push('      g.gain.setValueAtTime(0.0001, time);');
+      htmlLines.push('      g.gain.linearRampToValueAtTime(0.10, time + 0.02);');
+      htmlLines.push('      g.gain.exponentialRampToValueAtTime(0.0001, time + 1.4);');
+      htmlLines.push('      osc.connect(g); g.connect(dest.dryBus);');
+      htmlLines.push('      osc.start(time); osc.stop(time + 1.45);');
+      htmlLines.push('    }');
+
       htmlLines.push('    function startAudio() {');
       htmlLines.push('      const AC = window.AudioContext || window.webkitAudioContext;');
       htmlLines.push('      if (!audioCtx) { audioCtx = new AC(); masterBus = buildSoftGamelanBus(audioCtx); }');
@@ -670,14 +737,21 @@
       htmlLines.push('      const tickStep = () => {');
       htmlLines.push('        if (!isPlaying || !audioCtx) return;');
       htmlLines.push('        if (audioCtx.state === "suspended") audioCtx.resume();');
-      htmlLines.push('        const ev = SMOOTH_GAMELAN[stepIdx % SMOOTH_GAMELAN.length];');
+      htmlLines.push('        const ev = WALIMAH_MELODY[stepIdx % WALIMAH_MELODY.length];');
       htmlLines.push('        const now = audioCtx.currentTime + 0.02;');
       htmlLines.push('        playGamelanNote(audioCtx, masterBus, now, ev.f, ev.d, ev.v, ev.pan);');
-      htmlLines.push('        if (stepIdx % 4 === 0) playSoftGong(audioCtx, masterBus, now);');
+      htmlLines.push('        if (stepIdx % 4 === 0) {');
+      htmlLines.push('          const bassNotes = [SL.L1, SL.L2, SL.L3, SL.L5];');
+      htmlLines.push('          playCounterBass(audioCtx, masterBus, now, bassNotes[(stepIdx / 4) % 4]);');
+      htmlLines.push('        }');
+      htmlLines.push('        if (stepIdx % 8 === 2 || stepIdx % 8 === 6) {');
+      htmlLines.push('          playKenong(audioCtx, masterBus, now, SL.S5);');
+      htmlLines.push('        }');
+      htmlLines.push('        if (stepIdx % 8 === 0) playSoftGong(audioCtx, masterBus, now);');
       htmlLines.push('        stepIdx++;');
       htmlLines.push('      };');
       htmlLines.push('      tickStep();');
-      htmlLines.push('      seqTimer = setInterval(tickStep, 750);'); // tempo sederhana ~80 BPM
+      htmlLines.push('      seqTimer = setInterval(tickStep, 820);');
       htmlLines.push('    }');
       htmlLines.push('    function stopAudio() {');
       htmlLines.push('      isPlaying = false;');

@@ -3,278 +3,605 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Walimatulurus — Aiman Hakim &amp; Nurul Huda</title>
+  <title>Wedding E-Card Maker — Dzul Arts</title>
   <style>
-    :root {
-      --bg-grad: radial-gradient(circle at top, #2a1f16, #0d0906);
-      --card-bg: #17120d;
-      --text-main: #fdf6e7;
-      --text-accent: #e5be6a;
-      --border-col: #d4af37;
-      --shadow-col: rgba(212, 175, 55, 0.28);
-      --soft-box: rgba(229, 190, 106, 0.09);
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      min-height: 100dvh; background: var(--bg-grad); color: var(--text-main);
-      font-family: Georgia, 'Times New Roman', serif; display: flex; align-items: center;
-      justify-content: center; padding: 20px 14px;
-    }
-    .card {
-      width: 100%; max-width: 430px; background: var(--card-bg); color: var(--text-main);
-      border: 2px solid var(--border-col); border-radius: 22px; padding: 22px 18px 24px;
-      text-align: center; box-shadow: 0 22px 50px rgba(0, 0, 0, 0.55), 0 0 28px var(--shadow-col);
-    }
-    .top-bar { display: flex; justify-content: flex-end; gap: 6px; margin-bottom: 6px; }
-    .lang-btn {
-      background: transparent; border: 1px solid rgba(229, 190, 106, 0.55); color: var(--text-main);
-      padding: 4px 10px; border-radius: 999px; font-size: 11px;
-      font-family: system-ui, -apple-system, sans-serif; cursor: pointer;
-    }
-    .lang-btn.active { background: var(--text-accent); color: #17120d; font-weight: 700; border-color: var(--text-accent); }
-    .bismillah { font-size: 17px; color: var(--text-accent); margin-bottom: 4px; line-height: 1.7; }
-    .badge { font-family: system-ui, -apple-system, sans-serif; font-size: 10.5px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-accent); margin-bottom: 12px; }
-    .hosts { font-size: 12.5px; line-height: 1.55; opacity: 0.92; margin-bottom: 10px; }
-    .couple { font-size: 26px; font-weight: bold; color: var(--text-accent); line-height: 1.25; margin: 6px 0 16px; }
-    .couple span.amp { display: block; font-size: 17px; font-style: italic; margin: 2px 0; color: var(--text-main); }
-    .art {
-      width: 150px; height: 150px; margin: 0 auto 16px; border-radius: 50%;
-      border: 3px solid var(--border-col); padding: 5px; box-shadow: 0 0 22px var(--shadow-col);
-      overflow: hidden; display: flex; align-items: center; justify-content: center;
-      background: var(--soft-box); animation: floatY 3.8s ease-in-out infinite;
-    }
-    .art img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; display: block; }
-    @keyframes floatY { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
-    .invite-intro { font-size: 13.5px; line-height: 1.55; margin-bottom: 14px; }
-    .details-box {
-      background: var(--soft-box); border: 1px solid rgba(212, 175, 55, 0.35);
-      border-radius: 14px; padding: 12px; margin-bottom: 14px;
-      font-family: system-ui, -apple-system, sans-serif; font-size: 12.5px; line-height: 1.65; text-align: left;
-    }
-    .countdown-box {
-      background: var(--soft-box); border: 1px solid rgba(212, 175, 55, 0.35);
-      border-radius: 14px; padding: 12px 10px; margin-bottom: 16px;
+      min-height: 100dvh;
+      background: #0f172a;
+      color: #f8fafc;
       font-family: system-ui, -apple-system, sans-serif;
+      padding: 18px 14px 48px;
     }
-    .cd-heading { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-accent); margin-bottom: 8px; }
-    .cd-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; }
-    @media (max-width: 380px) { .cd-grid { grid-template-columns: repeat(2, 1fr); } }
-    .cd-cell { background: rgba(0, 0, 0, 0.25); border: 1px solid rgba(229, 190, 106, 0.28); border-radius: 10px; padding: 6px 3px; }
-    .cd-num { font-size: 14.5px; font-weight: 700; color: var(--text-accent); line-height: 1.2; font-variant-numeric: tabular-nums; }
-    .cd-unit { font-size: 9.5px; opacity: 0.85; margin-top: 2px; }
-    .cd-done { font-size: 12.5px; color: var(--text-accent); font-weight: 600; padding: 4px 0; }
-    .doa-box {
-      border-top: 1px dashed rgba(212, 175, 55, 0.45);
-      border-bottom: 1px dashed rgba(212, 175, 55, 0.45);
-      padding: 12px 6px; margin-bottom: 16px;
+    .wrap { max-width: 860px; margin: 0 auto; }
+    h1 { font-size: 20px; color: #facc15; margin-bottom: 4px; }
+    .sub { font-size: 12.5px; color: #94a3b8; margin-bottom: 16px; line-height: 1.5; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    @media (max-width: 680px) { .grid { grid-template-columns: 1fr; } }
+    .card {
+      background: #1e293b; border: 1px solid #334155;
+      border-radius: 14px; padding: 14px; margin-bottom: 14px;
     }
-    .doa-arab { font-size: 17px; color: var(--text-accent); margin-bottom: 6px; line-height: 1.75; }
-    .doa-text { font-size: 13px; font-style: italic; line-height: 1.55; opacity: 0.95; }
-    .btn-row { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 10px; }
-    .action-btn, .sound-btn {
-      text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 5px;
-      background: transparent; border: 1px solid var(--border-col); color: var(--text-accent);
-      padding: 8px 12px; border-radius: 20px; font-size: 11.5px;
-      font-family: system-ui, -apple-system, sans-serif; cursor: pointer;
+    .grp { margin-bottom: 11px; }
+    .grp:last-child { margin-bottom: 0; }
+    label { display: block; font-size: 12px; color: #cbd5e1; margin-bottom: 4px; }
+    input, select, textarea {
+      width: 100%; padding: 9px 10px; border-radius: 9px;
+      border: 1px solid #475569; background: #0f172a; color: #ffffff;
+      font-size: 13px; font-family: inherit;
     }
-    .action-btn { background: rgba(229, 190, 106, 0.16); font-weight: 700; }
-    .footer-note { margin-top: 16px; font-size: 11.5px; opacity: 0.75; font-family: system-ui, -apple-system, sans-serif; }
-    .env-overlay, .qr-modal {
-      position: fixed; inset: 0; background: rgba(0, 0, 0, 0.88);
-      display: flex; align-items: center; justify-content: center; padding: 20px; z-index: 50;
-      transition: opacity 0.35s ease;
+    .custom-date-row { margin-top: 7px; display: none; }
+    .custom-date-row.show { display: block; }
+    textarea.code-out {
+      min-height: 230px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 11.5px; line-height: 1.45; color: #fde68a;
+      white-space: pre; overflow-x: auto;
     }
-    .qr-modal { display: none; z-index: 60; }
-    .env-box, .qr-box {
-      width: 100%; max-width: 350px; background: var(--card-bg); border: 2px solid var(--border-col);
-      border-radius: 20px; padding: 22px 18px; text-align: center;
-      box-shadow: 0 22px 55px rgba(0, 0, 0, 0.65); font-family: system-ui, -apple-system, sans-serif;
+    .btn-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
+    button {
+      padding: 10px 14px; border-radius: 10px; border: none;
+      font-size: 13px; font-weight: 700; cursor: pointer;
     }
-    .env-box { cursor: pointer; font-family: Georgia, 'Times New Roman', serif; }
-    .env-label { font-family: system-ui, -apple-system, sans-serif; font-size: 11.5px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-accent); margin-bottom: 6px; }
-    .qr-subject { font-size: 13px; font-weight: 700; color: var(--text-main); margin-bottom: 3px; }
-    .qr-brand { font-size: 11px; color: var(--text-accent); margin-bottom: 8px; }
-    .env-title { font-size: 22px; font-weight: bold; color: var(--text-main); margin-bottom: 8px; }
-    .env-sub { font-size: 13px; color: var(--text-accent); opacity: 0.9; }
-    .qr-canvas-wrap { background: #ffffff; padding: 8px; border-radius: 14px; display: inline-block; margin: 8px 0 10px; }
-    .qr-link-txt { font-size: 11px; word-break: break-all; opacity: 0.92; margin-bottom: 12px; }
-    .qr-link-txt a { color: var(--text-accent); text-decoration: underline; }
-    .qr-actions { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+    .btn-gen { background: #facc15; color: #0f172a; }
+    .btn-copy { background: #38bdf8; color: #0f172a; }
+    .btn-dl { background: #22c55e; color: #052e16; }
+    .status-msg { margin-top: 8px; font-size: 12px; color: #4ade80; min-height: 18px; }
   </style>
 </head>
 <body>
-  <div class="env-overlay" id="envOverlay" onclick="openInvitation()">
-    <div class="env-box">
-      <div class="env-label" id="envLabel">✦ Jemputan Walimatulurus ✦</div>
-      <div class="env-title">Aiman Hakim &amp; Nurul Huda</div>
-      <div class="env-sub" id="envSub">Tekan untuk membuka kad jemputan</div>
-    </div>
-  </div>
+  <div class="wrap">
+    <h1>Wedding Invitation E-Card Maker</h1>
+    <p class="sub">
+      Pilih tarikh dan masa majlis melalui menu drop-down di bawah. Nama fail gambar automatik ditambah <strong>.jpg</strong> jika tiada sambungan (contoh: <code>wedding</code> → <code>wedding.jpg</code>).
+    </p>
 
-  <div class="qr-modal" id="qrModal" onclick="closeQr(event)">
-    <div class="qr-box" onclick="event.stopPropagation()">
-      <div class="env-label" id="qrTitle">Kongsi Kad Jemputan</div>
-      <div class="qr-subject">Aiman Hakim &amp; Nurul Huda</div>
-      <div class="qr-brand">Dzul Arts</div>
-      <div class="qr-canvas-wrap">
-        <canvas id="qrCanvas" width="400" height="400" style="width:200px;height:auto;display:block;"></canvas>
-      </div>
-      <div class="qr-link-txt" id="qrUrlText"></div>
-      <div class="qr-actions">
-        <button class="action-btn" id="saveQrBtn" onclick="saveQrCode()">⬇ Save QR Code</button>
-        <button class="sound-btn" id="closeQrBtn" onclick="closeQr()">Tutup</button>
-      </div>
-    </div>
-  </div>
+    <div class="card">
+      <div class="grid">
+        <div class="grp">
+          <label>1. Nama Pengantin Lelaki</label>
+          <input type="text" id="wGroom" value="Aiman Hakim" />
+        </div>
+        <div class="grp">
+          <label>2. Nama Pengantin Perempuan</label>
+          <input type="text" id="wBride" value="Nurul Huda" />
+        </div>
+        <div class="grp">
+          <label>3. Tuan Rumah / Keluarga (BM)</label>
+          <input type="text" id="wHostsMs" value="Hj. Rahman &amp; Hjh. Salmah serta En. Halim &amp; Pn. Faridah" />
+        </div>
+        <div class="grp">
+          <label>4. Hosts / Families (EN)</label>
+          <input type="text" id="wHostsEn" value="Hj. Rahman &amp; Hjh. Salmah and En. Halim &amp; Pn. Faridah" />
+        </div>
 
-  <div class="card">
-    <div class="top-bar">
-      <button class="lang-btn active" id="btnMs" onclick="setLang('ms')">BM</button>
-      <button class="lang-btn" id="btnEn" onclick="setLang('en')">EN</button>
-    </div>
-    <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
-    <div class="badge" id="badgeText"></div>
-    <div class="hosts" id="hostsText"></div>
-    <div class="couple">Aiman Hakim<span class="amp">&amp;</span>Nurul Huda</div>
-    <div class="art">
-      <img src="wedding.jpg" alt="Wedding Artwork" onerror="this.style.display='none';document.getElementById('artFb').style.display='flex';" />
-      <div id="artFb" style="display:none;width:100%;height:100%;align-items:center;justify-content:center;font-size:40px;">💍</div>
-    </div>
-    <p class="invite-intro" id="introText"></p>
-    <div class="details-box">
-      <div><strong id="lblDayDate"></strong> <span id="valDayDate"></span></div>
-      <div><strong id="lblTime"></strong> <span id="valTime"></span></div>
-      <div><strong id="lblLoc"></strong> <span id="valLoc"></span></div>
-    </div>
-    <div class="countdown-box">
-      <div class="cd-heading" id="cdHeading"></div>
-      <div class="cd-grid" id="cdGrid">
-        <div class="cd-cell"><div class="cd-num" id="cdDays">00</div><div class="cd-unit" id="uDays"></div></div>
-        <div class="cd-cell"><div class="cd-num" id="cdHours">00</div><div class="cd-unit" id="uHours"></div></div>
-        <div class="cd-cell"><div class="cd-num" id="cdMins">00</div><div class="cd-unit" id="uMins"></div></div>
-        <div class="cd-cell"><div class="cd-num" id="cdSecs">00</div><div class="cd-unit" id="uSecs"></div></div>
+        <div class="grp">
+          <label>5. Pilih Tarikh Majlis (Drop-Down)</label>
+          <select id="wDateSelect" onchange="syncDateTime()">
+            <option value="2026-12-12">Sabtu, 12 Disember 2026 (12 Dec 2026)</option>
+            <option value="2026-12-19">Sabtu, 19 Disember 2026 (19 Dec 2026)</option>
+            <option value="2026-12-26">Sabtu, 26 Disember 2026 (26 Dec 2026)</option>
+            <option value="2027-01-09">Sabtu, 9 Januari 2027 (9 Jan 2027)</option>
+            <option value="2027-01-16" selected>Sabtu, 16 Januari 2027 (16 Jan 2027)</option>
+            <option value="2027-01-23">Sabtu, 23 Januari 2027 (23 Jan 2027)</option>
+            <option value="2027-01-30">Sabtu, 30 Januari 2027 (30 Jan 2027)</option>
+            <option value="2027-02-06">Sabtu, 6 Februari 2027 (6 Feb 2027)</option>
+            <option value="custom">Pilih Tarikh Sendiri (Custom Date)...</option>
+          </select>
+          <div class="custom-date-row" id="customDateRow">
+            <input type="date" id="wCustomDate" value="2027-01-16" onchange="syncDateTime()" />
+          </div>
+        </div>
+
+        <div class="grp">
+          <label>6. Pilih Masa / Sesi Majlis (Drop-Down)</label>
+          <select id="wTimeSelect" onchange="syncDateTime()">
+            <option value="morning">Pagi • 10:30 PG – 1:30 TGH (Morning • 10:30 AM – 1:30 PM)</option>
+            <option value="afternoon">Tengah Hari • 11:30 PG – 3:30 PTG (Afternoon • 11:30 AM – 3:30 PM)</option>
+            <option value="evening" selected>Petang • 4:00 PTG – 8:00 MLM (Evening • 4:00 PM – 8:00 PM)</option>
+            <option value="night">Malam • 7:30 MLM – 10:30 MLM (Night • 7:30 PM – 10:30 PM)</option>
+          </select>
+        </div>
+
+        <div class="grp">
+          <label>7. Hari &amp; Tarikh (BM — Auto / Boleh Ubah)</label>
+          <input type="text" id="wDayDateMs" value="Sabtu, 16 Januari 2027" />
+        </div>
+        <div class="grp">
+          <label>8. Day &amp; Date (EN — Auto / Boleh Ubah)</label>
+          <input type="text" id="wDayDateEn" value="Saturday, 16 January 2027" />
+        </div>
+        <div class="grp">
+          <label>9. Masa / Sesi (BM — Auto / Boleh Ubah)</label>
+          <input type="text" id="wTimeMs" value="Petang • 4:00 PTG – 8:00 MLM" />
+        </div>
+        <div class="grp">
+          <label>10. Time / Session (EN — Auto / Boleh Ubah)</label>
+          <input type="text" id="wTimeEn" value="Evening • 4:00 PM – 8:00 PM" />
+        </div>
+
+        <div class="grp">
+          <label>11. Lokasi / Tempat (BM)</label>
+          <input type="text" id="wLocMs" value="Dewan Serbaguna Community Centre, 12 Jalan Harmoni (Bukan kolong blok)" />
+        </div>
+        <div class="grp">
+          <label>12. Venue / Location (EN)</label>
+          <input type="text" id="wLocEn" value="Community Centre Hall, 12 Jalan Harmoni (Not void deck)" />
+        </div>
+        <div class="grp">
+          <label>13. Tarikh &amp; Masa Countdown (ISO +08:00)</label>
+          <input type="text" id="wIso" value="2027-01-16T16:00:00+08:00" />
+        </div>
+        <div class="grp">
+          <label>14. Pautan Google Maps</label>
+          <input type="text" id="wMap" value="https://maps.google.com/?q=Community+Centre+12+Jalan+Harmoni" />
+        </div>
+        <div class="grp">
+          <label>15. Nama Fail Gambar Pengantin</label>
+          <input type="text" id="wArt" value="wedding.jpg" />
+        </div>
+        <div class="grp">
+          <label>16. Nama Fail HTML Keluaran</label>
+          <input type="text" id="wFile" value="index.html" />
+        </div>
+        <div class="grp">
+          <label>17. Tema Warna</label>
+          <select id="wTheme">
+            <option value="gold-dark" selected>1. Classic Gold &amp; Dark Espresso</option>
+            <option value="emerald-gold">2. Emerald Green &amp; Gold</option>
+            <option value="ivory-gold">3. Ivory Cream &amp; Gold</option>
+            <option value="rose-gold">4. Dusty Rose &amp; Gold</option>
+            <option value="royal-navy">5. Royal Navy &amp; Champagne</option>
+          </select>
+        </div>
+        <div class="grp">
+          <label>18. Sampul Pembuka (Envelope)?</label>
+          <select id="wEnv">
+            <option value="1" selected>Yes — Interactive Envelope</option>
+            <option value="0">No — Direct Card View</option>
+          </select>
+        </div>
       </div>
-      <div class="cd-done" id="cdDone" style="display:none;"></div>
+
+      <div class="btn-row">
+        <button class="btn-gen" onclick="generateWedding()">⚡ Generate HTML</button>
+        <button class="btn-copy" onclick="copyCode()">📋 Copy HTML</button>
+        <button class="btn-dl" onclick="downloadHtml()">⬇ Download .html</button>
+      </div>
+      <div class="status-msg" id="statusMsg"></div>
     </div>
-    <div class="doa-box">
-      <div class="doa-arab">بَارَكَ اللَّهُ لَكُمَا وَبَارَكَ عَلَيْكُمَا وَجَمَعَ بَيْنَكُمَا فِي خَيْرٍ</div>
-      <div class="doa-text" id="doaText"></div>
+
+    <div class="card">
+      <label>Generated Standalone Wedding E-Card HTML</label>
+      <textarea class="code-out" id="outCode" readonly></textarea>
     </div>
-    <div class="btn-row">
-      <a class="action-btn" id="mapBtn" href="https://maps.google.com/?q=Community+Centre+12+Jalan+Harmoni" target="_blank" rel="noopener">📍 Lokasi</a>
-      <button class="action-btn" onclick="showQr()">📱 Kongsi / QR</button>
-    </div>
-    <div class="footer-note">Dzul Arts • Kad Jemputan Digital</div>
   </div>
 
   <script>
-    const data = {
-      ms: {
-        badge: "Majlis Walimatulurus",
-        hosts: "Hj. Rahman & Hjh. Salmah serta En. Halim & Pn. Faridah",
-        intro: "Dengan penuh rasa kesyukuran, kami menjemput anda hadir ke majlis perkahwinan kami.",
-        lblDayDate: "Tarikh:",
-        valDayDate: "Sabtu, 16 Januari 2027",
-        lblTime: "Masa:",
-        valTime: "Petang • 4:00 PTG – 8:00 MLM",
-        lblLoc: "Lokasi:",
-        valLoc: "Dewan Serbaguna Community Centre, 12 Jalan Harmoni (Bukan kolong blok)",
-        cdHeading: "Menghitung Hari",
-        doa: '"Semoga Allah memberkati kamu berdua dan menghimpunkan kamu dalam kebaikan."',
-        uDays: "Hari", uHours: "Jam", uMins: "Minit", uSecs: "Saat",
-        cdDone: "Majlis telah berlangsung",
-        envSub: "Tekan untuk membuka kad jemputan"
+    const DAYS_MS = ["Ahad", "Isnin", "Selasa", "Rabu", "Khamis", "Jumaat", "Sabtu"];
+    const DAYS_EN = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const MONTHS_MS = ["Januari", "Februari", "Mac", "April", "Mei", "Jun", "Julai", "Ogos", "September", "Oktober", "November", "Disember"];
+    const MONTHS_EN = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+    const TIME_PRESETS = {
+      morning: {
+        ms: "Pagi • 10:30 PG – 1:30 TGH",
+        en: "Morning • 10:30 AM – 1:30 PM",
+        hms: "10:30:00"
       },
-      en: {
-        badge: "Wedding Reception",
-        hosts: "Hj. Rahman & Hjh. Salmah and En. Halim & Pn. Faridah",
-        intro: "With great joy, we cordially invite you to celebrate our wedding day.",
-        lblDayDate: "Date:",
-        valDayDate: "Saturday, 16 January 2027",
-        lblTime: "Time:",
-        valTime: "Evening • 4:00 PM – 8:00 PM",
-        lblLoc: "Venue:",
-        valLoc: "Community Centre Hall, 12 Jalan Harmoni (Not void deck)",
-        cdHeading: "Countdown to the Big Day",
-        doa: '"May Allah bless you both and unite you in goodness."',
-        uDays: "Days", uHours: "Hours", uMins: "Mins", uSecs: "Secs",
-        cdDone: "The event has concluded",
-        envSub: "Tap to open invitation"
+      afternoon: {
+        ms: "Tengah Hari • 11:30 PG – 3:30 PTG",
+        en: "Afternoon • 11:30 AM – 3:30 PM",
+        hms: "11:30:00"
+      },
+      evening: {
+        ms: "Petang • 4:00 PTG – 8:00 MLM",
+        en: "Evening • 4:00 PM – 8:00 PM",
+        hms: "16:00:00"
+      },
+      night: {
+        ms: "Malam • 7:30 MLM – 10:30 MLM",
+        en: "Night • 7:30 PM – 10:30 PM",
+        hms: "19:30:00"
       }
     };
-    let currentLang = "ms";
-    function setLang(lang) {
-      currentLang = lang;
-      document.querySelectorAll(".lang-btn").forEach(b => b.classList.remove("active"));
-      document.getElementById(lang === "ms" ? "btnMs" : "btnEn").classList.add("active");
-      const t = data[lang];
-      document.getElementById("badgeText").textContent = t.badge;
-      document.getElementById("hostsText").textContent = t.hosts;
-      document.getElementById("introText").textContent = t.intro;
-      document.getElementById("lblDayDate").textContent = t.lblDayDate;
-      document.getElementById("valDayDate").textContent = t.valDayDate;
-      document.getElementById("lblTime").textContent = t.lblTime;
-      document.getElementById("valTime").textContent = t.valTime;
-      document.getElementById("lblLoc").textContent = t.lblLoc;
-      document.getElementById("valLoc").textContent = t.valLoc;
-      document.getElementById("cdHeading").textContent = t.cdHeading;
-      document.getElementById("doaText").textContent = t.doa;
-      document.getElementById("uDays").textContent = t.uDays;
-      document.getElementById("uHours").textContent = t.uHours;
-      document.getElementById("uMins").textContent = t.uMins;
-      document.getElementById("uSecs").textContent = t.uSecs;
-      document.getElementById("cdDone").textContent = t.cdDone;
-      const envSub = document.getElementById("envSub");
-      if (envSub) envSub.textContent = t.envSub;
-    }
-    function openInvitation() {
-      const ov = document.getElementById("envOverlay");
-      if (ov) { ov.style.opacity = "0"; setTimeout(() => { ov.style.display = "none"; }, 350); }
-    }
-    const cdTarget = new Date("2027-01-16T16:00:00+08:00").getTime();
-    function updateCountdown() {
-      const now = new Date().getTime();
-      const distance = cdTarget - now;
-      if (distance < 0) {
-        document.getElementById("cdGrid").style.display = "none";
-        document.getElementById("cdDone").style.display = "block";
-        return;
+
+    function syncDateTime() {
+      const selVal = document.getElementById("wDateSelect").value;
+      const customRow = document.getElementById("customDateRow");
+      const customInput = document.getElementById("wCustomDate");
+
+      if (selVal === "custom") {
+        customRow.classList.add("show");
+      } else {
+        customRow.classList.remove("show");
       }
-      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const mins = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      const secs = Math.floor((distance % (1000 * 60)) / 1000);
-      document.getElementById("cdDays").innerText = String(days).padStart(2, "0");
-      document.getElementById("cdHours").innerText = String(hours).padStart(2, "0");
-      document.getElementById("cdMins").innerText = String(mins).padStart(2, "0");
-      document.getElementById("cdSecs").innerText = String(secs).padStart(2, "0");
+
+      const isoDate = selVal === "custom" ? customInput.value : selVal;
+      const parts = (isoDate || "2027-01-16").split("-");
+      if (parts.length === 3) {
+        const y = parseInt(parts[0], 10);
+        const m = parseInt(parts[1], 10) - 1;
+        const d = parseInt(parts[2], 10);
+        const dt = new Date(Date.UTC(y, m, d));
+        if (!isNaN(dt.getTime())) {
+          const dayIdx = dt.getUTCDay();
+          document.getElementById("wDayDateMs").value = `${DAYS_MS[dayIdx]}, ${d} ${MONTHS_MS[m]} ${y}`;
+          document.getElementById("wDayDateEn").value = `${DAYS_EN[dayIdx]}, ${d} ${MONTHS_EN[m]} ${y}`;
+        }
+      }
+
+      const timeKey = document.getElementById("wTimeSelect").value;
+      const preset = TIME_PRESETS[timeKey] || TIME_PRESETS.evening;
+      document.getElementById("wTimeMs").value = preset.ms;
+      document.getElementById("wTimeEn").value = preset.en;
+
+      if (isoDate) {
+        document.getElementById("wIso").value = `${isoDate}T${preset.hms}+08:00`;
+      }
     }
-    setInterval(updateCountdown, 1000);
-    updateCountdown();
-    setLang("ms");
-    function showQr() {
-      const modal = document.getElementById("qrModal");
-      modal.style.display = "flex";
-      const currentUrl = window.location.href;
-      document.getElementById("qrUrlText").innerHTML = '<a href="' + currentUrl + '" target="_blank">' + currentUrl + '</a>';
-      const canvas = document.getElementById("qrCanvas");
-      const ctx = canvas.getContext("2d");
-      const img = new Image();
-      img.crossOrigin = "Anonymous";
-      img.onload = function() { ctx.drawImage(img, 0, 0, canvas.width, canvas.height); };
-      img.src = "https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=" + encodeURIComponent(currentUrl);
+
+    function normalizeArtFilename(raw) {
+      let clean = (raw || '').trim().replace(/^\/+/, '');
+      if (!clean) return 'wedding.jpg';
+      if (!/\.(jpe?g|png|webp|gif)$/i.test(clean)) clean += '.jpg';
+      return clean;
     }
-    function closeQr(e) {
-      if(e && e.target.id !== "qrModal" && e.target.tagName !== "BUTTON") return;
-      document.getElementById("qrModal").style.display = "none";
+
+    function normalizeHtmlFilename(raw) {
+      let clean = (raw || '').trim().replace(/[^a-zA-Z0-9._-]/g, '');
+      if (!clean) return 'index.html';
+      if (!/\.html?$/i.test(clean)) clean += '.html';
+      return clean;
     }
-    function saveQrCode() {
-      const canvas = document.getElementById("qrCanvas");
-      const link = document.createElement("a");
-      link.download = "wedding-qr.png";
-      link.href = canvas.toDataURL("image/png");
-      link.click();
+
+    function esc(str) {
+      return String(str || '')
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
     }
+
+    function generateWedding() {
+      const groom = document.getElementById('wGroom').value.trim() || 'Pengantin Lelaki';
+      const bride = document.getElementById('wBride').value.trim() || 'Pengantin Perempuan';
+      const hostsMs = document.getElementById('wHostsMs').value.trim();
+      const hostsEn = document.getElementById('wHostsEn').value.trim();
+      const dayDateMs = document.getElementById('wDayDateMs').value.trim();
+      const dayDateEn = document.getElementById('wDayDateEn').value.trim();
+      const timeMs = document.getElementById('wTimeMs').value.trim();
+      const timeEn = document.getElementById('wTimeEn').value.trim();
+      const locMs = document.getElementById('wLocMs').value.trim();
+      const locEn = document.getElementById('wLocEn').value.trim();
+      const iso = document.getElementById('wIso').value.trim() || '2027-01-16T16:00:00+08:00';
+      const mapUrl = document.getElementById('wMap').value.trim() || 'https://maps.google.com/';
+      const artFile = normalizeArtFilename(document.getElementById('wArt').value);
+      const outFile = normalizeHtmlFilename(document.getElementById('wFile').value);
+      const theme = document.getElementById('wTheme').value;
+      const useEnv = document.getElementById('wEnv').value === '1';
+
+      document.getElementById('wArt').value = artFile;
+      document.getElementById('wFile').value = outFile;
+
+      const coupleShort = groom + ' & ' + bride;
+
+      const envBlock = useEnv ?
+        '<div class="env-overlay" id="envOverlay" onclick="openInvitation()">' +
+          '<div class="env-box">' +
+            '<div class="env-label" id="envLabel">✦ Jemputan Walimatulurus ✦</div>' +
+            '<div class="env-title">' + esc(coupleShort) + '</div>' +
+            '<div class="env-sub" id="envSub">Tekan untuk membuka kad jemputan</div>' +
+          '</div>' +
+        '</div>' : '';
+
+      let htmlLines = [];
+      htmlLines.push('<!DOCTYPE html>');
+      htmlLines.push('<html lang="ms">');
+      htmlLines.push('<head>');
+      htmlLines.push('  <meta charset="UTF-8" />');
+      htmlLines.push('  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />');
+      htmlLines.push('  <title>Walimatulurus — ' + esc(coupleShort) + '</title>');
+      htmlLines.push('  <style>');
+      htmlLines.push('    :root {');
+      htmlLines.push('      --bg-grad: radial-gradient(circle at top, #2a1f16, #0d0906);');
+      htmlLines.push('      --card-bg: #17120d;');
+      htmlLines.push('      --text-main: #fdf6e7;');
+      htmlLines.push('      --text-accent: #e5be6a;');
+      htmlLines.push('      --border-col: #d4af37;');
+      htmlLines.push('      --shadow-col: rgba(212, 175, 55, 0.28);');
+      htmlLines.push('      --soft-box: rgba(229, 190, 106, 0.09);');
+      htmlLines.push('    }');
+      htmlLines.push('    [data-theme="emerald-gold"] { --bg-grad: radial-gradient(circle at top, #0d3b2e, #041a14); --card-bg: #07261d; --text-main: #ffffff; --text-accent: #facc15; --border-col: #facc15; --shadow-col: rgba(250, 204, 21, 0.28); --soft-box: rgba(250, 204, 21, 0.09); }');
+      htmlLines.push('    [data-theme="ivory-gold"] { --bg-grad: radial-gradient(circle at top, #faf6ee, #e7dec8); --card-bg: #fffdf9; --text-main: #292524; --text-accent: #b45309; --border-col: #b45309; --shadow-col: rgba(180, 83, 9, 0.2); --soft-box: rgba(180, 83, 9, 0.08); }');
+      htmlLines.push('    [data-theme="rose-gold"] { --bg-grad: radial-gradient(circle at top, #fce7f3, #f9a8d4); --card-bg: #fff1f2; --text-main: #4a1525; --text-accent: #b45309; --border-col: #d97706; --shadow-col: rgba(217, 119, 6, 0.24); --soft-box: rgba(217, 119, 6, 0.09); }');
+      htmlLines.push('    [data-theme="royal-navy"] { --bg-grad: radial-gradient(circle at top, #172a45, #091324); --card-bg: #0d1b33; --text-main: #f8fafc; --text-accent: #f3d28a; --border-col: #e2c078; --shadow-col: rgba(243, 210, 138, 0.24); --soft-box: rgba(243, 210, 138, 0.09); }');
+      htmlLines.push('    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }');
+      htmlLines.push('    body {');
+      htmlLines.push('      min-height: 100dvh; background: var(--bg-grad); color: var(--text-main);');
+      htmlLines.push('      font-family: Georgia, \'Times New Roman\', serif; display: flex; align-items: center;');
+      htmlLines.push('      justify-content: center; padding: 20px 14px;');
+      htmlLines.push('    }');
+      htmlLines.push('    .card {');
+      htmlLines.push('      width: 100%; max-width: 430px; background: var(--card-bg); color: var(--text-main);');
+      htmlLines.push('      border: 2px solid var(--border-col); border-radius: 22px; padding: 22px 18px 24px;');
+      htmlLines.push('      text-align: center; box-shadow: 0 22px 50px rgba(0, 0, 0, 0.55), 0 0 28px var(--shadow-col);');
+      htmlLines.push('    }');
+      htmlLines.push('    .top-bar { display: flex; justify-content: flex-end; gap: 6px; margin-bottom: 6px; }');
+      htmlLines.push('    .lang-btn {');
+      htmlLines.push('      background: transparent; border: 1px solid rgba(229, 190, 106, 0.55); color: var(--text-main);');
+      htmlLines.push('      padding: 4px 10px; border-radius: 999px; font-size: 11px;');
+      htmlLines.push('      font-family: system-ui, -apple-system, sans-serif; cursor: pointer;');
+      htmlLines.push('    }');
+      htmlLines.push('    .lang-btn.active { background: var(--text-accent); color: #17120d; font-weight: 700; border-color: var(--text-accent); }');
+      htmlLines.push('    .bismillah { font-size: 17px; color: var(--text-accent); margin-bottom: 4px; line-height: 1.7; }');
+      htmlLines.push('    .badge { font-family: system-ui, -apple-system, sans-serif; font-size: 10.5px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-accent); margin-bottom: 12px; }');
+      htmlLines.push('    .hosts { font-size: 12.5px; line-height: 1.55; opacity: 0.92; margin-bottom: 10px; }');
+      htmlLines.push('    .couple { font-size: 26px; font-weight: bold; color: var(--text-accent); line-height: 1.25; margin: 6px 0 16px; }');
+      htmlLines.push('    .couple span.amp { display: block; font-size: 17px; font-style: italic; margin: 2px 0; color: var(--text-main); }');
+      htmlLines.push('    .art {');
+      htmlLines.push('      width: 150px; height: 150px; margin: 0 auto 16px; border-radius: 50%;');
+      htmlLines.push('      border: 3px solid var(--border-col); padding: 5px; box-shadow: 0 0 22px var(--shadow-col);');
+      htmlLines.push('      overflow: hidden; display: flex; align-items: center; justify-content: center;');
+      htmlLines.push('      background: var(--soft-box); animation: floatY 3.8s ease-in-out infinite;');
+      htmlLines.push('    }');
+      htmlLines.push('    .art img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; display: block; }');
+      htmlLines.push('    @keyframes floatY { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }');
+      htmlLines.push('    .invite-intro { font-size: 13.5px; line-height: 1.55; margin-bottom: 14px; }');
+      htmlLines.push('    .details-box {');
+      htmlLines.push('      background: var(--soft-box); border: 1px solid rgba(212, 175, 55, 0.35);');
+      htmlLines.push('      border-radius: 14px; padding: 12px; margin-bottom: 14px;');
+      htmlLines.push('      font-family: system-ui, -apple-system, sans-serif; font-size: 12.5px; line-height: 1.65; text-align: left;');
+      htmlLines.push('    }');
+      htmlLines.push('    .countdown-box {');
+      htmlLines.push('      background: var(--soft-box); border: 1px solid rgba(212, 175, 55, 0.35);');
+      htmlLines.push('      border-radius: 14px; padding: 12px 10px; margin-bottom: 16px;');
+      htmlLines.push('      font-family: system-ui, -apple-system, sans-serif;');
+      htmlLines.push('    }');
+      htmlLines.push('    .cd-heading { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-accent); margin-bottom: 8px; }');
+      htmlLines.push('    .cd-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; }');
+      htmlLines.push('    @media (max-width: 380px) { .cd-grid { grid-template-columns: repeat(2, 1fr); } }');
+      htmlLines.push('    .cd-cell { background: rgba(0, 0, 0, 0.25); border: 1px solid rgba(229, 190, 106, 0.28); border-radius: 10px; padding: 6px 3px; }');
+      htmlLines.push('    .cd-num { font-size: 14.5px; font-weight: 700; color: var(--text-accent); line-height: 1.2; font-variant-numeric: tabular-nums; }');
+      htmlLines.push('    .cd-unit { font-size: 9.5px; opacity: 0.85; margin-top: 2px; }');
+      htmlLines.push('    .cd-done { font-size: 12.5px; color: var(--text-accent); font-weight: 600; padding: 4px 0; }');
+      htmlLines.push('    .doa-box {');
+      htmlLines.push('      border-top: 1px dashed rgba(212, 175, 55, 0.45);');
+      htmlLines.push('      border-bottom: 1px dashed rgba(212, 175, 55, 0.45);');
+      htmlLines.push('      padding: 12px 6px; margin-bottom: 16px;');
+      htmlLines.push('    }');
+      htmlLines.push('    .doa-arab { font-size: 17px; color: var(--text-accent); margin-bottom: 6px; line-height: 1.75; }');
+      htmlLines.push('    .doa-text { font-size: 13px; font-style: italic; line-height: 1.55; opacity: 0.95; }');
+      htmlLines.push('    .btn-row { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 10px; }');
+      htmlLines.push('    .action-btn, .sound-btn {');
+      htmlLines.push('      text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 5px;');
+      htmlLines.push('      background: transparent; border: 1px solid var(--border-col); color: var(--text-accent);');
+      htmlLines.push('      padding: 8px 12px; border-radius: 20px; font-size: 11.5px;');
+      htmlLines.push('      font-family: system-ui, -apple-system, sans-serif; cursor: pointer;');
+      htmlLines.push('    }');
+      htmlLines.push('    .action-btn { background: rgba(229, 190, 106, 0.16); font-weight: 700; }');
+      htmlLines.push('    .footer-note { margin-top: 16px; font-size: 11.5px; opacity: 0.75; font-family: system-ui, -apple-system, sans-serif; }');
+      htmlLines.push('    .env-overlay, .qr-modal {');
+      htmlLines.push('      position: fixed; inset: 0; background: rgba(0, 0, 0, 0.88);');
+      htmlLines.push('      display: flex; align-items: center; justify-content: center; padding: 20px; z-index: 50;');
+      htmlLines.push('      transition: opacity 0.35s ease;');
+      htmlLines.push('    }');
+      htmlLines.push('    .qr-modal { display: none; z-index: 60; }');
+      htmlLines.push('    .env-box, .qr-box {');
+      htmlLines.push('      width: 100%; max-width: 350px; background: var(--card-bg); border: 2px solid var(--border-col);');
+      htmlLines.push('      border-radius: 20px; padding: 22px 18px; text-align: center;');
+      htmlLines.push('      box-shadow: 0 22px 55px rgba(0, 0, 0, 0.65); font-family: system-ui, -apple-system, sans-serif;');
+      htmlLines.push('    }');
+      htmlLines.push('    .env-box { cursor: pointer; font-family: Georgia, \'Times New Roman\', serif; }');
+      htmlLines.push('    .env-label { font-family: system-ui, -apple-system, sans-serif; font-size: 11.5px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-accent); margin-bottom: 6px; }');
+      htmlLines.push('    .qr-subject { font-size: 13px; font-weight: 700; color: var(--text-main); margin-bottom: 3px; }');
+      htmlLines.push('    .qr-brand { font-size: 11px; color: var(--text-accent); margin-bottom: 8px; }');
+      htmlLines.push('    .env-title { font-size: 22px; font-weight: bold; color: var(--text-main); margin-bottom: 8px; }');
+      htmlLines.push('    .env-sub { font-size: 13px; color: var(--text-accent); opacity: 0.9; }');
+      htmlLines.push('    .qr-canvas-wrap { background: #ffffff; padding: 8px; border-radius: 14px; display: inline-block; margin: 8px 0 10px; }');
+      htmlLines.push('    .qr-link-txt { font-size: 11px; word-break: break-all; opacity: 0.92; margin-bottom: 12px; }');
+      htmlLines.push('    .qr-link-txt a { color: var(--text-accent); text-decoration: underline; }');
+      htmlLines.push('    .qr-actions { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }');
+      htmlLines.push('  </style>');
+      htmlLines.push('</head>');
+      htmlLines.push('<body data-theme="' + esc(theme) + '">');
+      if (envBlock) htmlLines.push(envBlock);
+      htmlLines.push('  <div class="qr-modal" id="qrModal" onclick="closeQr(event)">');
+      htmlLines.push('    <div class="qr-box" onclick="event.stopPropagation()">');
+      htmlLines.push('      <div class="env-label" id="qrTitle">Kongsi Kad Jemputan</div>');
+      htmlLines.push('      <div class="qr-subject">' + esc(coupleShort) + '</div>');
+      htmlLines.push('      <div class="qr-brand">Dzul Arts</div>');
+      htmlLines.push('      <div class="qr-canvas-wrap"><canvas id="qrCanvas" width="400" height="400" style="width:200px;height:auto;display:block;"></canvas></div>');
+      htmlLines.push('      <div class="qr-link-txt" id="qrUrlText"></div>');
+      htmlLines.push('      <div class="qr-actions">');
+      htmlLines.push('        <button class="action-btn" id="saveQrBtn" onclick="saveQrCode()">⬇ Save QR Code</button>');
+      htmlLines.push('        <button class="sound-btn" id="closeQrBtn" onclick="closeQr()">Tutup</button>');
+      htmlLines.push('      </div>');
+      htmlLines.push('    </div>');
+      htmlLines.push('  </div>');
+      htmlLines.push('  <div class="card">');
+      htmlLines.push('    <div class="top-bar">');
+      htmlLines.push('      <button class="lang-btn active" id="btnMs" onclick="setLang(\'ms\')">BM</button>');
+      htmlLines.push('      <button class="lang-btn" id="btnEn" onclick="setLang(\'en\')">EN</button>');
+      htmlLines.push('    </div>');
+      htmlLines.push('    <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>');
+      htmlLines.push('    <div class="badge" id="badgeText"></div>');
+      htmlLines.push('    <div class="hosts" id="hostsText"></div>');
+      htmlLines.push('    <div class="couple">' + esc(groom) + '<span class="amp">&amp;</span>' + esc(bride) + '</div>');
+      htmlLines.push('    <div class="art">');
+      htmlLines.push('      <img src="' + esc(artFile) + '" alt="Wedding Artwork" onerror="this.style.display=\'none\';document.getElementById(\'artFb\').style.display=\'flex\';" />');
+      htmlLines.push('      <div id="artFb" style="display:none;width:100%;height:100%;align-items:center;justify-content:center;font-size:40px;">💍</div>');
+      htmlLines.push('    </div>');
+      htmlLines.push('    <p class="invite-intro" id="introText"></p>');
+      htmlLines.push('    <div class="details-box">');
+      htmlLines.push('      <div><strong id="lblDayDate"></strong> <span id="valDayDate"></span></div>');
+      htmlLines.push('      <div><strong id="lblTime"></strong> <span id="valTime"></span></div>');
+      htmlLines.push('      <div><strong id="lblLoc"></strong> <span id="valLoc"></span></div>');
+      htmlLines.push('    </div>');
+      htmlLines.push('    <div class="countdown-box">');
+      htmlLines.push('      <div class="cd-heading" id="cdHeading"></div>');
+      htmlLines.push('      <div class="cd-grid" id="cdGrid">');
+      htmlLines.push('        <div class="cd-cell"><div class="cd-num" id="cdDays">00</div><div class="cd-unit" id="uDays"></div></div>');
+      htmlLines.push('        <div class="cd-cell"><div class="cd-num" id="cdHours">00</div><div class="cd-unit" id="uHours"></div></div>');
+      htmlLines.push('        <div class="cd-cell"><div class="cd-num" id="cdMins">00</div><div class="cd-unit" id="uMins"></div></div>');
+      htmlLines.push('        <div class="cd-cell"><div class="cd-num" id="cdSecs">00</div><div class="cd-unit" id="uSecs"></div></div>');
+      htmlLines.push('      </div>');
+      htmlLines.push('      <div class="cd-done" id="cdDone" style="display:none;"></div>');
+      htmlLines.push('    </div>');
+      htmlLines.push('    <div class="doa-box">');
+      htmlLines.push('      <div class="doa-arab">بَارَكَ اللَّهُ لَكُمَا وَبَارَكَ عَلَيْكُمَا وَجَمَعَ بَيْنَكُمَا فِي خَيْرٍ</div>');
+      htmlLines.push('      <div class="doa-text" id="doaText"></div>');
+      htmlLines.push('    </div>');
+      htmlLines.push('    <div class="btn-row">');
+      htmlLines.push('      <a class="action-btn" id="mapBtn" href="' + esc(mapUrl) + '" target="_blank" rel="noopener">📍 Lokasi</a>');
+      htmlLines.push('      <button class="action-btn" onclick="showQr()">📱 Kongsi / QR</button>');
+      htmlLines.push('    </div>');
+      htmlLines.push('    <div class="footer-note">Dzul Arts • Kad Jemputan Digital</div>');
+      htmlLines.push('  </div>');
+      htmlLines.push('  <script>');
+      htmlLines.push('    const data = {');
+      htmlLines.push('      ms: {');
+      htmlLines.push('        badge: "Majlis Walimatulurus",');
+      htmlLines.push('        hosts: "' + esc(hostsMs) + '",');
+      htmlLines.push('        intro: "Dengan penuh rasa kesyukuran, kami menjemput anda hadir ke majlis perkahwinan kami.",');
+      htmlLines.push('        lblDayDate: "Tarikh:",');
+      htmlLines.push('        valDayDate: "' + esc(dayDateMs) + '",');
+      htmlLines.push('        lblTime: "Masa:",');
+      htmlLines.push('        valTime: "' + esc(timeMs) + '",');
+      htmlLines.push('        lblLoc: "Lokasi:",');
+      htmlLines.push('        valLoc: "' + esc(locMs) + '",');
+      htmlLines.push('        cdHeading: "Menghitung Hari",');
+      htmlLines.push('        doa: \'"Semoga Allah memberkati kamu berdua dan menghimpunkan kamu dalam kebaikan."\',');
+      htmlLines.push('        uDays: "Hari", uHours: "Jam", uMins: "Minit", uSecs: "Saat",');
+      htmlLines.push('        cdDone: "Majlis telah berlangsung",');
+      htmlLines.push('        envSub: "Tekan untuk membuka kad jemputan"');
+      htmlLines.push('      },');
+      htmlLines.push('      en: {');
+      htmlLines.push('        badge: "Wedding Reception",');
+      htmlLines.push('        hosts: "' + esc(hostsEn) + '",');
+      htmlLines.push('        intro: "With great joy, we cordially invite you to celebrate our wedding day.",');
+      htmlLines.push('        lblDayDate: "Date:",');
+      htmlLines.push('        valDayDate: "' + esc(dayDateEn) + '",');
+      htmlLines.push('        lblTime: "Time:",');
+      htmlLines.push('        valTime: "' + esc(timeEn) + '",');
+      htmlLines.push('        lblLoc: "Venue:",');
+      htmlLines.push('        valLoc: "' + esc(locEn) + '",');
+      htmlLines.push('        cdHeading: "Countdown to the Big Day",');
+      htmlLines.push('        doa: \'"May Allah bless you both and unite you in goodness."\',');
+      htmlLines.push('        uDays: "Days", uHours: "Hours", uMins: "Mins", uSecs: "Secs",');
+      htmlLines.push('        cdDone: "The event has concluded",');
+      htmlLines.push('        envSub: "Tap to open invitation"');
+      htmlLines.push('      }');
+      htmlLines.push('    };');
+      htmlLines.push('    let currentLang = "ms";');
+      htmlLines.push('    function setLang(lang) {');
+      htmlLines.push('      currentLang = lang;');
+      htmlLines.push('      document.querySelectorAll(".lang-btn").forEach(b => b.classList.remove("active"));');
+      htmlLines.push('      document.getElementById(lang === "ms" ? "btnMs" : "btnEn").classList.add("active");');
+      htmlLines.push('      const t = data[lang];');
+      htmlLines.push('      document.getElementById("badgeText").textContent = t.badge;');
+      htmlLines.push('      document.getElementById("hostsText").textContent = t.hosts;');
+      htmlLines.push('      document.getElementById("introText").textContent = t.intro;');
+      htmlLines.push('      document.getElementById("lblDayDate").textContent = t.lblDayDate;');
+      htmlLines.push('      document.getElementById("valDayDate").textContent = t.valDayDate;');
+      htmlLines.push('      document.getElementById("lblTime").textContent = t.lblTime;');
+      htmlLines.push('      document.getElementById("valTime").textContent = t.valTime;');
+      htmlLines.push('      document.getElementById("lblLoc").textContent = t.lblLoc;');
+      htmlLines.push('      document.getElementById("valLoc").textContent = t.valLoc;');
+      htmlLines.push('      document.getElementById("cdHeading").textContent = t.cdHeading;');
+      htmlLines.push('      document.getElementById("doaText").textContent = t.doa;');
+      htmlLines.push('      document.getElementById("uDays").textContent = t.uDays;');
+      htmlLines.push('      document.getElementById("uHours").textContent = t.uHours;');
+      htmlLines.push('      document.getElementById("uMins").textContent = t.uMins;');
+      htmlLines.push('      document.getElementById("uSecs").textContent = t.uSecs;');
+      htmlLines.push('      document.getElementById("cdDone").textContent = t.cdDone;');
+      htmlLines.push('      const envSub = document.getElementById("envSub");');
+      htmlLines.push('      if (envSub) envSub.textContent = t.envSub;');
+      htmlLines.push('    }');
+      htmlLines.push('    function openInvitation() {');
+      htmlLines.push('      const ov = document.getElementById("envOverlay");');
+      htmlLines.push('      if (ov) { ov.style.opacity = "0"; setTimeout(() => { ov.style.display = "none"; }, 350); }');
+      htmlLines.push('    }');
+      htmlLines.push('    const cdTarget = new Date("' + iso + '").getTime();');
+      htmlLines.push('    function updateCountdown() {');
+      htmlLines.push('      const now = new Date().getTime();');
+      htmlLines.push('      const distance = cdTarget - now;');
+      htmlLines.push('      if (distance < 0) {');
+      htmlLines.push('        document.getElementById("cdGrid").style.display = "none";');
+      htmlLines.push('        document.getElementById("cdDone").style.display = "block";');
+      htmlLines.push('        return;');
+      htmlLines.push('      }');
+      htmlLines.push('      const days = Math.floor(distance / (1000 * 60 * 60 * 24));');
+      htmlLines.push('      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));');
+      htmlLines.push('      const mins = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));');
+      htmlLines.push('      const secs = Math.floor((distance % (1000 * 60)) / 1000);');
+      htmlLines.push('      document.getElementById("cdDays").innerText = String(days).padStart(2, "0");');
+      htmlLines.push('      document.getElementById("cdHours").innerText = String(hours).padStart(2, "0");');
+      htmlLines.push('      document.getElementById("cdMins").innerText = String(mins).padStart(2, "0");');
+      htmlLines.push('      document.getElementById("cdSecs").innerText = String(secs).padStart(2, "0");');
+      htmlLines.push('    }');
+      htmlLines.push('    setInterval(updateCountdown, 1000);');
+      htmlLines.push('    updateCountdown();');
+      htmlLines.push('    setLang("ms");');
+      htmlLines.push('    function showQr() {');
+      htmlLines.push('      const modal = document.getElementById("qrModal");');
+      htmlLines.push('      modal.style.display = "flex";');
+      htmlLines.push('      const currentUrl = window.location.href;');
+      htmlLines.push('      document.getElementById("qrUrlText").innerHTML = \'<a href="\' + currentUrl + \'" target="_blank">\' + currentUrl + \'</a>\';');
+      htmlLines.push('      const canvas = document.getElementById("qrCanvas");');
+      htmlLines.push('      const ctx = canvas.getContext("2d");');
+      htmlLines.push('      const img = new Image();');
+      htmlLines.push('      img.crossOrigin = "Anonymous";');
+      htmlLines.push('      img.onload = function() { ctx.drawImage(img, 0, 0, canvas.width, canvas.height); };');
+      htmlLines.push('      img.src = "https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=" + encodeURIComponent(currentUrl);');
+      htmlLines.push('    }');
+      htmlLines.push('    function closeQr(e) {');
+      htmlLines.push('      if(e && e.target.id !== "qrModal" && e.target.tagName !== "BUTTON") return;');
+      htmlLines.push('      document.getElementById("qrModal").style.display = "none";');
+      htmlLines.push('    }');
+      htmlLines.push('    function saveQrCode() {');
+      htmlLines.push('      const canvas = document.getElementById("qrCanvas");');
+      htmlLines.push('      const link = document.createElement("a");');
+      htmlLines.push('      link.download = "wedding-qr.png";');
+      htmlLines.push('      link.href = canvas.toDataURL("image/png");');
+      htmlLines.push('      link.click();');
+      htmlLines.push('    }');
+      htmlLines.push('  <\/script>');
+      htmlLines.push('</body>');
+      htmlLines.push('</html>');
+
+      const finalHtml = htmlLines.join('\n');
+
+      document.getElementById('outCode').value = finalHtml;
+      document.getElementById('statusMsg').textContent = "HTML berjaya dijana! Sedia untuk dimuat turun.";
+    }
+
+    function copyCode() {
+      const code = document.getElementById('outCode');
+      if (!code.value) { generateWedding(); }
+      code.select();
+      document.execCommand('copy');
+      document.getElementById('statusMsg').textContent = "HTML berjaya disalin ke clipboard!";
+    }
+
+    function downloadHtml() {
+      const code = document.getElementById('outCode').value;
+      if (!code) { generateWedding(); }
+
+      const filename = normalizeHtmlFilename(document.getElementById('wFile').value);
+      const blob = new Blob([document.getElementById('outCode').value], { type: 'text/html' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+
+      document.getElementById('statusMsg').textContent = 'Fail ' + filename + ' berjaya dimuat turun!';
+    }
+
+    syncDateTime();
+    generateWedding();
   </script>
 </body>
 </html>

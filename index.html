@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Walimatulurus — Aiman &amp; Nurul</title>
+  <style>
+    :root {
+      --bg-grad: radial-gradient(circle at top, #2a1f16, #0d0906);
+      --card-bg: #17120d;
+      --text-main: #fdf6e7;
+      --text-accent: #e5be6a;
+      --border-col: #d4af37;
+      --shadow-col: rgba(212, 175, 55, 0.28);
+      --soft-box: rgba(229, 190, 106, 0.09);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+    body {
+      min-height: 100dvh;
+      background: var(--bg-grad);
+      color: var(--text-main);
+      font-family: Georgia, 'Times New Roman', serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px 14px;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 430px;
+      background: var(--card-bg);
+      color: var(--text-main);
+      border: 2px solid var(--border-col);
+      border-radius: 22px;
+      padding: 22px 18px 24px;
+      text-align: center;
+      box-shadow: 0 22px 50px rgba(0, 0, 0, 0.55), 0 0 28px var(--shadow-col);
+    }
+
+    .top-bar {
+      display: flex;
+      justify-content: flex-end;
+      gap: 6px;
+      margin-bottom: 6px;
+    }
+
+    .lang-btn {
+      background: transparent;
+      border: 1px solid rgba(229, 190, 106, 0.55);
+      color: var(--text-main);
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-family: system-ui, -apple-system, sans-serif;
+      cursor: pointer;
+    }
+
+    .lang-btn.active {
+      background: var(--text-accent);
+      color: #17120d;
+      font-weight: 700;
+      border-color: var(--text-accent);
+    }
+
+    .bismillah {
+      font-size: 17px;
+      color: var(--text-accent);
+      margin-bottom: 4px;
+      line-height: 1.7;
+    }
+
+    .badge {
+      font-family: system-ui, -apple-system, sans-serif;
+      font-size: 10.5px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text-accent);
+      margin-bottom: 12px;
+    }
+
+    .hosts {
+      font-size: 12.5px;
+      line-height: 1.55;
+      opacity: 0.92;
+      margin-bottom: 10px;
+    }
+
+    .couple {
+      font-size: 27px;
+      font-weight: bold;
+      color: var(--text-accent);
+      line-height: 1.25;
+      margin: 6px 0 16px;
+    }
+
+    .couple span.amp {
+      display: block;
+      font-size: 17px;
+      font-style: italic;
+      margin: 2px 0;
+      color: var(--text-main);
+    }
+
+    .art {
+      width: 150px;
+      height: 150px;
+      margin: 0 auto 16px;
+      border-radius: 50%;
+      border: 3px solid var(--border-col);
+      padding: 5px;
+      box-shadow: 0 0 22px var(--shadow-col);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--soft-box);
+      animation: floatY 3.8s ease-in-out infinite;
+    }
+
+    .art img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+      display: block;
+    }
+
+    @keyframes floatY {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-7px); }
+    }
+
+    .invite-intro {
+      font-size: 13.5px;
+      line-height: 1.55;
+      margin-bottom: 14px;
+    }
+
+    .details-box {
+      background: var(--soft-box);
+      border: 1px solid rgba(212, 175, 55, 0.35);
+      border-radius: 14px;
+      padding: 12px;
+      margin-bottom: 14px;
+      font-family: system-ui, -apple-system, sans-serif;
+      font-size: 12.5px;
+      line-height: 1.65;
+      text-align: left;
+    }
+
+    .countdown-box {
+      background: var(--soft-box);
+      border: 1px solid rgba(212, 175, 55, 0.35);
+      border-radius: 14px;
+      padding: 12px 10px;
+      margin-bottom: 16px;
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+
+    .cd-heading {
+      font-size: 11px;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--text-accent);
+      margin-bottom: 8px;
+    }
+
+    .cd-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 5px;
+    }
+
+    @media (max-width: 380px) {
+      .cd-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    .cd-cell {
+      background: rgba(0, 0, 0, 0.28);
+      border: 1px solid rgba(229, 190, 106, 0.28);
+      border-radius: 10px;
+      padding: 6px 3px;
+    }
+
+    .cd-num {
+      font-size: 14.5px;
+      font-weight: 700;
+      color: var(--text-accent);
+      line-height: 1.2;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .cd-unit {
+      font-size: 9.5px;
+      opacity: 0.85;
+      margin-top: 2px;
+    }
+
+    .cd-done {
+      font-size: 12.5px;
+      color: var(--text-accent);
+      font-weight: 600;
+      padding: 4px 0;
+    }
+
+    .doa-box {
+      border-top: 1px dashed rgba(212, 175, 55, 0.45);
+      border-bottom: 1px dashed rgba(212, 175, 55, 0.45);
+      padding: 12px 6px;
+      margin-bottom: 16px;
+    }
+
+    .doa-arab {
+      font-size: 17px;
+      color: var(--text-accent);
+      margin-bottom: 6px;
+      line-height: 1.75;
+    }
+
+    .doa-text {
+      font-size: 13px;
+      font-style: italic;
+      line-height: 1.55;
+      opacity: 0.95;
+    }
+
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      margin-top: 10px;
+    }
+
+    .action-btn, .sound-btn {
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      background: transparent;
+      border: 1px solid var(--border-col);
+      color: var(--text-accent);
+      padding: 8px 12px;
+      border-radius: 20px;
+      font-size: 11.5px;
+      font-family: system-ui, -apple-system, sans-serif;
+      cursor: pointer;
+    }
+
+    .action-btn {
+      background: rgba(229, 190, 106, 0.16);
+      font-weight: 700;
+    }
+
+    .footer-note {
+      margin-top: 16px;
+      font-size: 11.5px;
+      opacity: 0.75;
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+
+    .env-overlay, .qr-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.88);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 50;
+      transition: opacity 0.35s ease;
+    }
+
+    .qr-modal {
+      display: none;
+      z-index: 60;
+    }
+
+    .env-box, .qr-box {
+      width: 100%;
+      max-width: 350px;
+      background: var(--card-bg);
+      border: 2px solid var(--border-col);
+      border-radius: 20px;
+      padding: 22px 18px;
+      text-align: center;
+      box-shadow: 0 22px 55px rgba(0, 0, 0, 0.65);
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+
+    .env-box { cursor: pointer; font-family: Georgia, 'Times New Roman', serif; }
+
+    .env-label {
+      font-family: system-ui, -apple-system, sans-serif;
+      font-size: 11.5px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--text-accent);
+      margin-bottom: 6px;
+    }
+
+    .qr-subject {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 3px;
+    }
+
+    .qr-brand {
+      font-size: 11px;
+      color: var(--text-accent);
+      margin-bottom: 8px;
+    }
+
+    .env-title {
+      font-size: 22px;
+      font-weight: bold;
+      color: var(--text-main);
+      margin-bottom: 8px;
+    }
+
+    .env-sub {
+      font-size: 13px;
+      color: var(--text-accent);
+      opacity: 0.9;
+    }
+
+    .qr-canvas-wrap {
+      background: #ffffff;
+      padding: 8px;
+      border-radius: 14px;
+      display: inline-block;
+      margin: 8px 0 10px;
+    }
+
+    .qr-link-txt {
+      font-size: 11px;
+      word-break: break-all;
+      opacity: 0.92;
+      margin-bottom: 12px;
+    }
+
+    .qr-link-txt a {
+      color: var(--text-accent);
+      text-decoration: underline;
+    }
+
+    .qr-actions {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+  </style>
+</head>
+<body>
+  <div class="env-overlay" id="envOverlay" onclick="openInvitation()">
+    <div class="env-box">
+      <div class="env-label" id="envLabel">✦ Jemputan Walimatulurus ✦</div>
+      <div class="env-title">Aiman &amp; Nurul</div>
+      <div class="env-sub" id="envSub">Tekan untuk membuka kad jemputan</div>
+    </div>
+  </div>
+
+  <div class="qr-modal" id="qrModal" onclick="closeQr(event)">
+    <div class="qr-box" onclick="event.stopPropagation()">
+      <div class="env-label" id="qrTitle">Imbas QR Code Kad</div>
+      <div class="qr-subject" id="qrSubject">Majlis Walimah • Aiman &amp; Nurul</div>
+      <div class="qr-brand" id="qrBrand">Oleh Dzul Arts • Kad Jemputan Rasmi</div>
+      <div class="qr-canvas-wrap">
+        <canvas id="qrCanvas" width="800" height="960" style="width:220px;height:auto;display:block;"></canvas>
+      </div>
+      <div class="qr-link-txt" id="qrUrlText"></div>
+      <div class="qr-actions">
+        <button class="action-btn" id="saveQrBtn" onclick="saveQrCode()">⬇ Save QR Code</button>
+        <button class="sound-btn" id="closeQrBtn" onclick="closeQr()">Tutup</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="top-bar">
+      <button class="lang-btn active" id="btnMs" onclick="setLang('ms')">BM</button>
+      <button class="lang-btn" id="btnEn" onclick="setLang('en')">EN</button>
+    </div>
+
+    <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+    <div class="badge" id="badgeText">Jemputan Walimatulurus • Wedding Invitation</div>
+
+    <div class="hosts" id="hostsText">
+      Dengan penuh kesyukuran ke hadrat Ilahi,<br />
+      <strong>Hj. Rahman &amp; Hjh. Salmah</strong> serta <strong>En. Halim &amp; Pn. Faridah</strong><br />
+      mempersilakan tuan/puan ke majlis perkahwinan putera &amp; puteri kami:
+    </div>
+
+    <div class="couple">
+      Aiman Hakim
+      <span class="amp">&amp;</span>
+      Nurul Huda
+    </div>
+
+    <div class="art">
+      <img src="wedding.jpg" alt="Wedding Artwork" onerror="this.style.display='none';document.getElementById('artFb').style.display='flex';" />
+      <div id="artFb" style="display:none;width:100%;height:100%;align-items:center;justify-content:center;font-size:40px;">💍</div>
+    </div>
+
+    <p class="invite-intro" id="introText">
+      Semoga kehadiran dan doa restu anda menyerikan lagi majlis serta diberkati Allah SWT.
+    </p>
+
+    <div class="details-box">
+      <div><strong id="lblDayDate">Hari &amp; Tarikh:</strong> <span id="valDayDate">Sabtu, 16 Januari 2027</span></div>
+      <div><strong id="lblTime">Masa:</strong> <span id="valTime">Petang • 4:00 PTG – 8:00 MLM</span></div>
+      <div><strong id="lblLoc">Lokasi:</strong> <span id="valLoc">Dewan Serbaguna Community Centre, 12 Jalan Harmoni (Bukan kolong blok)</span></div>
+    </div>
+
+    <div class="countdown-box">
+      <div class="cd-heading" id="cdHeading">Kiraan Detik Ke Majlis</div>
+      <div class="cd-grid" id="cdGrid">
+        <div class="cd-cell"><div class="cd-num" id="cdDays">00</div><div class="cd-unit" id="uDays">Hari</div></div>
+        <div class="cd-cell"><div class="cd-num" id="cdHours">00</div><div class="cd-unit" id="uHours">Jam</div></div>
+        <div class="cd-cell"><div class="cd-num" id="cdMins">00</div><div class="cd-unit" id="uMins">Minit</div></div>
+        <div class="cd-cell"><div class="cd-num" id="cdSecs">00</div><div class="cd-unit" id="uSecs">Saat</div></div>
+        <div class="cd-cell"><div class="cd-num" id="cdMs">000</div><div class="cd-unit" id="uMs">Milisaat</div></div>
+      </div>
+      <div class="cd-done" id="cdDone" style="display:none;"></div>
+    </div>
+
+    <div class="doa-box">
+      <div class="doa-arab">بَارَكَ اللَّهُ لَكُمَا وَبَارَكَ عَلَيْكُمَا وَجَمَعَ بَيْنَكُمَا فِي خَيْرٍ</div>
+      <div class="doa-text" id="doaText">
+        "Semoga Allah memberkati kalian berdua dan melimpahkan keberkatan atas kalian, serta menghimpunkan kalian berdua dalam kebaikan."
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <a class="action-btn" id="mapBtn" href="https://maps.google.com/?q=Community+Centre+12+Jalan+Harmoni" target="_blank" rel="noopener">📍 Peta</a>
+      <button class="action-btn" id="qrBtn" onclick="openQr()">▦ QR Code</button>
+      <button class="sound-btn" id="soundBtn" onclick="playWeddingMelody()">♪ Melodi</button>
+    </div>
+
+    <div class="footer-note" id="footerText">Kad Digital oleh Dzul Arts</div>
+  </div>
+
+  <script>
+    const EVENT_ISO = "2027-01-16T16:00:00+08:00";
+
+    const COPY = {
+      ms: {
+        envLabel: "✦ Jemputan Walimatulurus ✦",
+        envSub: "Tekan untuk membuka kad jemputan",
+        badge: "Jemputan Walimatulurus • Wedding Invitation",
+        hosts: "Dengan penuh kesyukuran ke hadrat Ilahi,<br /><strong>Hj. Rahman &amp; Hjh. Salmah</strong> serta <strong>En. Halim &amp; Pn. Faridah</strong><br />mempersilakan tuan/puan ke majlis perkahwinan putera &amp; puteri kami:",
+        intro: "Semoga kehadiran dan doa restu anda menyerikan lagi majlis serta diberkati Allah SWT.",
+        lblDayDate: "Hari &amp; Tarikh:",
+        valDayDate: "Sabtu, 16 Januari 2027",
+        lblTime: "Masa:",
+        valTime: "Petang • 4:00 PTG – 8:00 MLM",
+        lblLoc: "Lokasi:",
+        valLoc: "Dewan Serbaguna Community Centre, 12 Jalan Harmoni (Bukan kolong blok)",
+        cdHeading: "Kiraan Detik Ke Majlis",
+        uDays: "Hari", uHours: "Jam", uMins: "Minit", uSecs: "Saat", uMs: "Milisaat",
+        cdDone: "Majlis telah berlangsung — Semoga diberkati Allah SWT.",
+        doa: "\"Semoga Allah memberkati kalian berdua dan melimpahkan keberkatan atas kalian, serta menghimpunkan kalian berdua dalam kebaikan.\"",
+        mapBtn: "📍 Peta", qrBtn: "▦ QR Code", soundBtn: "♪ Melodi",
+        qrTitle: "Imbas QR Code Kad",
+        qrSubject: "Majlis Walimah • Aiman & Nurul",
+        qrBrand: "Oleh Dzul Arts • Kad Jemputan Rasmi",
+        qrTopText: "MAJLIS WALIMAH • AIMAN & NURUL",
+        qrBottomText: "Dzul Arts • Kad Jemputan Digital",
+        saveQrBtn: "⬇ Save QR Code", closeQrBtn: "Tutup",
+        footer: "Kad Digital oleh Dzul Arts"
+      },
+      en: {
+        envLabel: "✦ Wedding Invitation ✦",
+        envSub: "Tap to open the invitation card",
+        badge: "Wedding Invitation • Walimatulurus",
+        hosts: "With gratitude to the Almighty,<br /><strong>Hj. Rahman &amp; Hjh. Salmah</strong> and <strong>En. Halim &amp; Pn. Faridah</strong><br />cordially invite you to the wedding of our children:",
+        intro: "May your presence and prayers bring joy to our celebration and blessings from Allah SWT.",
+        lblDayDate: "Day &amp; Date:",
+        valDayDate: "Saturday, 16 January 2027",
+        lblTime: "Time:",
+        valTime: "Evening • 4:00 PM – 8:00 PM",
+        lblLoc: "Venue:",
+        valLoc: "Community Centre Hall, 12 Jalan Harmoni (Not void deck)",
+        cdHeading: "Countdown to the Wedding",
+        uDays: "Days", uHours: "Hours", uMins: "Mins", uSecs: "Secs", uMs: "Millisecs",
+        cdDone: "The celebration has taken place — May Allah bless the couple.",
+        doa: "\"May Allah bless you both, shower His blessings upon you, and unite you both in goodness.\"",
+        mapBtn: "📍 Map", qrBtn: "▦ QR Code", soundBtn: "♪ Melody",
+        qrTitle: "Scan Card QR Code",
+        qrSubject: "Wedding Reception • Aiman & Nurul",
+        qrBrand: "By Dzul Arts • Official Invitation Card",
+        qrTopText: "WEDDING INVITATION • AIMAN & NURUL",
+        qrBottomText: "Dzul Arts • Digital E-Card",
+        saveQrBtn: "⬇ Save QR Code", closeQrBtn: "Close",
+        footer: "Digital Card by Dzul Arts"
+      }
+    };
+
+    let currentLang = "ms";
+
+    function setLang(lang) {
+      currentLang = lang === "en" ? "en" : "ms";
+      document.documentElement.lang = currentLang;
+      document.getElementById("btnMs").classList.toggle("active", currentLang === "ms");
+      document.getElementById("btnEn").classList.toggle("active", currentLang === "en");
+
+      const t = COPY[currentLang];
+      const setT = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+      setT("envLabel", t.envLabel); setT("envSub", t.envSub); setT("badgeText", t.badge);
+      const hEl = document.getElementById("hostsText"); if (hEl) hEl.innerHTML = t.hosts;
+      setT("introText", t.intro);
+      const d1 = document.getElementById("lblDayDate"); if (d1) d1.innerHTML = t.lblDayDate;
+      setT("valDayDate", t.valDayDate);
+      const d2 = document.getElementById("lblTime"); if (d2) d2.innerHTML = t.lblTime;
+      setT("valTime", t.valTime);
+      const d3 = document.getElementById("lblLoc"); if (d3) d3.innerHTML = t.lblLoc;
+      setT("valLoc", t.valLoc);
+      setT("cdHeading", t.cdHeading); setT("uDays", t.uDays); setT("uHours", t.uHours);
+      setT("uMins", t.uMins); setT("uSecs", t.uSecs); setT("uMs", t.uMs); setT("cdDone", t.cdDone);
+      setT("doaText", t.doa); setT("mapBtn", t.mapBtn); setT("qrBtn", t.qrBtn); setT("soundBtn", t.soundBtn);
+      setT("qrTitle", t.qrTitle); setT("qrSubject", t.qrSubject); setT("qrBrand", t.qrBrand);
+      setT("saveQrBtn", t.saveQrBtn); setT("closeQrBtn", t.closeQrBtn); setT("footerText", t.footer);
+      if (document.getElementById("qrModal").style.display === "flex") openQr();
+    }
+
+    const targetMs = new Date(EVENT_ISO).getTime();
+
+    function tickCountdown() {
+      const diff = targetMs - Date.now();
+      const grid = document.getElementById("cdGrid");
+      const done = document.getElementById("cdDone");
+
+      if (isNaN(targetMs) || diff <= 0) {
+        grid.style.display = "none";
+        done.style.display = "block";
+        done.textContent = COPY[currentLang].cdDone;
+        return;
+      }
+
+      grid.style.display = "grid";
+      done.style.display = "none";
+
+      document.getElementById("cdDays").textContent = String(Math.floor(diff / 86400000)).padStart(2, "0");
+      document.getElementById("cdHours").textContent = String(Math.floor((diff / 3600000) % 24)).padStart(2, "0");
+      document.getElementById("cdMins").textContent = String(Math.floor((diff / 60000) % 60)).padStart(2, "0");
+      document.getElementById("cdSecs").textContent = String(Math.floor((diff / 1000) % 60)).padStart(2, "0");
+      document.getElementById("cdMs").textContent = String(Math.floor(diff % 1000)).padStart(3, "0");
+
+      requestAnimationFrame(tickCountdown);
+    }
+
+    requestAnimationFrame(tickCountdown);
+
+    const QRCodeGen = (function () {
+      const EXP = new Uint8Array(256), LOG = new Uint8Array(256);
+      let x = 1;
+      for (let i = 0; i < 255; i++) { EXP[i] = x; LOG[x] = i; x <<= 1; if (x & 256) x ^= 285; }
+      for (let i = 255; i < 512; i++) EXP[i] = EXP[i - 255];
+      const gfMul = (a, b) => (a === 0 || b === 0) ? 0 : EXP[LOG[a] + LOG[b]];
+
+      function rsEncode(data, ecLen) {
+        let poly = [1];
+        for (let i = 0; i < ecLen; i++) {
+          const next = new Array(poly.length + 1).fill(0);
+          for (let j = 0; j < poly.length; j++) { next[j] ^= poly[j]; next[j + 1] ^= gfMul(poly[j], EXP[i]); }
+          poly = next;
+        }
+        const msg = data.concat(new Array(ecLen).fill(0));
+        for (let i = 0; i < data.length; i++) {
+          const f = msg[i];
+          if (f !== 0) for (let j = 0; j < poly.length; j++) msg[i + j] ^= gfMul(poly[j], f);
+        }
+        return msg.slice(data.length);
+      }
+
+      const SPECS = [
+        null,
+        [1, 26, 7, 1, []],
+        [2, 44, 10, 1, [6, 18]],
+        [3, 70, 15, 1, [6, 22]],
+        [4, 100, 20, 1, [6, 26]],
+        [5, 134, 26, 1, [6, 30]],
+        [6, 172, 18, 2, [6, 34]],
+        [7, 196, 20, 2, [6, 22, 38]],
+        [8, 242, 24, 2, [6, 24, 42]],
+        [9, 292, 30, 2, [6, 26, 46]],
+        [10, 346, 18, 4, [6, 28, 50]]
+      ];
+
+      function toUtf8Bytes(str) {
+        const out = [];
+        for (let i = 0; i < str.length; i++) {
+          let c = str.charCodeAt(i);
+          if (c < 0x80) out.push(c);
+          else if (c < 0x800) out.push(0xc0 | (c >> 6), 0x80 | (c & 0x3f));
+          else out.push(0xe0 | (c >> 12), 0x80 | ((c >> 6) & 0x3f), 0x80 | (c & 0x3f));
+        }
+        return out;
+      }
+
+      function buildMatrix(text) {
+        const bytes = toUtf8Bytes(text);
+        let spec = null;
+        for (let v = 1; v <= 10; v++) {
+          const [, totalCw, ecCw, blocks, aligns] = SPECS[v];
+          const dataCw = totalCw - ecCw * blocks;
+          const headerBytes = v >= 10 ? 3 : 2;
+          if (bytes.length <= dataCw - headerBytes) { spec = { v, ecCw, blocks, aligns, dataCw }; break; }
+        }
+        if (!spec) return null;
+
+        const { v, ecCw, blocks, aligns, dataCw } = spec;
+        const bits = [];
+        const pushBits = (val, len) => { for (let i = len - 1; i >= 0; i--) bits.push((val >>> i) & 1); };
+        pushBits(0b0100, 4);
+        pushBits(bytes.length, v >= 10 ? 16 : 8);
+        for (const b of bytes) pushBits(b, 8);
+
+        const term = Math.min(4, dataCw * 8 - bits.length);
+        if (term > 0) pushBits(0, term);
+        while (bits.length % 8 !== 0) bits.push(0);
+
+        const cw = [];
+        for (let i = 0; i < bits.length; i += 8) {
+          let byte = 0; for (let j = 0; j < 8; j++) byte = (byte << 1) | bits[i + j]; cw.push(byte);
+        }
+        const pads = [0xec, 0x11]; let p = 0;
+        while (cw.length < dataCw) cw.push(pads[p++ % 2]);
+
+        const bLen = Math.floor(dataCw / blocks), dBlocks = [], eBlocks = [];
+        for (let b = 0; b < blocks; b++) {
+          const sl = cw.slice(b * bLen, (b + 1) * bLen);
+          dBlocks.push(sl); eBlocks.push(rsEncode(sl, ecCw));
+        }
+        const finalCw = [];
+        for (let i = 0; i < bLen; i++) for (let b = 0; b < blocks; b++) finalCw.push(dBlocks[b][i]);
+        for (let i = 0; i < ecCw; i++) for (let b = 0; b < blocks; b++) finalCw.push(eBlocks[b][i]);
+
+        const size = v * 4 + 17;
+        const mat = Array.from({ length: size }, () => Array(size).fill(null));
+        const res = Array.from({ length: size }, () => Array(size).fill(false));
+        const setMod = (r, c, d, f) => {
+          if (r >= 0 && r < size && c >= 0 && c < size) { mat[r][c] = d ? 1 : 0; if (f) res[r][c] = true; }
+        };
+
+        const drawFinder = (r0, c0) => {
+          for (let r = -1; r <= 7; r++) for (let c = -1; c <= 7; c++) {
+            const d = (r >= 0 && r <= 6 && (c === 0 || c === 6)) || (c >= 0 && c <= 6 && (r === 0 || r === 6)) || (r >= 2 && r <= 4 && c >= 2 && c <= 4);
+            setMod(r0 + r, c0 + c, d, true);
+          }
+        };
+        drawFinder(0, 0); drawFinder(0, size - 7); drawFinder(size - 7, 0);
+
+        for (const r of aligns) for (const c of aligns) {
+          if ((r < 9 && c < 9) || (r < 9 && c > size - 10) || (r > size - 10 && c < 9)) continue;
+          for (let dr = -2; dr <= 2; dr++) for (let dc = -2; dc <= 2; dc++) setMod(r + dr, c + dc, Math.max(Math.abs(dr), Math.abs(dc)) !== 1, true);
+        }
+
+        for (let i = 8; i < size - 8; i++) { setMod(6, i, i % 2 === 0, true); setMod(i, 6, i % 2 === 0, true); }
+        setMod(size - 8, 8, true, true);
+
+        for (let i = 0; i < 9; i++) if (i !== 6) { res[8][i] = true; res[i][8] = true; }
+        for (let i = 0; i < 8; i++) { res[8][size - 1 - i] = true; res[size - 1 - i][8] = true; }
+
+        if (v >= 7) {
+          let vRem = v << 12; const vPoly = 0b1111100100101;
+          for (let i = 17; i >= 12; i--) if ((vRem >>> i) & 1) vRem ^= vPoly << (i - 12);
+          const vBits = (v << 12) | vRem;
+          for (let i = 0; i < 18; i++) {
+            const bit = (vBits >>> i) & 1;
+            const r = Math.floor(i / 3), c = size - 11 + (i % 3);
+            setMod(r, c, bit === 1, true); setMod(c, r, bit === 1, true);
+          }
+        }
+
+        let bitIdx = 0, dir = -1;
+        for (let col = size - 1; col > 0; col -= 2) {
+          if (col === 6) col = 5;
+          for (let step = 0; step < size; step++) {
+            const r = dir === -1 ? size - 1 - step : step;
+            for (const c of [col, col - 1]) if (!res[r][c]) {
+              mat[r][c] = bitIdx < finalCw.length * 8 ? ((finalCw[bitIdx >>> 3] >>> (7 - (bitIdx & 7))) & 1) : 0;
+              bitIdx++;
+            }
+          }
+          dir = -dir;
+        }
+
+        for (let r = 0; r < size; r++) for (let c = 0; c < size; c++) if (!res[r][c] && ((r + c) % 2 === 0)) mat[r][c] ^= 1;
+
+        let rem = (0b01 << 13); const poly = 0b10100110111;
+        for (let i = 14; i >= 10; i--) if ((rem >>> i) & 1) rem ^= poly << (i - 10);
+        const fmt = ((0b01 << 13) | rem) ^ 0b101010000010010;
+        const fmtBits = []; for (let i = 14; i >= 0; i--) fmtBits.push((fmt >>> i) & 1);
+        const aA = [[0,8],[1,8],[2,8],[3,8],[4,8],[5,8],[7,8],[8,8],[8,7],[8,5],[8,4],[8,3],[8,2],[8,1],[8,0]];
+        for (let i = 0; i < 15; i++) { const [rr, cc] = aA[i]; mat[rr][cc] = fmtBits[i]; }
+        for (let i = 0; i < 8; i++) mat[size - 1 - i][8] = fmtBits[i];
+        for (let i = 8; i < 15; i++) mat[8][size - 15 + i] = fmtBits[i];
+
+        return mat;
+      }
+      return { buildMatrix };
+    })();
+
+    function renderQrWithLabels(canvas, url) {
+      const ctx = canvas.getContext("2d"), w = canvas.width, h = canvas.height, t = COPY[currentLang];
+      ctx.imageSmoothingEnabled = false;
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(0, 0, w, h);
+      ctx.strokeStyle = "#d4af37";
+      ctx.lineWidth = 6;
+      ctx.strokeRect(14, 14, w - 28, h - 28);
+
+      ctx.fillStyle = "#17120d";
+      ctx.font = "bold 30px sans-serif";
+      ctx.textAlign = "center";
+      ctx.fillText(t.qrTopText, w / 2, 74);
+
+      const mat = QRCodeGen.buildMatrix(url);
+      if (mat) {
+        const count = mat.length, quiet = 4, cell = Math.floor(680 / (count + quiet * 2));
+        const sx = Math.floor((w - cell * count) / 2), sy = 105;
+        ctx.fillStyle = "#000000";
+        for (let r = 0; r < count; r++) for (let c = 0; c < count; c++) if (mat[r][c] === 1) ctx.fillRect(sx + c * cell, sy + r * cell, cell, cell);
+      }
+
+      ctx.fillStyle = "#8a5a00";
+      ctx.font = "bold 28px sans-serif";
+      ctx.fillText(t.qrBottomText, w / 2, 845);
+
+      ctx.fillStyle = "#333333";
+      ctx.font = "22px sans-serif";
+      ctx.fillText(url.length > 52 ? url.slice(0, 49) + "..." : url, w / 2, 895);
+    }
+
+    function openQr() {
+      const url = window.location.href;
+      const escUrl = url.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
+      document.getElementById("qrUrlText").innerHTML = `<a href="${escUrl}" target="_blank" rel="noopener">${escUrl}</a>`;
+      renderQrWithLabels(document.getElementById("qrCanvas"), url);
+      document.getElementById("qrModal").style.display = "flex";
+    }
+
+    function saveQrCode() {
+      const canvas = document.getElementById("qrCanvas");
+      if (!canvas) return;
+      const a = document.createElement("a");
+      a.download = "majlis-walimah-dzul-arts-qr.png";
+      a.href = canvas.toDataURL("image/png");
+      a.click();
+    }
+
+    function closeQr(e) {
+      if (!e || e.target === document.getElementById("qrModal")) {
+        document.getElementById("qrModal").style.display = "none";
+      }
+    }
+
+    function openInvitation() {
+      const ov = document.getElementById("envOverlay");
+      if (ov) {
+        ov.style.opacity = "0";
+        setTimeout(() => { ov.style.display = "none"; }, 350);
+      }
+      playWeddingMelody();
+    }
+
+    let audioCtx = null;
+    function playWeddingMelody() {
+      try {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === "suspended") audioCtx.resume();
+        const masterGain = audioCtx.createGain(); masterGain.gain.value = 0.72;
+        const delayL = audioCtx.createDelay(); delayL.delayTime.value = 0.28;
+        const delayR = audioCtx.createDelay(); delayR.delayTime.value = 0.42;
+        const fbL = audioCtx.createGain(); fbL.gain.value = 0.34;
+        const fbR = audioCtx.createGain(); fbR.gain.value = 0.34;
+        const merger = audioCtx.createChannelMerger(2);
+        delayL.connect(fbL); fbL.connect(delayR); delayR.connect(fbR); fbR.connect(delayL);
+        delayL.connect(merger, 0, 0); delayR.connect(merger, 0, 1);
+        merger.connect(masterGain); masterGain.connect(audioCtx.destination);
+        const notes = [
+          [261.63, 0.40], [329.63, 0.40], [392.00, 0.55], [523.25, 0.85],
+          [493.88, 0.40], [440.00, 0.40], [392.00, 0.85],
+          [349.23, 0.40], [440.00, 0.40], [392.00, 0.50], [329.63, 0.50], [293.66, 0.90],
+          [329.63, 0.40], [392.00, 0.40], [349.23, 0.45], [293.66, 0.45], [261.63, 1.15]
+        ];
+        let time = audioCtx.currentTime + 0.08;
+        notes.forEach(([freq, dur], idx) => {
+          const osc = audioCtx.createOscillator(), noteGain = audioCtx.createGain(), panner = audioCtx.createStereoPanner();
+          osc.type = "triangle"; osc.frequency.setValueAtTime(freq, time);
+          panner.pan.setValueAtTime(Math.sin(idx * 0.65) * 0.6, time);
+          noteGain.gain.setValueAtTime(0.001, time);
+          noteGain.gain.exponentialRampToValueAtTime(0.8, time + 0.04);
+          noteGain.gain.exponentialRampToValueAtTime(0.001, time + dur + 0.38);
+          osc.connect(noteGain); noteGain.connect(panner); panner.connect(masterGain); panner.connect(delayL);
+          osc.start(time); osc.stop(time + dur + 0.42); time += dur + 0.06;
+        });
+      } catch (e) {}
+    }
+  </script>
+</body>
+</html>

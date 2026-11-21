@@ -148,6 +148,7 @@
       font-family: system-ui, -apple-system, sans-serif;
       font-size: 12.5px;
       line-height: 1.65;
+      text-align: left;
     }
 
     .countdown-box {
@@ -178,7 +179,7 @@
     }
 
     .cd-cell {
-      background: rgba(0, 0, 0, 0.3);
+      background: rgba(0, 0, 0, 0.28);
       border: 1px solid rgba(229, 190, 106, 0.28);
       border-radius: 10px;
       padding: 6px 3px;
@@ -306,7 +307,7 @@
       font-size: 13px;
       font-weight: 700;
       color: var(--text-main);
-      margin-bottom: 4px;
+      margin-bottom: 3px;
     }
 
     .qr-brand {
@@ -330,7 +331,7 @@
 
     .qr-canvas-wrap {
       background: #ffffff;
-      padding: 10px;
+      padding: 8px;
       border-radius: 14px;
       display: inline-block;
       margin: 8px 0 10px;
@@ -339,7 +340,7 @@
     .qr-link-txt {
       font-size: 11px;
       word-break: break-all;
-      opacity: 0.9;
+      opacity: 0.92;
       margin-bottom: 12px;
     }
 
@@ -371,7 +372,7 @@
       <div class="qr-subject" id="qrSubject">Majlis Walimah • Aiman &amp; Nurul</div>
       <div class="qr-brand" id="qrBrand">Oleh Dzul Arts • Kad Jemputan Rasmi</div>
       <div class="qr-canvas-wrap">
-        <canvas id="qrCanvas" width="220" height="270"></canvas>
+        <canvas id="qrCanvas" width="800" height="960" style="width:220px;height:auto;display:block;"></canvas>
       </div>
       <div class="qr-link-txt" id="qrUrlText"></div>
       <div class="qr-actions">
@@ -411,7 +412,7 @@
       Semoga kehadiran dan doa restu anda menyerikan lagi majlis serta diberkati Allah SWT.
     </p>
 
-    <div class="details-box" id="detailsBox">
+    <div class="details-box">
       <div><strong id="lblDayDate">Hari &amp; Tarikh:</strong> <span id="valDayDate">Sabtu, 16 Januari 2027</span></div>
       <div><strong id="lblTime">Masa:</strong> <span id="valTime">Petang • 4:00 PTG – 8:00 MLM</span></div>
       <div><strong id="lblLoc">Lokasi:</strong> <span id="valLoc">Dewan Serbaguna Community Centre, 12 Jalan Harmoni (Bukan kolong blok)</span></div>
@@ -462,23 +463,16 @@
         lblLoc: "Lokasi:",
         valLoc: "Dewan Serbaguna Community Centre, 12 Jalan Harmoni (Bukan kolong blok)",
         cdHeading: "Kiraan Detik Ke Majlis",
-        uDays: "Hari",
-        uHours: "Jam",
-        uMins: "Minit",
-        uSecs: "Saat",
-        uMs: "Milisaat",
+        uDays: "Hari", uHours: "Jam", uMins: "Minit", uSecs: "Saat", uMs: "Milisaat",
         cdDone: "Majlis telah berlangsung — Semoga diberkati Allah SWT.",
         doa: "\"Semoga Allah memberkati kalian berdua dan melimpahkan keberkatan atas kalian, serta menghimpunkan kalian berdua dalam kebaikan.\"",
-        mapBtn: "📍 Peta",
-        qrBtn: "▦ QR Code",
-        soundBtn: "♪ Melodi",
+        mapBtn: "📍 Peta", qrBtn: "▦ QR Code", soundBtn: "♪ Melodi",
         qrTitle: "Imbas QR Code Kad",
         qrSubject: "Majlis Walimah • Aiman & Nurul",
         qrBrand: "Oleh Dzul Arts • Kad Jemputan Rasmi",
         qrTopText: "MAJLIS WALIMAH • AIMAN & NURUL",
         qrBottomText: "Dzul Arts • Kad Jemputan Digital",
-        saveQrBtn: "⬇ Save QR Code",
-        closeQrBtn: "Tutup",
+        saveQrBtn: "⬇ Save QR Code", closeQrBtn: "Tutup",
         footer: "Kad Digital oleh Dzul Arts"
       },
       en: {
@@ -494,23 +488,16 @@
         lblLoc: "Venue:",
         valLoc: "Community Centre Hall, 12 Jalan Harmoni (Not void deck)",
         cdHeading: "Countdown to the Wedding",
-        uDays: "Days",
-        uHours: "Hours",
-        uMins: "Mins",
-        uSecs: "Secs",
-        uMs: "Millisecs",
+        uDays: "Days", uHours: "Hours", uMins: "Mins", uSecs: "Secs", uMs: "Millisecs",
         cdDone: "The celebration has taken place — May Allah bless the couple.",
         doa: "\"May Allah bless you both, shower His blessings upon you, and unite you both in goodness.\"",
-        mapBtn: "📍 Map",
-        qrBtn: "▦ QR Code",
-        soundBtn: "♪ Melody",
+        mapBtn: "📍 Map", qrBtn: "▦ QR Code", soundBtn: "♪ Melody",
         qrTitle: "Scan Card QR Code",
         qrSubject: "Wedding Reception • Aiman & Nurul",
         qrBrand: "By Dzul Arts • Official Invitation Card",
         qrTopText: "WEDDING INVITATION • AIMAN & NURUL",
         qrBottomText: "Dzul Arts • Digital E-Card",
-        saveQrBtn: "⬇ Save QR Code",
-        closeQrBtn: "Close",
+        saveQrBtn: "⬇ Save QR Code", closeQrBtn: "Close",
         footer: "Digital Card by Dzul Arts"
       }
     };
@@ -524,45 +511,28 @@
       document.getElementById("btnEn").classList.toggle("active", currentLang === "en");
 
       const t = COPY[currentLang];
-      document.getElementById("envLabel").textContent = t.envLabel;
-      document.getElementById("envSub").textContent = t.envSub;
-      document.getElementById("badgeText").textContent = t.badge;
-      document.getElementById("hostsText").innerHTML = t.hosts;
-      document.getElementById("introText").textContent = t.intro;
-      document.getElementById("lblDayDate").innerHTML = t.lblDayDate;
-      document.getElementById("valDayDate").textContent = t.valDayDate;
-      document.getElementById("lblTime").innerHTML = t.lblTime;
-      document.getElementById("valTime").textContent = t.valTime;
-      document.getElementById("lblLoc").innerHTML = t.lblLoc;
-      document.getElementById("valLoc").textContent = t.valLoc;
-      document.getElementById("cdHeading").textContent = t.cdHeading;
-      document.getElementById("uDays").textContent = t.uDays;
-      document.getElementById("uHours").textContent = t.uHours;
-      document.getElementById("uMins").textContent = t.uMins;
-      document.getElementById("uSecs").textContent = t.uSecs;
-      document.getElementById("uMs").textContent = t.uMs;
-      document.getElementById("cdDone").textContent = t.cdDone;
-      document.getElementById("doaText").textContent = t.doa;
-      document.getElementById("mapBtn").textContent = t.mapBtn;
-      document.getElementById("qrBtn").textContent = t.qrBtn;
-      document.getElementById("soundBtn").textContent = t.soundBtn;
-      document.getElementById("qrTitle").textContent = t.qrTitle;
-      document.getElementById("qrSubject").textContent = t.qrSubject;
-      document.getElementById("qrBrand").textContent = t.qrBrand;
-      document.getElementById("saveQrBtn").textContent = t.saveQrBtn;
-      document.getElementById("closeQrBtn").textContent = t.closeQrBtn;
-      document.getElementById("footerText").textContent = t.footer;
-
-      if (document.getElementById("qrModal").style.display === "flex") {
-        openQr();
-      }
+      const setT = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+      setT("envLabel", t.envLabel); setT("envSub", t.envSub); setT("badgeText", t.badge);
+      const hEl = document.getElementById("hostsText"); if (hEl) hEl.innerHTML = t.hosts;
+      setT("introText", t.intro);
+      const d1 = document.getElementById("lblDayDate"); if (d1) d1.innerHTML = t.lblDayDate;
+      setT("valDayDate", t.valDayDate);
+      const d2 = document.getElementById("lblTime"); if (d2) d2.innerHTML = t.lblTime;
+      setT("valTime", t.valTime);
+      const d3 = document.getElementById("lblLoc"); if (d3) d3.innerHTML = t.lblLoc;
+      setT("valLoc", t.valLoc);
+      setT("cdHeading", t.cdHeading); setT("uDays", t.uDays); setT("uHours", t.uHours);
+      setT("uMins", t.uMins); setT("uSecs", t.uSecs); setT("uMs", t.uMs); setT("cdDone", t.cdDone);
+      setT("doaText", t.doa); setT("mapBtn", t.mapBtn); setT("qrBtn", t.qrBtn); setT("soundBtn", t.soundBtn);
+      setT("qrTitle", t.qrTitle); setT("qrSubject", t.qrSubject); setT("qrBrand", t.qrBrand);
+      setT("saveQrBtn", t.saveQrBtn); setT("closeQrBtn", t.closeQrBtn); setT("footerText", t.footer);
+      if (document.getElementById("qrModal").style.display === "flex") openQr();
     }
 
     const targetMs = new Date(EVENT_ISO).getTime();
 
     function tickCountdown() {
-      const now = Date.now();
-      const diff = targetMs - now;
+      const diff = targetMs - Date.now();
       const grid = document.getElementById("cdGrid");
       const done = document.getElementById("cdDone");
 
@@ -576,67 +546,35 @@
       grid.style.display = "grid";
       done.style.display = "none";
 
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-      const mins = Math.floor((diff / (1000 * 60)) % 60);
-      const secs = Math.floor((diff / 1000) % 60);
-      const ms = Math.floor(diff % 1000);
-
-      document.getElementById("cdDays").textContent = String(days).padStart(2, "0");
-      document.getElementById("cdHours").textContent = String(hours).padStart(2, "0");
-      document.getElementById("cdMins").textContent = String(mins).padStart(2, "0");
-      document.getElementById("cdSecs").textContent = String(secs).padStart(2, "0");
-      document.getElementById("cdMs").textContent = String(ms).padStart(3, "0");
+      document.getElementById("cdDays").textContent = String(Math.floor(diff / 86400000)).padStart(2, "0");
+      document.getElementById("cdHours").textContent = String(Math.floor((diff / 3600000) % 24)).padStart(2, "0");
+      document.getElementById("cdMins").textContent = String(Math.floor((diff / 60000) % 60)).padStart(2, "0");
+      document.getElementById("cdSecs").textContent = String(Math.floor((diff / 1000) % 60)).padStart(2, "0");
+      document.getElementById("cdMs").textContent = String(Math.floor(diff % 1000)).padStart(3, "0");
 
       requestAnimationFrame(tickCountdown);
     }
 
     requestAnimationFrame(tickCountdown);
 
-    /* =====================================================================
-       Penjana QR Code Standard ISO/IEC 18004 (Version 1-6, Byte Mode, EC-L)
-       ===================================================================== */
     const QRCodeGen = (function () {
-      const EXP = new Uint8Array(256);
-      const LOG = new Uint8Array(256);
+      const EXP = new Uint8Array(256), LOG = new Uint8Array(256);
       let x = 1;
-      for (let i = 0; i < 255; i++) {
-        EXP[i] = x;
-        LOG[x] = i;
-        x <<= 1;
-        if (x & 256) x ^= 285;
-      }
+      for (let i = 0; i < 255; i++) { EXP[i] = x; LOG[x] = i; x <<= 1; if (x & 256) x ^= 285; }
       for (let i = 255; i < 512; i++) EXP[i] = EXP[i - 255];
+      const gfMul = (a, b) => (a === 0 || b === 0) ? 0 : EXP[LOG[a] + LOG[b]];
 
-      function gfMul(a, b) {
-        if (a === 0 || b === 0) return 0;
-        return EXP[LOG[a] + LOG[b]];
-      }
-
-      function rsPoly(ecLen) {
+      function rsEncode(data, ecLen) {
         let poly = [1];
         for (let i = 0; i < ecLen; i++) {
           const next = new Array(poly.length + 1).fill(0);
-          const root = EXP[i];
-          for (let j = 0; j < poly.length; j++) {
-            next[j] ^= poly[j];
-            next[j + 1] ^= gfMul(poly[j], root);
-          }
+          for (let j = 0; j < poly.length; j++) { next[j] ^= poly[j]; next[j + 1] ^= gfMul(poly[j], EXP[i]); }
           poly = next;
         }
-        return poly;
-      }
-
-      function rsEncode(data, ecLen) {
-        const gen = rsPoly(ecLen);
         const msg = data.concat(new Array(ecLen).fill(0));
         for (let i = 0; i < data.length; i++) {
-          const factor = msg[i];
-          if (factor !== 0) {
-            for (let j = 0; j < gen.length; j++) {
-              msg[i + j] ^= gfMul(gen[j], factor);
-            }
-          }
+          const f = msg[i];
+          if (f !== 0) for (let j = 0; j < poly.length; j++) msg[i + j] ^= gfMul(poly[j], f);
         }
         return msg.slice(data.length);
       }
@@ -648,250 +586,157 @@
         [3, 70, 15, 1, [6, 22]],
         [4, 100, 20, 1, [6, 26]],
         [5, 134, 26, 1, [6, 30]],
-        [6, 172, 18, 2, [6, 34]]
+        [6, 172, 18, 2, [6, 34]],
+        [7, 196, 20, 2, [6, 22, 38]],
+        [8, 242, 24, 2, [6, 24, 42]],
+        [9, 292, 30, 2, [6, 26, 46]],
+        [10, 346, 18, 4, [6, 28, 50]]
       ];
 
       function toUtf8Bytes(str) {
-        const bytes = [];
+        const out = [];
         for (let i = 0; i < str.length; i++) {
           let c = str.charCodeAt(i);
-          if (c < 0x80) bytes.push(c);
-          else if (c < 0x800) {
-            bytes.push(0xc0 | (c >> 6), 0x80 | (c & 0x3f));
-          } else {
-            if (c >= 0xd800 && c <= 0xdbff && i + 1 < str.length) {
-              const d = str.charCodeAt(++i);
-              c = 0x10000 + (((c & 0x3ff) << 10) | (d & 0x3ff));
-              bytes.push(0xf0 | (c >> 18), 0x80 | ((c >> 12) & 0x3f), 0x80 | ((c >> 6) & 0x3f), 0x80 | (c & 0x3f));
-            } else {
-              bytes.push(0xe0 | (c >> 12), 0x80 | ((c >> 6) & 0x3f), 0x80 | (c & 0x3f));
-            }
-          }
+          if (c < 0x80) out.push(c);
+          else if (c < 0x800) out.push(0xc0 | (c >> 6), 0x80 | (c & 0x3f));
+          else out.push(0xe0 | (c >> 12), 0x80 | ((c >> 6) & 0x3f), 0x80 | (c & 0x3f));
         }
-        return bytes;
+        return out;
       }
 
       function buildMatrix(text) {
         const bytes = toUtf8Bytes(text);
-        let chosen = null;
-
-        for (let v = 1; v <= 6; v++) {
+        let spec = null;
+        for (let v = 1; v <= 10; v++) {
           const [, totalCw, ecCw, blocks, aligns] = SPECS[v];
           const dataCw = totalCw - ecCw * blocks;
-          const maxPayload = dataCw - 2;
-          if (bytes.length <= maxPayload) {
-            chosen = { v, totalCw, ecCw, blocks, aligns, dataCw };
-            break;
-          }
+          const headerBytes = v >= 10 ? 3 : 2;
+          if (bytes.length <= dataCw - headerBytes) { spec = { v, ecCw, blocks, aligns, dataCw }; break; }
         }
-        if (!chosen) return null;
+        if (!spec) return null;
 
-        const { v, ecCw, blocks, aligns, dataCw } = chosen;
+        const { v, ecCw, blocks, aligns, dataCw } = spec;
         const bits = [];
-        const pushBits = (val, len) => {
-          for (let i = len - 1; i >= 0; i--) bits.push((val >>> i) & 1);
-        };
-
+        const pushBits = (val, len) => { for (let i = len - 1; i >= 0; i--) bits.push((val >>> i) & 1); };
         pushBits(0b0100, 4);
-        pushBits(bytes.length, 8);
+        pushBits(bytes.length, v >= 10 ? 16 : 8);
         for (const b of bytes) pushBits(b, 8);
 
-        const capacityBits = dataCw * 8;
-        const termLen = Math.min(4, capacityBits - bits.length);
-        if (termLen > 0) pushBits(0, termLen);
+        const term = Math.min(4, dataCw * 8 - bits.length);
+        if (term > 0) pushBits(0, term);
         while (bits.length % 8 !== 0) bits.push(0);
 
         const cw = [];
         for (let i = 0; i < bits.length; i += 8) {
-          let byte = 0;
-          for (let j = 0; j < 8; j++) byte = (byte << 1) | bits[i + j];
-          cw.push(byte);
+          let byte = 0; for (let j = 0; j < 8; j++) byte = (byte << 1) | bits[i + j]; cw.push(byte);
         }
-        const pads = [0xec, 0x11];
-        let pIdx = 0;
-        while (cw.length < dataCw) {
-          cw.push(pads[pIdx % 2]);
-          pIdx++;
-        }
+        const pads = [0xec, 0x11]; let p = 0;
+        while (cw.length < dataCw) cw.push(pads[p++ % 2]);
 
-        const blockLen = Math.floor(dataCw / blocks);
-        const dataBlocks = [];
-        const ecBlocks = [];
-        let offset = 0;
+        const bLen = Math.floor(dataCw / blocks), dBlocks = [], eBlocks = [];
         for (let b = 0; b < blocks; b++) {
-          const slice = cw.slice(offset, offset + blockLen);
-          offset += blockLen;
-          dataBlocks.push(slice);
-          ecBlocks.push(rsEncode(slice, ecCw));
+          const sl = cw.slice(b * bLen, (b + 1) * bLen);
+          dBlocks.push(sl); eBlocks.push(rsEncode(sl, ecCw));
         }
-
         const finalCw = [];
-        for (let i = 0; i < blockLen; i++) {
-          for (let b = 0; b < blocks; b++) finalCw.push(dataBlocks[b][i]);
-        }
-        for (let i = 0; i < ecCw; i++) {
-          for (let b = 0; b < blocks; b++) finalCw.push(ecBlocks[b][i]);
-        }
+        for (let i = 0; i < bLen; i++) for (let b = 0; b < blocks; b++) finalCw.push(dBlocks[b][i]);
+        for (let i = 0; i < ecCw; i++) for (let b = 0; b < blocks; b++) finalCw.push(eBlocks[b][i]);
 
         const size = v * 4 + 17;
         const mat = Array.from({ length: size }, () => Array(size).fill(null));
-        const reserved = Array.from({ length: size }, () => Array(size).fill(false));
+        const res = Array.from({ length: size }, () => Array(size).fill(false));
+        const setMod = (r, c, d, f) => {
+          if (r >= 0 && r < size && c >= 0 && c < size) { mat[r][c] = d ? 1 : 0; if (f) res[r][c] = true; }
+        };
 
-        function setMod(r, c, dark, isFunc) {
-          if (r < 0 || r >= size || c < 0 || c >= size) return;
-          mat[r][c] = dark ? 1 : 0;
-          if (isFunc) reserved[r][c] = true;
-        }
-
-        function drawFinder(r0, c0) {
-          for (let r = -1; r <= 7; r++) {
-            for (let c = -1; c <= 7; c++) {
-              const rr = r0 + r, cc = c0 + c;
-              if (rr < 0 || rr >= size || cc < 0 || cc >= size) continue;
-              const dark = (r >= 0 && r <= 6 && (c === 0 || c === 6)) ||
-                           (c >= 0 && c <= 6 && (r === 0 || r === 6)) ||
-                           (r >= 2 && r <= 4 && c >= 2 && c <= 4);
-              setMod(rr, cc, dark, true);
-            }
+        const drawFinder = (r0, c0) => {
+          for (let r = -1; r <= 7; r++) for (let c = -1; c <= 7; c++) {
+            const d = (r >= 0 && r <= 6 && (c === 0 || c === 6)) || (c >= 0 && c <= 6 && (r === 0 || r === 6)) || (r >= 2 && r <= 4 && c >= 2 && c <= 4);
+            setMod(r0 + r, c0 + c, d, true);
           }
+        };
+        drawFinder(0, 0); drawFinder(0, size - 7); drawFinder(size - 7, 0);
+
+        for (const r of aligns) for (const c of aligns) {
+          if ((r < 9 && c < 9) || (r < 9 && c > size - 10) || (r > size - 10 && c < 9)) continue;
+          for (let dr = -2; dr <= 2; dr++) for (let dc = -2; dc <= 2; dc++) setMod(r + dr, c + dc, Math.max(Math.abs(dr), Math.abs(dc)) !== 1, true);
         }
 
-        drawFinder(0, 0);
-        drawFinder(0, size - 7);
-        drawFinder(size - 7, 0);
-
-        for (const r of aligns) {
-          for (const c of aligns) {
-            if ((r < 9 && c < 9) || (r < 9 && c > size - 10) || (r > size - 10 && c < 9)) continue;
-            for (let dr = -2; dr <= 2; dr++) {
-              for (let dc = -2; dc <= 2; dc++) {
-                const dark = Math.max(Math.abs(dr), Math.abs(dc)) !== 1;
-                setMod(r + dr, c + dc, dark, true);
-              }
-            }
-          }
-        }
-
-        for (let i = 8; i < size - 8; i++) {
-          const dark = i % 2 === 0;
-          setMod(6, i, dark, true);
-          setMod(i, 6, dark, true);
-        }
-
+        for (let i = 8; i < size - 8; i++) { setMod(6, i, i % 2 === 0, true); setMod(i, 6, i % 2 === 0, true); }
         setMod(size - 8, 8, true, true);
 
-        for (let i = 0; i < 9; i++) {
-          if (i !== 6) {
-            reserved[8][i] = true;
-            reserved[i][8] = true;
+        for (let i = 0; i < 9; i++) if (i !== 6) { res[8][i] = true; res[i][8] = true; }
+        for (let i = 0; i < 8; i++) { res[8][size - 1 - i] = true; res[size - 1 - i][8] = true; }
+
+        if (v >= 7) {
+          let vRem = v << 12; const vPoly = 0b1111100100101;
+          for (let i = 17; i >= 12; i--) if ((vRem >>> i) & 1) vRem ^= vPoly << (i - 12);
+          const vBits = (v << 12) | vRem;
+          for (let i = 0; i < 18; i++) {
+            const bit = (vBits >>> i) & 1;
+            const r = Math.floor(i / 3), c = size - 11 + (i % 3);
+            setMod(r, c, bit === 1, true); setMod(c, r, bit === 1, true);
           }
         }
-        for (let i = 0; i < 8; i++) {
-          reserved[8][size - 1 - i] = true;
-          reserved[size - 1 - i][8] = true;
-        }
 
-        let bitIdx = 0;
-        let dir = -1;
+        let bitIdx = 0, dir = -1;
         for (let col = size - 1; col > 0; col -= 2) {
           if (col === 6) col = 5;
           for (let step = 0; step < size; step++) {
             const r = dir === -1 ? size - 1 - step : step;
-            for (const c of [col, col - 1]) {
-              if (!reserved[r][c]) {
-                const bit = bitIdx < finalCw.length * 8
-                  ? ((finalCw[bitIdx >>> 3] >>> (7 - (bitIdx & 7))) & 1)
-                  : 0;
-                bitIdx++;
-                mat[r][c] = bit;
-              }
+            for (const c of [col, col - 1]) if (!res[r][c]) {
+              mat[r][c] = bitIdx < finalCw.length * 8 ? ((finalCw[bitIdx >>> 3] >>> (7 - (bitIdx & 7))) & 1) : 0;
+              bitIdx++;
             }
           }
           dir = -dir;
         }
 
-        const maskId = 0;
-        for (let r = 0; r < size; r++) {
-          for (let c = 0; c < size; c++) {
-            if (!reserved[r][c] && ((r + c) % 2 === 0)) {
-              mat[r][c] ^= 1;
-            }
-          }
-        }
+        for (let r = 0; r < size; r++) for (let c = 0; c < size; c++) if (!res[r][c] && ((r + c) % 2 === 0)) mat[r][c] ^= 1;
 
-        const dataBits = (0b01 << 3) | maskId;
-        let rem = dataBits << 10;
-        const poly = 0b10100110111;
-        for (let i = 14; i >= 10; i--) {
-          if ((rem >>> i) & 1) rem ^= poly << (i - 10);
-        }
-        const fmt = ((dataBits << 10) | rem) ^ 0b101010000010010;
-
-        const fmtBits = [];
-        for (let i = 14; i >= 0; i--) fmtBits.push((fmt >>> i) & 1);
-
-        const aroundA = [[0,8],[1,8],[2,8],[3,8],[4,8],[5,8],[7,8],[8,8],[8,7],[8,5],[8,4],[8,3],[8,2],[8,1],[8,0]];
-        for (let i = 0; i < 15; i++) {
-          const [rr, cc] = aroundA[i];
-          mat[rr][cc] = fmtBits[i];
-        }
-        for (let i = 0; i < 8; i++) {
-          mat[size - 1 - i][8] = fmtBits[i];
-        }
-        for (let i = 8; i < 15; i++) {
-          mat[8][size - 15 + i] = fmtBits[i];
-        }
+        let rem = (0b01 << 13); const poly = 0b10100110111;
+        for (let i = 14; i >= 10; i--) if ((rem >>> i) & 1) rem ^= poly << (i - 10);
+        const fmt = ((0b01 << 13) | rem) ^ 0b101010000010010;
+        const fmtBits = []; for (let i = 14; i >= 0; i--) fmtBits.push((fmt >>> i) & 1);
+        const aA = [[0,8],[1,8],[2,8],[3,8],[4,8],[5,8],[7,8],[8,8],[8,7],[8,5],[8,4],[8,3],[8,2],[8,1],[8,0]];
+        for (let i = 0; i < 15; i++) { const [rr, cc] = aA[i]; mat[rr][cc] = fmtBits[i]; }
+        for (let i = 0; i < 8; i++) mat[size - 1 - i][8] = fmtBits[i];
+        for (let i = 8; i < 15; i++) mat[8][size - 15 + i] = fmtBits[i];
 
         return mat;
       }
-
       return { buildMatrix };
     })();
 
     function renderQrWithLabels(canvas, url) {
-      const ctx = canvas.getContext("2d");
-      const w = canvas.width;
-      const h = canvas.height;
-      const t = COPY[currentLang];
-
+      const ctx = canvas.getContext("2d"), w = canvas.width, h = canvas.height, t = COPY[currentLang];
+      ctx.imageSmoothingEnabled = false;
       ctx.fillStyle = "#ffffff";
       ctx.fillRect(0, 0, w, h);
+      ctx.strokeStyle = "#d4af37";
+      ctx.lineWidth = 6;
+      ctx.strokeRect(14, 14, w - 28, h - 28);
 
-      // Teks tajuk majlis di bahagian atas QR
       ctx.fillStyle = "#17120d";
-      ctx.font = "bold 11px sans-serif";
+      ctx.font = "bold 30px sans-serif";
       ctx.textAlign = "center";
-      ctx.fillText(t.qrTopText, w / 2, 20);
+      ctx.fillText(t.qrTopText, w / 2, 74);
 
       const mat = QRCodeGen.buildMatrix(url);
       if (mat) {
-        const count = mat.length;
-        const quiet = 3;
-        const qrBoxSize = 186;
-        const cell = Math.floor(qrBoxSize / (count + quiet * 2));
-        const qrTotalPx = cell * count;
-        const startX = Math.floor((w - qrTotalPx) / 2);
-        const startY = 30;
-
+        const count = mat.length, quiet = 4, cell = Math.floor(680 / (count + quiet * 2));
+        const sx = Math.floor((w - cell * count) / 2), sy = 105;
         ctx.fillStyle = "#000000";
-        for (let r = 0; r < count; r++) {
-          for (let c = 0; c < count; c++) {
-            if (mat[r][c] === 1) {
-              ctx.fillRect(startX + c * cell, startY + r * cell, cell, cell);
-            }
-          }
-        }
+        for (let r = 0; r < count; r++) for (let c = 0; c < count; c++) if (mat[r][c] === 1) ctx.fillRect(sx + c * cell, sy + r * cell, cell, cell);
       }
 
-      // Label nama Dzul Arts & pautan ringkas di bahagian bawah QR
       ctx.fillStyle = "#8a5a00";
-      ctx.font = "bold 11px sans-serif";
-      ctx.fillText(t.qrBottomText, w / 2, 236);
+      ctx.font = "bold 28px sans-serif";
+      ctx.fillText(t.qrBottomText, w / 2, 845);
 
-      ctx.fillStyle = "#444444";
-      ctx.font = "9.5px sans-serif";
-      const shortUrl = url.length > 34 ? url.slice(0, 31) + "..." : url;
-      ctx.fillText(shortUrl, w / 2, 254);
+      ctx.fillStyle = "#333333";
+      ctx.font = "22px sans-serif";
+      ctx.fillText(url.length > 52 ? url.slice(0, 49) + "..." : url, w / 2, 895);
     }
 
     function openQr() {
@@ -905,10 +750,10 @@
     function saveQrCode() {
       const canvas = document.getElementById("qrCanvas");
       if (!canvas) return;
-      const link = document.createElement("a");
-      link.download = "majlis-walimah-dzul-arts-qr.png";
-      link.href = canvas.toDataURL("image/png");
-      link.click();
+      const a = document.createElement("a");
+      a.download = "majlis-walimah-dzul-arts-qr.png";
+      a.href = canvas.toDataURL("image/png");
+      a.click();
     }
 
     function closeQr(e) {
@@ -931,62 +776,31 @@
       try {
         if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         if (audioCtx.state === "suspended") audioCtx.resume();
-
-        const masterGain = audioCtx.createGain();
-        masterGain.gain.value = 0.72;
-
-        const delayL = audioCtx.createDelay();
-        delayL.delayTime.value = 0.28;
-        const delayR = audioCtx.createDelay();
-        delayR.delayTime.value = 0.42;
-
-        const feedbackL = audioCtx.createGain();
-        feedbackL.gain.value = 0.34;
-        const feedbackR = audioCtx.createGain();
-        feedbackR.gain.value = 0.34;
-
+        const masterGain = audioCtx.createGain(); masterGain.gain.value = 0.72;
+        const delayL = audioCtx.createDelay(); delayL.delayTime.value = 0.28;
+        const delayR = audioCtx.createDelay(); delayR.delayTime.value = 0.42;
+        const fbL = audioCtx.createGain(); fbL.gain.value = 0.34;
+        const fbR = audioCtx.createGain(); fbR.gain.value = 0.34;
         const merger = audioCtx.createChannelMerger(2);
-
-        delayL.connect(feedbackL);
-        feedbackL.connect(delayR);
-        delayR.connect(feedbackR);
-        feedbackR.connect(delayL);
-
-        delayL.connect(merger, 0, 0);
-        delayR.connect(merger, 0, 1);
-
-        merger.connect(masterGain);
-        masterGain.connect(audioCtx.destination);
-
+        delayL.connect(fbL); fbL.connect(delayR); delayR.connect(fbR); fbR.connect(delayL);
+        delayL.connect(merger, 0, 0); delayR.connect(merger, 0, 1);
+        merger.connect(masterGain); masterGain.connect(audioCtx.destination);
         const notes = [
           [261.63, 0.40], [329.63, 0.40], [392.00, 0.55], [523.25, 0.85],
           [493.88, 0.40], [440.00, 0.40], [392.00, 0.85],
           [349.23, 0.40], [440.00, 0.40], [392.00, 0.50], [329.63, 0.50], [293.66, 0.90],
           [329.63, 0.40], [392.00, 0.40], [349.23, 0.45], [293.66, 0.45], [261.63, 1.15]
         ];
-
         let time = audioCtx.currentTime + 0.08;
         notes.forEach(([freq, dur], idx) => {
-          const osc = audioCtx.createOscillator();
-          const noteGain = audioCtx.createGain();
-          const panner = audioCtx.createStereoPanner();
-
-          osc.type = "triangle";
-          osc.frequency.setValueAtTime(freq, time);
+          const osc = audioCtx.createOscillator(), noteGain = audioCtx.createGain(), panner = audioCtx.createStereoPanner();
+          osc.type = "triangle"; osc.frequency.setValueAtTime(freq, time);
           panner.pan.setValueAtTime(Math.sin(idx * 0.65) * 0.6, time);
-
           noteGain.gain.setValueAtTime(0.001, time);
           noteGain.gain.exponentialRampToValueAtTime(0.8, time + 0.04);
           noteGain.gain.exponentialRampToValueAtTime(0.001, time + dur + 0.38);
-
-          osc.connect(noteGain);
-          noteGain.connect(panner);
-          panner.connect(masterGain);
-          panner.connect(delayL);
-
-          osc.start(time);
-          osc.stop(time + dur + 0.42);
-          time += dur + 0.06;
+          osc.connect(noteGain); noteGain.connect(panner); panner.connect(masterGain); panner.connect(delayL);
+          osc.start(time); osc.stop(time + dur + 0.42); time += dur + 0.06;
         });
       } catch (e) {}
     }

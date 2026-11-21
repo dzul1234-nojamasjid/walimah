@@ -67,7 +67,7 @@
   <div class="wrap">
     <h1>Wedding Invitation E-Card Maker</h1>
     <p class="sub">
-      Pilih tarikh (2026–2030, Isnin–Ahad) dan masa (HH:MM setiap 5 minit) melalui drop-down. Kotak berwarna kelabu dikemas kini automatik.
+      Nama keluarga pengantin lelaki &amp; perempuan kekal sama apabila suis BM / EN ditekan. Kotak kelabu dikemas kini automatik mengikut tarikh &amp; masa.
     </p>
 
     <div class="card">
@@ -81,12 +81,12 @@
           <input type="text" id="wBride" value="Dara" />
         </div>
         <div class="grp">
-          <label>3. Tuan Rumah / Keluarga (BM)</label>
-          <input type="text" id="wHostsMs" value="Haji Bakhil &amp; Hajjah Bakhil" />
+          <label>3. Keluarga Pengantin Lelaki (Groom's Family)</label>
+          <input type="text" id="wGroomFam" value="Haji Bakhil &amp; Hajjah Bakhil" />
         </div>
         <div class="grp">
-          <label>4. Hosts / Families (EN)</label>
-          <input type="text" id="wHostsEn" value="Tok Siak and Mak Siak" />
+          <label>4. Keluarga Pengantin Perempuan (Bride's Family)</label>
+          <input type="text" id="wBrideFam" value="Tok Siak &amp; Mak Siak" />
         </div>
 
         <div class="grp">
@@ -341,8 +341,8 @@
     function generateWedding() {
       const groom = document.getElementById('wGroom').value.trim() || 'Teruna';
       const bride = document.getElementById('wBride').value.trim() || 'Dara';
-      const hostsMs = document.getElementById('wHostsMs').value.trim();
-      const hostsEn = document.getElementById('wHostsEn').value.trim();
+      const groomFam = document.getElementById('wGroomFam').value.trim();
+      const brideFam = document.getElementById('wBrideFam').value.trim();
       const dayDateMs = document.getElementById('wDayDateMs').value.trim();
       const dayDateEn = document.getElementById('wDayDateEn').value.trim();
       const timeMs = document.getElementById('wTimeMs').value.trim();
@@ -360,6 +360,7 @@
       document.getElementById('wFile').value = outFile;
 
       const coupleShort = groom + ' & ' + bride;
+      const bothFamilies = [groomFam, brideFam].filter(Boolean).join(' & ');
 
       const envBlock = useEnv ?
         '<div class="env-overlay" id="envOverlay" onclick="openInvitation()">' +
@@ -501,7 +502,7 @@
       htmlLines.push('    </div>');
       htmlLines.push('    <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>');
       htmlLines.push('    <div class="badge" id="badgeText"></div>');
-      htmlLines.push('    <div class="hosts" id="hostsText"></div>');
+      htmlLines.push('    <div class="hosts" id="hostsText">' + esc(bothFamilies) + '</div>');
       htmlLines.push('    <div class="couple">' + esc(groom) + '<span class="amp">&amp;</span>' + esc(bride) + '</div>');
       htmlLines.push('    <div class="art">');
       htmlLines.push('      <img src="' + esc(artFile) + '" alt="Wedding Artwork" onerror="this.style.display=\'none\';document.getElementById(\'artFb\').style.display=\'flex\';" />');
@@ -538,7 +539,6 @@
       htmlLines.push('    const data = {');
       htmlLines.push('      ms: {');
       htmlLines.push('        badge: "Majlis Walimatulurus",');
-      htmlLines.push('        hosts: "' + esc(hostsMs) + '",');
       htmlLines.push('        intro: "Dengan penuh rasa kesyukuran, kami menjemput anda hadir ke majlis perkahwinan kami.",');
       htmlLines.push('        lblDayDate: "Tarikh:",');
       htmlLines.push('        valDayDate: "' + esc(dayDateMs) + '",');
@@ -554,7 +554,6 @@
       htmlLines.push('      },');
       htmlLines.push('      en: {');
       htmlLines.push('        badge: "Wedding Reception",');
-      htmlLines.push('        hosts: "' + esc(hostsEn) + '",');
       htmlLines.push('        intro: "With great joy, we cordially invite you to celebrate our wedding day.",');
       htmlLines.push('        lblDayDate: "Date:",');
       htmlLines.push('        valDayDate: "' + esc(dayDateEn) + '",');
@@ -576,7 +575,6 @@
       htmlLines.push('      document.getElementById(lang === "ms" ? "btnMs" : "btnEn").classList.add("active");');
       htmlLines.push('      const t = data[lang];');
       htmlLines.push('      document.getElementById("badgeText").textContent = t.badge;');
-      htmlLines.push('      document.getElementById("hostsText").textContent = t.hosts;');
       htmlLines.push('      document.getElementById("introText").textContent = t.intro;');
       htmlLines.push('      document.getElementById("lblDayDate").textContent = t.lblDayDate;');
       htmlLines.push('      document.getElementById("valDayDate").textContent = t.valDayDate;');

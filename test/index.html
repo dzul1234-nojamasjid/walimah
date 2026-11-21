@@ -107,7 +107,7 @@
     .qr-actions { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
   </style>
 </head>
-<body data-theme="emerald-gold">
+<body data-theme="gold-dark">
 <div class="env-overlay" id="envOverlay" onclick="openInvitation()"><div class="env-box"><div class="env-label" id="envLabel">✦ Jemputan Walimatulurus ✦</div><div class="env-title">Teruna &amp; Dara</div><div class="env-sub" id="envSub">Tekan untuk membuka kad jemputan</div></div></div>
   <div class="qr-modal" id="qrModal" onclick="closeQr(event)">
     <div class="qr-box" onclick="event.stopPropagation()">
@@ -159,6 +159,7 @@
     <div class="btn-row">
       <a class="action-btn" id="mapBtn" href="https://maps.google.com/?q=Community+Centre+12+Jalan+Harmoni" target="_blank" rel="noopener">📍 Lokasi</a>
       <button class="action-btn" onclick="showQr()">📱 Kongsi / QR</button>
+      <button class="sound-btn" id="soundBtn" onclick="toggleAudio()">🔊 Gamelan Jawa</button>
     </div>
     <div class="footer-note">Dzul Arts • Kad Jemputan Digital</div>
   </div>
@@ -177,7 +178,8 @@
         doa: '"Semoga Allah memberkati kamu berdua dan menghimpunkan kamu dalam kebaikan."',
         uDays: "Hari", uHours: "Jam", uMins: "Minit", uSecs: "Saat", uMs: "Milisaat",
         cdDone: "Majlis telah berlangsung",
-        envSub: "Tekan untuk membuka kad jemputan"
+        envSub: "Tekan untuk membuka kad jemputan",
+        soundOn: "🔊 Gamelan Jawa", soundOff: "🔇 Bisukan"
       },
       en: {
         badge: "Wedding Reception",
@@ -192,10 +194,119 @@
         doa: '"May Allah bless you both and unite you in goodness."',
         uDays: "Days", uHours: "Hours", uMins: "Mins", uSecs: "Secs", uMs: "Millisecs",
         cdDone: "The event has concluded",
-        envSub: "Tap to open invitation"
+        envSub: "Tap to open invitation",
+        soundOn: "🔊 Javanese Gamelan", soundOff: "🔇 Mute"
       }
     };
     let currentLang = "ms";
+    let audioCtx = null, masterBus = null, isPlaying = false, seqTimer = null, stepIdx = 0;
+    // Skala slendro (5 not hampir sama rata), frekuensi dalam Hz
+    const SL = {
+      S1: 261.63, S2: 293.66, S3: 329.63, S5: 392.00, S6: 440.00,
+      S1h: 523.25, S2h: 587.33, S3h: 659.25, S5h: 783.99
+    };
+    // Partial inharmonic ciri gamelan (bukan 1:2:3 harmonik biasa)
+    const GAMELAN_PARTIALS = [
+      { ratio: 1.00, amp: 0.55, dec: 1.00 },
+      { ratio: 2.76, amp: 0.20, dec: 0.55 },
+      { ratio: 5.40, amp: 0.10, dec: 0.30 }
+    ];
+    // Corak melodi lembut, tempo sederhana (8 not, ulang)
+    const SMOOTH_GAMELAN = [
+      { f: SL.S3h, d: 1.10, v: 0.20, pan: -0.35 },
+      { f: SL.S2h, d: 0.90, v: 0.17, pan:  0.30 },
+      { f: SL.S1h, d: 1.00, v: 0.19, pan: -0.20 },
+      { f: SL.S2h, d: 0.85, v: 0.16, pan:  0.40 },
+      { f: SL.S3h, d: 1.10, v: 0.20, pan: -0.30 },
+      { f: SL.S5,  d: 1.00, v: 0.18, pan:  0.20 },
+      { f: SL.S3h, d: 0.90, v: 0.17, pan: -0.40 },
+      { f: SL.S2h, d: 1.15, v: 0.19, pan:  0.30 }
+    ];
+    function buildSoftGamelanBus(ctx) {
+      const comp = ctx.createDynamicsCompressor();
+      comp.threshold.value = -20; comp.knee.value = 20; comp.ratio.value = 4;
+      comp.attack.value = 0.003; comp.release.value = 0.20;
+      const toneLp = ctx.createBiquadFilter();
+      toneLp.type = "lowpass"; toneLp.frequency.value = 3200; toneLp.Q.value = 0.6;
+      const dryBus = ctx.createGain(); dryBus.gain.value = 1.0;
+      const delayL = ctx.createDelay(1.0); const delayR = ctx.createDelay(1.0);
+      delayL.delayTime.value = 0.28; delayR.delayTime.value = 0.41;
+      const fbL = ctx.createGain(); const fbR = ctx.createGain();
+      fbL.gain.value = 0.12; fbR.gain.value = 0.14;
+      const echoLp = ctx.createBiquadFilter(); echoLp.type = "lowpass"; echoLp.frequency.value = 1800;
+      const echoWet = ctx.createGain(); echoWet.gain.value = 0.22;
+      const outGain = ctx.createGain(); outGain.gain.value = 1.0;
+      dryBus.connect(comp);
+      dryBus.connect(delayL); dryBus.connect(delayR);
+      delayL.connect(fbL); fbL.connect(delayR);
+      delayR.connect(fbR); fbR.connect(delayL);
+      delayL.connect(echoLp); delayR.connect(echoLp);
+      echoLp.connect(echoWet); echoWet.connect(comp);
+      comp.connect(toneLp); toneLp.connect(outGain); outGain.connect(ctx.destination);
+      return { dryBus, hasPan: !!ctx.createStereoPanner };
+    }
+    function playGamelanNote(ctx, dest, time, freq, dur, vel, panVal) {
+      const noteGain = ctx.createGain();
+      noteGain.gain.setValueAtTime(0.0001, time);
+      noteGain.gain.linearRampToValueAtTime(vel, time + 0.008);
+      noteGain.gain.exponentialRampToValueAtTime(0.0001, time + dur);
+      if (dest.hasPan) {
+        const p = ctx.createStereoPanner(); p.pan.setValueAtTime(panVal, time);
+        noteGain.connect(p); p.connect(dest.dryBus);
+      } else { noteGain.connect(dest.dryBus); }
+      GAMELAN_PARTIALS.forEach(pt => {
+        const osc = ctx.createOscillator(); const g = ctx.createGain();
+        osc.type = "sine";
+        osc.frequency.setValueAtTime(freq * pt.ratio, time);
+        g.gain.setValueAtTime(0.0001, time);
+        g.gain.linearRampToValueAtTime(pt.amp, time + 0.006);
+        g.gain.exponentialRampToValueAtTime(0.0001, time + pt.dec * dur);
+        osc.connect(g); g.connect(noteGain);
+        osc.start(time); osc.stop(time + pt.dec * dur + 0.05);
+      });
+    }
+    function playSoftGong(ctx, dest, time) {
+      const osc = ctx.createOscillator(); const g = ctx.createGain();
+      osc.type = "sine";
+      osc.frequency.setValueAtTime(72, time);
+      osc.frequency.exponentialRampToValueAtTime(64, time + 1.6);
+      g.gain.setValueAtTime(0.0001, time);
+      g.gain.linearRampToValueAtTime(0.35, time + 0.05);
+      g.gain.exponentialRampToValueAtTime(0.0001, time + 1.9);
+      osc.connect(g); g.connect(dest.dryBus);
+      osc.start(time); osc.stop(time + 1.95);
+    }
+    function startAudio() {
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if (!audioCtx) { audioCtx = new AC(); masterBus = buildSoftGamelanBus(audioCtx); }
+      if (audioCtx.state === "suspended") { audioCtx.resume(); }
+      if (isPlaying) return;
+      isPlaying = true; updateSoundLabel();
+      if (seqTimer) clearInterval(seqTimer);
+      const tickStep = () => {
+        if (!isPlaying || !audioCtx) return;
+        if (audioCtx.state === "suspended") audioCtx.resume();
+        const ev = SMOOTH_GAMELAN[stepIdx % SMOOTH_GAMELAN.length];
+        const now = audioCtx.currentTime + 0.02;
+        playGamelanNote(audioCtx, masterBus, now, ev.f, ev.d, ev.v, ev.pan);
+        if (stepIdx % 4 === 0) playSoftGong(audioCtx, masterBus, now);
+        stepIdx++;
+      };
+      tickStep();
+      seqTimer = setInterval(tickStep, 750);
+    }
+    function stopAudio() {
+      isPlaying = false;
+      if (seqTimer) { clearInterval(seqTimer); seqTimer = null; }
+      updateSoundLabel();
+    }
+    function toggleAudio() { if (isPlaying) stopAudio(); else startAudio(); }
+    function updateSoundLabel() {
+      const btn = document.getElementById("soundBtn");
+      if (!btn) return;
+      const t = data[currentLang];
+      btn.textContent = isPlaying ? t.soundOff : t.soundOn;
+    }
     function setLang(lang) {
       currentLang = lang;
       document.querySelectorAll(".lang-btn").forEach(b => b.classList.remove("active"));
@@ -219,11 +330,20 @@
       document.getElementById("cdDone").textContent = t.cdDone;
       const envSub = document.getElementById("envSub");
       if (envSub) envSub.textContent = t.envSub;
+      updateSoundLabel();
     }
     function openInvitation() {
+      startAudio();
       const ov = document.getElementById("envOverlay");
       if (ov) { ov.style.opacity = "0"; setTimeout(() => { ov.style.display = "none"; }, 350); }
     }
+    window.addEventListener("load", () => {
+      if (!document.getElementById("envOverlay")) { startAudio(); }
+      document.addEventListener("pointerdown", function unlockOnce() {
+        if (!isPlaying) startAudio();
+        document.removeEventListener("pointerdown", unlockOnce);
+      }, { passive: true });
+    });
     const cdTarget = new Date("2027-01-16T16:00:00+08:00").getTime();
     function updateCountdown() {
       const now = Date.now();

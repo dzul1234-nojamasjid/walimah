@@ -168,6 +168,7 @@
     <div class="btn-row">
       <a class="action-btn" id="mapBtn" href="https://maps.google.com/?q=Community+Centre+12+Jalan+Harmoni" target="_blank" rel="noopener">📍 Lokasi</a>
       <button class="action-btn" onclick="showQr()">📱 Kongsi / QR</button>
+      <button class="sound-btn" id="soundBtn" onclick="toggleAudio()">🔊 Kompang 3D</button>
     </div>
     <div class="footer-note">Dzul Arts • Kad Jemputan Digital</div>
   </div>
@@ -187,7 +188,8 @@
         doa: '"Semoga Allah memberkati kamu berdua dan menghimpunkan kamu dalam kebaikan."',
         uDays: "Hari", uHours: "Jam", uMins: "Minit", uSecs: "Saat", uMs: "Milisaat",
         cdDone: "Majlis telah berlangsung",
-        envSub: "Tekan untuk membuka kad jemputan"
+        envSub: "Tekan untuk membuka kad jemputan",
+        soundOn: "🔊 Kompang 3D", soundOff: "🔇 Bisukan"
       },
       en: {
         badge: "Wedding Reception",
@@ -202,10 +204,209 @@
         doa: '"May Allah bless you both and unite you in goodness."',
         uDays: "Days", uHours: "Hours", uMins: "Mins", uSecs: "Secs", uMs: "Millisecs",
         cdDone: "The event has concluded",
-        envSub: "Tap to open invitation"
+        envSub: "Tap to open invitation",
+        soundOn: "🔊 3D Kompang", soundOff: "🔇 Mute"
       }
     };
     let currentLang = "ms";
+    let audioCtx = null, masterGain = null, isPlaying = false, seqTimer = null, stepIdx = 0;
+
+    function build3dKompangGraph(ctx) {
+      const comp = ctx.createDynamicsCompressor();
+      comp.threshold.value = -10;
+      comp.knee.value = 12;
+      comp.ratio.value = 4;
+      comp.attack.value = 0.003;
+      comp.release.value = 0.12;
+
+      const boost = ctx.createGain();
+      boost.gain.value = 2.4;
+
+      const splitter = ctx.createChannelSplitter(2);
+      const merger = ctx.createChannelMerger(2);
+
+      const dLeft = ctx.createDelay(1.0);
+      const dRight = ctx.createDelay(1.0);
+      dLeft.delayTime.value = 0.145;
+      dRight.delayTime.value = 0.235;
+
+      const fbLeft = ctx.createGain();
+      const fbRight = ctx.createGain();
+      fbLeft.gain.value = 0.46;
+      fbRight.gain.value = 0.48;
+
+      const echoGain = ctx.createGain();
+      echoGain.gain.value = 0.72;
+
+      const panner = ctx.createStereoPanner ? ctx.createStereoPanner() : null;
+      const dryBus = ctx.createGain();
+      dryBus.gain.value = 1.35;
+
+      const outGain = ctx.createGain();
+      outGain.gain.value = 1.45;
+
+      dryBus.connect(comp);
+      dryBus.connect(splitter);
+
+      splitter.connect(dLeft, 0);
+      splitter.connect(dRight, 1);
+
+      dLeft.connect(fbLeft);
+      fbLeft.connect(dRight);
+      dRight.connect(fbRight);
+      fbRight.connect(dLeft);
+
+      dLeft.connect(merger, 0, 0);
+      dRight.connect(merger, 0, 1);
+
+      merger.connect(echoGain);
+      echoGain.connect(comp);
+
+      comp.connect(boost);
+      boost.connect(outGain);
+      outGain.connect(ctx.destination);
+
+      return { dryBus, panner };
+    }
+
+    function hitKompang(ctx, dest, time, pitchBase, vel, panVal) {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      const filter = ctx.createBiquadFilter();
+
+      osc.type = "triangle";
+      osc.frequency.setValueAtTime(pitchBase * 1.65, time);
+      osc.frequency.exponentialRampToValueAtTime(pitchBase, time + 0.045);
+      osc.frequency.exponentialRampToValueAtTime(pitchBase * 0.72, time + 0.19);
+
+      filter.type = "bandpass";
+      filter.frequency.setValueAtTime(pitchBase * 3.4, time);
+      filter.Q.value = 1.8;
+
+      gain.gain.setValueAtTime(0.001, time);
+      gain.gain.linearRampToValueAtTime(vel, time + 0.008);
+      gain.gain.exponentialRampToValueAtTime(0.001, time + 0.22);
+
+      const nLen = Math.floor(ctx.sampleRate * 0.08);
+      const nBuf = ctx.createBuffer(1, nLen, ctx.sampleRate);
+      const ch = nBuf.getChannelData(0);
+      for (let i = 0; i < nLen; i++) {
+        ch[i] = (Math.random() * 2 - 1) * Math.exp(-i / (nLen * 0.25));
+      }
+      const noise = ctx.createBufferSource();
+      noise.buffer = nBuf;
+
+      const nFilt = ctx.createBiquadFilter();
+      nFilt.type = "highpass";
+      nFilt.frequency.value = 1400;
+
+      const nGain = ctx.createGain();
+      nGain.gain.setValueAtTime(vel * 0.55, time);
+      nGain.gain.exponentialRampToValueAtTime(0.001, time + 0.06);
+
+      let target = dest.dryBus;
+      if (dest.panner) {
+        const p = ctx.createStereoPanner();
+        p.pan.setValueAtTime(panVal, time);
+        p.connect(dest.dryBus);
+        target = p;
+      }
+
+      osc.connect(filter);
+      filter.connect(gain);
+      gain.connect(target);
+
+      noise.connect(nFilt);
+      nFilt.connect(nGain);
+      nGain.connect(target);
+
+      osc.start(time);
+      osc.stop(time + 0.24);
+      noise.start(time);
+      noise.stop(time + 0.08);
+    }
+
+    function playFestiveLead(ctx, dest, time, freq, dur) {
+      const osc = ctx.createOscillator();
+      const g = ctx.createGain();
+      osc.type = "sawtooth";
+      osc.frequency.setValueAtTime(freq, time);
+
+      const lp = ctx.createBiquadFilter();
+      lp.type = "lowpass";
+      lp.frequency.setValueAtTime(2200, time);
+
+      g.gain.setValueAtTime(0.001, time);
+      g.gain.linearRampToValueAtTime(0.24, time + 0.02);
+      g.gain.exponentialRampToValueAtTime(0.001, time + dur);
+
+      osc.connect(lp);
+      lp.connect(g);
+      g.connect(dest.dryBus);
+
+      osc.start(time);
+      osc.stop(time + dur + 0.02);
+    }
+
+    const kompPattern = [
+      { p: 135, v: 0.95, pan: -0.6, note: 587.33 },
+      { p: 175, v: 0.65, pan: 0.55, note: 0 },
+      { p: 135, v: 0.85, pan: -0.4, note: 659.25 },
+      { p: 190, v: 0.78, pan: 0.7,  note: 783.99 },
+      { p: 135, v: 0.95, pan: -0.65,note: 880.00 },
+      { p: 175, v: 0.70, pan: 0.5,  note: 783.99 },
+      { p: 150, v: 0.88, pan: -0.35,note: 659.25 },
+      { p: 190, v: 0.82, pan: 0.65, note: 587.33 }
+    ];
+
+    function startAudio() {
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if (!audioCtx) {
+        audioCtx = new AC();
+        masterGain = build3dKompangGraph(audioCtx);
+      }
+      if (audioCtx.state === "suspended") {
+        audioCtx.resume();
+      }
+      if (isPlaying) return;
+      isPlaying = true;
+      updateSoundLabel();
+
+      if (seqTimer) clearInterval(seqTimer);
+      const tickStep = () => {
+        if (!isPlaying || !audioCtx) return;
+        if (audioCtx.state === "suspended") audioCtx.resume();
+        const pat = kompPattern[stepIdx % kompPattern.length];
+        const now = audioCtx.currentTime;
+        hitKompang(audioCtx, masterGain, now, pat.p, pat.v, pat.pan);
+        if (pat.note > 0) playFestiveLead(audioCtx, masterGain, now, pat.note, 0.21);
+        stepIdx++;
+      };
+      tickStep();
+      seqTimer = setInterval(tickStep, 230);
+    }
+
+    function stopAudio() {
+      isPlaying = false;
+      if (seqTimer) {
+        clearInterval(seqTimer);
+        seqTimer = null;
+      }
+      updateSoundLabel();
+    }
+
+    function toggleAudio() {
+      if (isPlaying) stopAudio();
+      else startAudio();
+    }
+
+    function updateSoundLabel() {
+      const btn = document.getElementById("soundBtn");
+      if (!btn) return;
+      const t = data[currentLang];
+      btn.textContent = isPlaying ? t.soundOff : t.soundOn;
+    }
+
     function setLang(lang) {
       currentLang = lang;
       document.querySelectorAll(".lang-btn").forEach(b => b.classList.remove("active"));
@@ -229,11 +430,25 @@
       document.getElementById("cdDone").textContent = t.cdDone;
       const envSub = document.getElementById("envSub");
       if (envSub) envSub.textContent = t.envSub;
+      updateSoundLabel();
     }
+
     function openInvitation() {
+      startAudio();
       const ov = document.getElementById("envOverlay");
       if (ov) { ov.style.opacity = "0"; setTimeout(() => { ov.style.display = "none"; }, 350); }
     }
+
+    window.addEventListener("load", () => {
+      if (!document.getElementById("envOverlay")) {
+        startAudio();
+      }
+      document.addEventListener("pointerdown", function unlockOnce() {
+        if (!isPlaying) startAudio();
+        document.removeEventListener("pointerdown", unlockOnce);
+      }, { passive: true });
+    });
+
     const cdTarget = new Date("2027-01-16T16:00:00+08:00").getTime();
     function updateCountdown() {
       const now = Date.now();
@@ -259,6 +474,7 @@
     }
     requestAnimationFrame(updateCountdown);
     setLang("ms");
+
     function showQr() {
       const modal = document.getElementById("qrModal");
       modal.style.display = "flex";

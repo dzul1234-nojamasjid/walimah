@@ -281,11 +281,11 @@
 
     .env-box, .qr-box {
       width: 100%;
-      max-width: 345px;
+      max-width: 350px;
       background: var(--card-bg);
       border: 2px solid var(--border-col);
       border-radius: 20px;
-      padding: 24px 20px;
+      padding: 22px 18px;
       text-align: center;
       box-shadow: 0 22px 55px rgba(0, 0, 0, 0.65);
       font-family: system-ui, -apple-system, sans-serif;
@@ -296,10 +296,23 @@
     .env-label {
       font-family: system-ui, -apple-system, sans-serif;
       font-size: 11.5px;
-      letter-spacing: 1.6px;
+      letter-spacing: 1.5px;
       text-transform: uppercase;
       color: var(--text-accent);
-      margin-bottom: 10px;
+      margin-bottom: 6px;
+    }
+
+    .qr-subject {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 4px;
+    }
+
+    .qr-brand {
+      font-size: 11px;
+      color: var(--text-accent);
+      margin-bottom: 8px;
     }
 
     .env-title {
@@ -317,17 +330,22 @@
 
     .qr-canvas-wrap {
       background: #ffffff;
-      padding: 12px;
+      padding: 10px;
       border-radius: 14px;
       display: inline-block;
-      margin: 12px 0;
+      margin: 8px 0 10px;
     }
 
     .qr-link-txt {
       font-size: 11px;
       word-break: break-all;
-      opacity: 0.85;
+      opacity: 0.9;
       margin-bottom: 12px;
+    }
+
+    .qr-link-txt a {
+      color: var(--text-accent);
+      text-decoration: underline;
     }
 
     .qr-actions {
@@ -350,8 +368,10 @@
   <div class="qr-modal" id="qrModal" onclick="closeQr(event)">
     <div class="qr-box" onclick="event.stopPropagation()">
       <div class="env-label" id="qrTitle">Imbas QR Code Kad</div>
+      <div class="qr-subject" id="qrSubject">Majlis Walimah • Aiman &amp; Nurul</div>
+      <div class="qr-brand" id="qrBrand">Oleh Dzul Arts • Kad Jemputan Rasmi</div>
       <div class="qr-canvas-wrap">
-        <canvas id="qrCanvas" width="210" height="210"></canvas>
+        <canvas id="qrCanvas" width="220" height="270"></canvas>
       </div>
       <div class="qr-link-txt" id="qrUrlText"></div>
       <div class="qr-actions">
@@ -453,7 +473,11 @@
         qrBtn: "▦ QR Code",
         soundBtn: "♪ Melodi",
         qrTitle: "Imbas QR Code Kad",
-        saveQrBtn: "⬇ Simpan QR",
+        qrSubject: "Majlis Walimah • Aiman & Nurul",
+        qrBrand: "Oleh Dzul Arts • Kad Jemputan Rasmi",
+        qrTopText: "MAJLIS WALIMAH • AIMAN & NURUL",
+        qrBottomText: "Dzul Arts • Kad Jemputan Digital",
+        saveQrBtn: "⬇ Save QR Code",
         closeQrBtn: "Tutup",
         footer: "Kad Digital oleh Dzul Arts"
       },
@@ -481,6 +505,10 @@
         qrBtn: "▦ QR Code",
         soundBtn: "♪ Melody",
         qrTitle: "Scan Card QR Code",
+        qrSubject: "Wedding Reception • Aiman & Nurul",
+        qrBrand: "By Dzul Arts • Official Invitation Card",
+        qrTopText: "WEDDING INVITATION • AIMAN & NURUL",
+        qrBottomText: "Dzul Arts • Digital E-Card",
         saveQrBtn: "⬇ Save QR Code",
         closeQrBtn: "Close",
         footer: "Digital Card by Dzul Arts"
@@ -519,9 +547,15 @@
       document.getElementById("qrBtn").textContent = t.qrBtn;
       document.getElementById("soundBtn").textContent = t.soundBtn;
       document.getElementById("qrTitle").textContent = t.qrTitle;
+      document.getElementById("qrSubject").textContent = t.qrSubject;
+      document.getElementById("qrBrand").textContent = t.qrBrand;
       document.getElementById("saveQrBtn").textContent = t.saveQrBtn;
       document.getElementById("closeQrBtn").textContent = t.closeQrBtn;
       document.getElementById("footerText").textContent = t.footer;
+
+      if (document.getElementById("qrModal").style.display === "flex") {
+        openQr();
+      }
     }
 
     const targetMs = new Date(EVENT_ISO).getTime();
@@ -814,34 +848,57 @@
       return { buildMatrix };
     })();
 
-    function renderQrOnCanvas(canvas, text) {
+    function renderQrWithLabels(canvas, url) {
       const ctx = canvas.getContext("2d");
-      const pxSize = canvas.width;
+      const w = canvas.width;
+      const h = canvas.height;
+      const t = COPY[currentLang];
+
       ctx.fillStyle = "#ffffff";
-      ctx.fillRect(0, 0, pxSize, pxSize);
+      ctx.fillRect(0, 0, w, h);
 
-      const mat = QRCodeGen.buildMatrix(text);
-      if (!mat) return;
+      // Teks tajuk majlis di bahagian atas QR
+      ctx.fillStyle = "#17120d";
+      ctx.font = "bold 11px sans-serif";
+      ctx.textAlign = "center";
+      ctx.fillText(t.qrTopText, w / 2, 20);
 
-      const count = mat.length;
-      const quiet = 4;
-      const cell = Math.floor(pxSize / (count + quiet * 2));
-      const offset = Math.floor((pxSize - cell * count) / 2);
+      const mat = QRCodeGen.buildMatrix(url);
+      if (mat) {
+        const count = mat.length;
+        const quiet = 3;
+        const qrBoxSize = 186;
+        const cell = Math.floor(qrBoxSize / (count + quiet * 2));
+        const qrTotalPx = cell * count;
+        const startX = Math.floor((w - qrTotalPx) / 2);
+        const startY = 30;
 
-      ctx.fillStyle = "#000000";
-      for (let r = 0; r < count; r++) {
-        for (let c = 0; c < count; c++) {
-          if (mat[r][c] === 1) {
-            ctx.fillRect(offset + c * cell, offset + r * cell, cell, cell);
+        ctx.fillStyle = "#000000";
+        for (let r = 0; r < count; r++) {
+          for (let c = 0; c < count; c++) {
+            if (mat[r][c] === 1) {
+              ctx.fillRect(startX + c * cell, startY + r * cell, cell, cell);
+            }
           }
         }
       }
+
+      // Label nama Dzul Arts & pautan ringkas di bahagian bawah QR
+      ctx.fillStyle = "#8a5a00";
+      ctx.font = "bold 11px sans-serif";
+      ctx.fillText(t.qrBottomText, w / 2, 236);
+
+      ctx.fillStyle = "#444444";
+      ctx.font = "9.5px sans-serif";
+      const shortUrl = url.length > 34 ? url.slice(0, 31) + "..." : url;
+      ctx.fillText(shortUrl, w / 2, 254);
     }
 
     function openQr() {
       const url = window.location.href;
-      document.getElementById("qrUrlText").textContent = url;
-      renderQrOnCanvas(document.getElementById("qrCanvas"), url);
+      const escUrl = url.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
+      document.getElementById("qrUrlText").innerHTML = `<a href="${escUrl}" target="_blank" rel="noopener">${escUrl}</a>`;
+      renderQrWithLabels(document.getElementById("qrCanvas"), url);
       document.getElementById("qrModal").style.display = "flex";
     }
 
@@ -849,7 +906,7 @@
       const canvas = document.getElementById("qrCanvas");
       if (!canvas) return;
       const link = document.createElement("a");
-      link.download = "wedding-invitation-qr.png";
+      link.download = "majlis-walimah-dzul-arts-qr.png";
       link.href = canvas.toDataURL("image/png");
       link.click();
     }

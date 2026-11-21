@@ -166,8 +166,6 @@
         .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
     }
 
-    function jsStr(str) { return JSON.stringify(String(str || '')); }
-
     function generateWedding() {
       const groom = document.getElementById('wGroom').value.trim() || 'Pengantin Lelaki';
       const bride = document.getElementById('wBride').value.trim() || 'Pengantin Perempuan';
@@ -200,6 +198,7 @@
     </div>
   </div>` : '';
 
+      // FIXED: Changed nested backticks to string concatenation to prevent SyntaxError
       const html = `<!DOCTYPE html>
 <html lang="ms">
 <head>
@@ -264,8 +263,8 @@
       font-family: system-ui, -apple-system, sans-serif;
     }
     .cd-heading { font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-accent); margin-bottom: 8px; }
-    .cd-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; }
-    @media (max-width: 380px) { .cd-grid { grid-template-columns: repeat(3, 1fr); } }
+    .cd-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; }
+    @media (max-width: 380px) { .cd-grid { grid-template-columns: repeat(2, 1fr); } }
     .cd-cell { background: rgba(0, 0, 0, 0.25); border: 1px solid rgba(229, 190, 106, 0.28); border-radius: 10px; padding: 6px 3px; }
     .cd-num { font-size: 14.5px; font-weight: 700; color: var(--text-accent); line-height: 1.2; font-variant-numeric: tabular-nums; }
     .cd-unit { font-size: 9.5px; opacity: 0.85; margin-top: 2px; }
@@ -432,7 +431,6 @@
     function openInvitation() {
       const ov = document.getElementById("envOverlay");
       if (ov) { ov.style.opacity = "0"; setTimeout(() => { ov.style.display = "none"; }, 350); }
-      // Note: Audio play functionality omitted for simplicity in this template
     }
 
     // Countdown Logic
@@ -462,20 +460,22 @@
     updateCountdown();
     setLang('ms'); // init
 
-    // QR Code logic (Requires external API or simple placeholder)
+    // QR Code logic (FIXED: No nested backticks causing SyntaxError)
     function showQr() {
       const modal = document.getElementById('qrModal');
       modal.style.display = 'flex';
       const currentUrl = window.location.href;
-      document.getElementById('qrUrlText').innerHTML = `<a href="${'${currentUrl}'}" target="_blank">${'${currentUrl}'}</a>`;
       
-      // Simple QR generation using canvas and an API
+      // Update link text safely
+      document.getElementById('qrUrlText').innerHTML = '<a href="' + currentUrl + '" target="_blank">' + currentUrl + '</a>';
+      
+      // Generate QR image
       const canvas = document.getElementById('qrCanvas');
       const ctx = canvas.getContext('2d');
       const img = new Image();
       img.crossOrigin = "Anonymous";
       img.onload = function() { ctx.drawImage(img, 0, 0, canvas.width, canvas.height); };
-      img.src = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=${'${encodeURIComponent(currentUrl)}'}`;
+      img.src = "https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=" + encodeURIComponent(currentUrl);
     }
 
     function closeQr(e) {

@@ -34,7 +34,8 @@
     .lang-btn.active { background: var(--text-accent); color: #17120d; font-weight: 700; border-color: var(--text-accent); }
     .bismillah { font-size: 17px; color: var(--text-accent); margin-bottom: 4px; line-height: 1.7; }
     .badge { font-family: system-ui, -apple-system, sans-serif; font-size: 10.5px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-accent); margin-bottom: 12px; }
-    .hosts { font-size: 12.5px; line-height: 1.55; opacity: 0.92; margin-bottom: 10px; }
+    .hosts { font-size: 12.5px; line-height: 1.65; opacity: 0.92; margin-bottom: 10px; }
+    .hosts .host-line { display: block; }
     .couple { font-size: 26px; font-weight: bold; color: var(--text-accent); line-height: 1.25; margin: 6px 0 16px; }
     .couple span.amp { display: block; font-size: 17px; font-style: italic; margin: 2px 0; color: var(--text-main); }
     .art {
@@ -134,7 +135,10 @@
     </div>
     <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
     <div class="badge" id="badgeText"></div>
-    <div class="hosts" id="hostsText">Haji Bakhil &amp; Hajjah Bakhil &amp; Tok Siak &amp; Mak Siak</div>
+    <div class="hosts" id="hostsText">
+      <span class="host-line">Haji Bakhil &amp; Hajjah Bakhil</span>
+      <span class="host-line">Tok Siak &amp; Mak Siak</span>
+    </div>
     <div class="couple">Teruna<span class="amp">&amp;</span>Dara</div>
     <div class="art">
       <img src="wedding.jpg" alt="Wedding Artwork" onerror="this.style.display='none';document.getElementById('artFb').style.display='flex';" />

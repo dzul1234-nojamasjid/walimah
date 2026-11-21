@@ -13,171 +13,105 @@
       font-family: system-ui, -apple-system, sans-serif;
       padding: 18px 14px 48px;
     }
-    .wrap {
-      max-width: 860px;
-      margin: 0 auto;
-    }
-    h1 {
-      font-size: 20px;
-      color: #facc15;
-      margin-bottom: 4px;
-    }
-    .sub {
-      font-size: 12.5px;
-      color: #94a3b8;
-      margin-bottom: 16px;
-      line-height: 1.5;
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-    }
-    @media (max-width: 680px) {
-      .grid { grid-template-columns: 1fr; }
-    }
+    .wrap { max-width: 860px; margin: 0 auto; }
+    h1 { font-size: 20px; color: #facc15; margin-bottom: 4px; }
+    .sub { font-size: 12.5px; color: #94a3b8; margin-bottom: 16px; line-height: 1.5; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    @media (max-width: 680px) { .grid { grid-template-columns: 1fr; } }
     .card {
-      background: #1e293b;
-      border: 1px solid #334155;
-      border-radius: 14px;
-      padding: 14px;
-      margin-bottom: 14px;
+      background: #1e293b; border: 1px solid #334155;
+      border-radius: 14px; padding: 14px; margin-bottom: 14px;
     }
-    .grp {
-      margin-bottom: 11px;
-    }
-    .grp:last-child {
-      margin-bottom: 0;
-    }
-    label {
-      display: block;
-      font-size: 12px;
-      color: #cbd5e1;
-      margin-bottom: 4px;
-    }
+    .grp { margin-bottom: 11px; }
+    .grp:last-child { margin-bottom: 0; }
+    label { display: block; font-size: 12px; color: #cbd5e1; margin-bottom: 4px; }
     input, select, textarea {
-      width: 100%;
-      padding: 9px 10px;
-      border-radius: 9px;
-      border: 1px solid #475569;
-      background: #0f172a;
-      color: #ffffff;
-      font-size: 13px;
-      font-family: inherit;
+      width: 100%; padding: 9px 10px; border-radius: 9px;
+      border: 1px solid #475569; background: #0f172a; color: #ffffff;
+      font-size: 13px; font-family: inherit;
     }
     textarea.code-out {
       min-height: 230px;
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-      font-size: 11.5px;
-      line-height: 1.45;
-      color: #fde68a;
-      white-space: pre;
-      overflow-x: auto;
+      font-size: 11.5px; line-height: 1.45; color: #fde68a;
+      white-space: pre; overflow-x: auto;
     }
-    .btn-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 10px;
-    }
+    .btn-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
     button {
-      padding: 10px 14px;
-      border-radius: 10px;
-      border: none;
-      font-size: 13px;
-      font-weight: 700;
-      cursor: pointer;
+      padding: 10px 14px; border-radius: 10px; border: none;
+      font-size: 13px; font-weight: 700; cursor: pointer;
     }
     .btn-gen { background: #facc15; color: #0f172a; }
     .btn-copy { background: #38bdf8; color: #0f172a; }
     .btn-dl { background: #22c55e; color: #052e16; }
-    .status-msg {
-      margin-top: 8px;
-      font-size: 12px;
-      color: #4ade80;
-      min-height: 18px;
-    }
+    .status-msg { margin-top: 8px; font-size: 12px; color: #4ade80; min-height: 18px; }
   </style>
 </head>
 <body>
   <div class="wrap">
     <h1>Wedding Invitation E-Card Maker</h1>
     <p class="sub">
-      Isi maklumat majlis walimatulurus di bawah. Nama fail gambar automatik ditambah <strong>.jpg</strong> jika ditulis tanpa sambungan (contoh: <code>wedding</code> → <code>wedding.jpg</code>).
+      Isi maklumat majlis walimatulurus di bawah. Nama fail gambar automatik ditambah <strong>.jpg</strong> jika tiada sambungan (contoh: <code>wedding</code> → <code>wedding.jpg</code>).
     </p>
 
     <div class="card">
       <div class="grid">
         <div class="grp">
-          <label>1. Nama Pengantin Lelaki (Groom)</label>
+          <label>1. Nama Pengantin Lelaki</label>
           <input type="text" id="wGroom" value="Aiman Hakim" />
         </div>
-
         <div class="grp">
-          <label>2. Nama Pengantin Perempuan (Bride)</label>
+          <label>2. Nama Pengantin Perempuan</label>
           <input type="text" id="wBride" value="Nurul Huda" />
         </div>
-
         <div class="grp">
           <label>3. Tuan Rumah / Keluarga (BM)</label>
           <input type="text" id="wHostsMs" value="Hj. Rahman &amp; Hjh. Salmah serta En. Halim &amp; Pn. Faridah" />
         </div>
-
         <div class="grp">
           <label>4. Hosts / Families (EN)</label>
           <input type="text" id="wHostsEn" value="Hj. Rahman &amp; Hjh. Salmah and En. Halim &amp; Pn. Faridah" />
         </div>
-
         <div class="grp">
           <label>5. Hari &amp; Tarikh (BM)</label>
           <input type="text" id="wDayDateMs" value="Sabtu, 16 Januari 2027" />
         </div>
-
         <div class="grp">
           <label>6. Day &amp; Date (EN)</label>
           <input type="text" id="wDayDateEn" value="Saturday, 16 January 2027" />
         </div>
-
         <div class="grp">
           <label>7. Masa / Sesi (BM)</label>
           <input type="text" id="wTimeMs" value="Petang • 4:00 PTG – 8:00 MLM" />
         </div>
-
         <div class="grp">
           <label>8. Time / Session (EN)</label>
           <input type="text" id="wTimeEn" value="Evening • 4:00 PM – 8:00 PM" />
         </div>
-
         <div class="grp">
           <label>9. Lokasi / Tempat (BM)</label>
           <input type="text" id="wLocMs" value="Dewan Serbaguna Community Centre, 12 Jalan Harmoni (Bukan kolong blok)" />
         </div>
-
         <div class="grp">
           <label>10. Venue / Location (EN)</label>
           <input type="text" id="wLocEn" value="Community Centre Hall, 12 Jalan Harmoni (Not void deck)" />
         </div>
-
         <div class="grp">
           <label>11. Tarikh &amp; Masa Countdown (ISO +08:00)</label>
           <input type="text" id="wIso" value="2027-01-16T16:00:00+08:00" />
         </div>
-
         <div class="grp">
           <label>12. Pautan Google Maps</label>
           <input type="text" id="wMap" value="https://maps.google.com/?q=Community+Centre+12+Jalan+Harmoni" />
         </div>
-
         <div class="grp">
           <label>13. Nama Fail Gambar Pengantin</label>
           <input type="text" id="wArt" value="wedding.jpg" />
         </div>
-
         <div class="grp">
           <label>14. Nama Fail HTML Keluaran</label>
           <input type="text" id="wFile" value="index.html" />
         </div>
-
         <div class="grp">
           <label>15. Tema Warna</label>
           <select id="wTheme">
@@ -188,7 +122,6 @@
             <option value="royal-navy">5. Royal Navy &amp; Champagne</option>
           </select>
         </div>
-
         <div class="grp">
           <label>16. Sampul Pembuka (Envelope)?</label>
           <select id="wEnv">
@@ -229,16 +162,11 @@
 
     function esc(str) {
       return String(str || '')
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#39;');
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
     }
 
-    function jsStr(str) {
-      return JSON.stringify(String(str || ''));
-    }
+    function jsStr(str) { return JSON.stringify(String(str || '')); }
 
     function generateWedding() {
       const groom = document.getElementById('wGroom').value.trim() || 'Pengantin Lelaki';
@@ -274,15 +202,11 @@
       const openFn = useEnv ? `
     function openInvitation() {
       const ov = document.getElementById("envOverlay");
-      if (ov) {
-        ov.style.opacity = "0";
-        setTimeout(() => { ov.style.display = "none"; }, 350);
-      }
+      if (ov) { ov.style.opacity = "0"; setTimeout(() => { ov.style.display = "none"; }, 350); }
       playWeddingMelody();
     }` : `
     document.addEventListener("click", function once() {
-      playWeddingMelody();
-      document.removeEventListener("click", once);
+      playWeddingMelody(); document.removeEventListener("click", once);
     });`;
 
       const html = `<!DOCTYPE html>
@@ -308,36 +232,20 @@
 
     * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
     body {
-      min-height: 100dvh;
-      background: var(--bg-grad);
-      color: var(--text-main);
-      font-family: Georgia, 'Times New Roman', serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px 14px;
+      min-height: 100dvh; background: var(--bg-grad); color: var(--text-main);
+      font-family: Georgia, 'Times New Roman', serif; display: flex; align-items: center;
+      justify-content: center; padding: 20px 14px;
     }
     .card {
-      width: 100%;
-      max-width: 430px;
-      background: var(--card-bg);
-      color: var(--text-main);
-      border: 2px solid var(--border-col);
-      border-radius: 22px;
-      padding: 22px 18px 24px;
-      text-align: center;
-      box-shadow: 0 22px 50px rgba(0, 0, 0, 0.55), 0 0 28px var(--shadow-col);
+      width: 100%; max-width: 430px; background: var(--card-bg); color: var(--text-main);
+      border: 2px solid var(--border-col); border-radius: 22px; padding: 22px 18px 24px;
+      text-align: center; box-shadow: 0 22px 50px rgba(0, 0, 0, 0.55), 0 0 28px var(--shadow-col);
     }
     .top-bar { display: flex; justify-content: flex-end; gap: 6px; margin-bottom: 6px; }
     .lang-btn {
-      background: transparent;
-      border: 1px solid rgba(229, 190, 106, 0.55);
-      color: var(--text-main);
-      padding: 4px 10px;
-      border-radius: 999px;
-      font-size: 11px;
-      font-family: system-ui, -apple-system, sans-serif;
-      cursor: pointer;
+      background: transparent; border: 1px solid rgba(229, 190, 106, 0.55); color: var(--text-main);
+      padding: 4px 10px; border-radius: 999px; font-size: 11px;
+      font-family: system-ui, -apple-system, sans-serif; cursor: pointer;
     }
     .lang-btn.active { background: var(--text-accent); color: #17120d; font-weight: 700; border-color: var(--text-accent); }
     .bismillah { font-size: 17px; color: var(--text-accent); margin-bottom: 4px; line-height: 1.7; }
@@ -357,7 +265,7 @@
     .details-box {
       background: var(--soft-box); border: 1px solid rgba(212, 175, 55, 0.35);
       border-radius: 14px; padding: 12px; margin-bottom: 14px;
-      font-family: system-ui, -apple-system, sans-serif; font-size: 12.5px; line-height: 1.65;
+      font-family: system-ui, -apple-system, sans-serif; font-size: 12.5px; line-height: 1.65; text-align: left;
     }
     .countdown-box {
       background: var(--soft-box); border: 1px solid rgba(212, 175, 55, 0.35);
@@ -400,12 +308,12 @@
     }
     .env-box { cursor: pointer; font-family: Georgia, 'Times New Roman', serif; }
     .env-label { font-family: system-ui, -apple-system, sans-serif; font-size: 11.5px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-accent); margin-bottom: 6px; }
-    .qr-subject { font-size: 13px; font-weight: 700; color: var(--text-main); margin-bottom: 4px; }
+    .qr-subject { font-size: 13px; font-weight: 700; color: var(--text-main); margin-bottom: 3px; }
     .qr-brand { font-size: 11px; color: var(--text-accent); margin-bottom: 8px; }
     .env-title { font-size: 22px; font-weight: bold; color: var(--text-main); margin-bottom: 8px; }
     .env-sub { font-size: 13px; color: var(--text-accent); opacity: 0.9; }
-    .qr-canvas-wrap { background: #ffffff; padding: 10px; border-radius: 14px; display: inline-block; margin: 8px 0 10px; }
-    .qr-link-txt { font-size: 11px; word-break: break-all; opacity: 0.9; margin-bottom: 12px; }
+    .qr-canvas-wrap { background: #ffffff; padding: 8px; border-radius: 14px; display: inline-block; margin: 8px 0 10px; }
+    .qr-link-txt { font-size: 11px; word-break: break-all; opacity: 0.92; margin-bottom: 12px; }
     .qr-link-txt a { color: var(--text-accent); text-decoration: underline; }
     .qr-actions { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
   </style>
@@ -416,7 +324,7 @@
       <div class="env-label" id="qrTitle">Imbas QR Code Kad</div>
       <div class="qr-subject" id="qrSubject"></div>
       <div class="qr-brand" id="qrBrand"></div>
-      <div class="qr-canvas-wrap"><canvas id="qrCanvas" width="220" height="270"></canvas></div>
+      <div class="qr-canvas-wrap"><canvas id="qrCanvas" width="800" height="960" style="width:220px;height:auto;display:block;"></canvas></div>
       <div class="qr-link-txt" id="qrUrlText"></div>
       <div class="qr-actions">
         <button class="action-btn" id="saveQrBtn" onclick="saveQrCode()">⬇ Save QR Code</button>
@@ -586,7 +494,7 @@
         }
         return msg.slice(data.length);
       }
-      const SPECS = [null,[1,26,7,1,[]],[2,44,10,1,[6,18]],[3,70,15,1,[6,22]],[4,100,20,1,[6,26]],[5,134,26,1,[6,30]],[6,172,18,2,[6,34]]];
+      const SPECS = [null,[1,26,7,1,[]],[2,44,10,1,[6,18]],[3,70,15,1,[6,22]],[4,100,20,1,[6,26]],[5,134,26,1,[6,30]],[6,172,18,2,[6,34]],[7,196,20,2,[6,22,38]],[8,242,24,2,[6,24,42]],[9,292,30,2,[6,26,46]],[10,346,18,4,[6,28,50]]];
       function toUtf8Bytes(str) {
         const out = [];
         for (let i = 0; i < str.length; i++) {
@@ -600,16 +508,16 @@
       function buildMatrix(text) {
         const bytes = toUtf8Bytes(text);
         let spec = null;
-        for (let v = 1; v <= 6; v++) {
+        for (let v = 1; v <= 10; v++) {
           const [, totalCw, ecCw, blocks, aligns] = SPECS[v];
           const dataCw = totalCw - ecCw * blocks;
-          if (bytes.length <= dataCw - 2) { spec = { v, ecCw, blocks, aligns, dataCw }; break; }
+          if (bytes.length <= dataCw - (v >= 10 ? 3 : 2)) { spec = { v, ecCw, blocks, aligns, dataCw }; break; }
         }
         if (!spec) return null;
         const { v, ecCw, blocks, aligns, dataCw } = spec;
         const bits = [];
         const pushBits = (val, len) => { for (let i = len - 1; i >= 0; i--) bits.push((val >>> i) & 1); };
-        pushBits(0b0100, 4); pushBits(bytes.length, 8);
+        pushBits(0b0100, 4); pushBits(bytes.length, v >= 10 ? 16 : 8);
         for (const b of bytes) pushBits(b, 8);
         const term = Math.min(4, dataCw * 8 - bits.length);
         if (term > 0) pushBits(0, term);
@@ -647,6 +555,15 @@
         setMod(size - 8, 8, true, true);
         for (let i = 0; i < 9; i++) if (i !== 6) { res[8][i] = true; res[i][8] = true; }
         for (let i = 0; i < 8; i++) { res[8][size - 1 - i] = true; res[size - 1 - i][8] = true; }
+        if (v >= 7) {
+          let vRem = v << 12; const vPoly = 0b1111100100101;
+          for (let i = 17; i >= 12; i--) if ((vRem >>> i) & 1) vRem ^= vPoly << (i - 12);
+          const vBits = (v << 12) | vRem;
+          for (let i = 0; i < 18; i++) {
+            const bit = (vBits >>> i) & 1, r = Math.floor(i / 3), c = size - 11 + (i % 3);
+            setMod(r, c, bit === 1, true); setMod(c, r, bit === 1, true);
+          }
+        }
         let bitIdx = 0, dir = -1;
         for (let col = size - 1; col > 0; col -= 2) {
           if (col === 6) col = 5;
@@ -675,19 +592,21 @@
 
     function renderQrWithLabels(canvas, url) {
       const ctx = canvas.getContext("2d"), w = canvas.width, h = canvas.height, t = COPY[currentLang];
+      ctx.imageSmoothingEnabled = false;
       ctx.fillStyle = "#ffffff"; ctx.fillRect(0, 0, w, h);
-      ctx.fillStyle = "#17120d"; ctx.font = "bold 11px sans-serif"; ctx.textAlign = "center";
-      ctx.fillText(t.qrTopText, w / 2, 20);
+      ctx.strokeStyle = "#d4af37"; ctx.lineWidth = 6; ctx.strokeRect(14, 14, w - 28, h - 28);
+      ctx.fillStyle = "#17120d"; ctx.font = "bold 30px sans-serif"; ctx.textAlign = "center";
+      ctx.fillText(t.qrTopText, w / 2, 74);
       const mat = QRCodeGen.buildMatrix(url);
       if (mat) {
-        const count = mat.length, quiet = 3, cell = Math.floor(186 / (count + quiet * 2));
-        const sx = Math.floor((w - cell * count) / 2), sy = 30;
+        const count = mat.length, quiet = 4, cell = Math.floor(680 / (count + quiet * 2));
+        const sx = Math.floor((w - cell * count) / 2), sy = 105;
         ctx.fillStyle = "#000000";
         for (let r = 0; r < count; r++) for (let c = 0; c < count; c++) if (mat[r][c] === 1) ctx.fillRect(sx + c * cell, sy + r * cell, cell, cell);
       }
-      ctx.fillStyle = "#8a5a00"; ctx.font = "bold 11px sans-serif"; ctx.fillText(t.qrBottomText, w / 2, 236);
-      ctx.fillStyle = "#444444"; ctx.font = "9.5px sans-serif";
-      ctx.fillText(url.length > 34 ? url.slice(0, 31) + "..." : url, w / 2, 254);
+      ctx.fillStyle = "#8a5a00"; ctx.font = "bold 28px sans-serif"; ctx.fillText(t.qrBottomText, w / 2, 845);
+      ctx.fillStyle = "#333333"; ctx.font = "22px sans-serif";
+      ctx.fillText(url.length > 52 ? url.slice(0, 49) + "..." : url, w / 2, 895);
     }
 
     function openQr() {
@@ -762,9 +681,7 @@ ${openFn}
       const blob = new Blob([ta.value], { type: 'text/html;charset=utf-8' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
-      a.href = url;
-      a.download = fname;
-      a.click();
+      a.href = url; a.download = fname; a.click();
       URL.revokeObjectURL(url);
       document.getElementById('statusMsg').textContent = `Fail "${fname}" dimuat turun.`;
     }

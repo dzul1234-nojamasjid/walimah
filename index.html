@@ -327,7 +327,14 @@
       font-size: 11px;
       word-break: break-all;
       opacity: 0.85;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
+    }
+
+    .qr-actions {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      flex-wrap: wrap;
     }
   </style>
 </head>
@@ -347,7 +354,10 @@
         <canvas id="qrCanvas" width="210" height="210"></canvas>
       </div>
       <div class="qr-link-txt" id="qrUrlText"></div>
-      <button class="action-btn" id="closeQrBtn" onclick="closeQr()">Tutup</button>
+      <div class="qr-actions">
+        <button class="action-btn" id="saveQrBtn" onclick="saveQrCode()">⬇ Save QR Code</button>
+        <button class="sound-btn" id="closeQrBtn" onclick="closeQr()">Tutup</button>
+      </div>
     </div>
   </div>
 
@@ -443,6 +453,7 @@
         qrBtn: "▦ QR Code",
         soundBtn: "♪ Melodi",
         qrTitle: "Imbas QR Code Kad",
+        saveQrBtn: "⬇ Simpan QR",
         closeQrBtn: "Tutup",
         footer: "Kad Digital oleh Dzul Arts"
       },
@@ -470,6 +481,7 @@
         qrBtn: "▦ QR Code",
         soundBtn: "♪ Melody",
         qrTitle: "Scan Card QR Code",
+        saveQrBtn: "⬇ Save QR Code",
         closeQrBtn: "Close",
         footer: "Digital Card by Dzul Arts"
       }
@@ -507,6 +519,7 @@
       document.getElementById("qrBtn").textContent = t.qrBtn;
       document.getElementById("soundBtn").textContent = t.soundBtn;
       document.getElementById("qrTitle").textContent = t.qrTitle;
+      document.getElementById("saveQrBtn").textContent = t.saveQrBtn;
       document.getElementById("closeQrBtn").textContent = t.closeQrBtn;
       document.getElementById("footerText").textContent = t.footer;
     }
@@ -594,7 +607,6 @@
         return msg.slice(data.length);
       }
 
-      // [version, totalCodewords, ecCodewordsPerBlock, numBlocks, alignCenters]
       const SPECS = [
         null,
         [1, 26, 7, 1, []],
@@ -632,7 +644,7 @@
         for (let v = 1; v <= 6; v++) {
           const [, totalCw, ecCw, blocks, aligns] = SPECS[v];
           const dataCw = totalCw - ecCw * blocks;
-          const maxPayload = dataCw - 2; // 4-bit mode + 8-bit len = 12 bits (~1.5 bytes)
+          const maxPayload = dataCw - 2;
           if (bytes.length <= maxPayload) {
             chosen = { v, totalCw, ecCw, blocks, aligns, dataCw };
             break;
@@ -640,13 +652,12 @@
         }
         if (!chosen) return null;
 
-        const { v, totalCw, ecCw, blocks, aligns, dataCw } = chosen;
+        const { v, ecCw, blocks, aligns, dataCw } = chosen;
         const bits = [];
         const pushBits = (val, len) => {
           for (let i = len - 1; i >= 0; i--) bits.push((val >>> i) & 1);
         };
 
-        // Mode 0100 = Byte mode
         pushBits(0b0100, 4);
         pushBits(bytes.length, 8);
         for (const b of bytes) pushBits(b, 8);
@@ -735,7 +746,6 @@
 
         setMod(size - 8, 8, true, true);
 
-        // Rizab kawasan format info
         for (let i = 0; i < 9; i++) {
           if (i !== 6) {
             reserved[8][i] = true;
@@ -747,7 +757,6 @@
           reserved[size - 1 - i][8] = true;
         }
 
-        // Isi data bit secara zig-zag
         let bitIdx = 0;
         let dir = -1;
         for (let col = size - 1; col > 0; col -= 2) {
@@ -767,7 +776,6 @@
           dir = -dir;
         }
 
-        // Pilih mask terbaik (mask 0: (r + c) % 2 === 0)
         const maskId = 0;
         for (let r = 0; r < size; r++) {
           for (let c = 0; c < size; c++) {
@@ -777,7 +785,6 @@
           }
         }
 
-        // Format info EC Level L (01) + Mask 0 (000) -> 01000
         const dataBits = (0b01 << 3) | maskId;
         let rem = dataBits << 10;
         const poly = 0b10100110111;
@@ -789,7 +796,6 @@
         const fmtBits = [];
         for (let i = 14; i >= 0; i--) fmtBits.push((fmt >>> i) & 1);
 
-        // Tempatkan format bits
         const aroundA = [[0,8],[1,8],[2,8],[3,8],[4,8],[5,8],[7,8],[8,8],[8,7],[8,5],[8,4],[8,3],[8,2],[8,1],[8,0]];
         for (let i = 0; i < 15; i++) {
           const [rr, cc] = aroundA[i];
@@ -837,6 +843,15 @@
       document.getElementById("qrUrlText").textContent = url;
       renderQrOnCanvas(document.getElementById("qrCanvas"), url);
       document.getElementById("qrModal").style.display = "flex";
+    }
+
+    function saveQrCode() {
+      const canvas = document.getElementById("qrCanvas");
+      if (!canvas) return;
+      const link = document.createElement("a");
+      link.download = "wedding-invitation-qr.png";
+      link.href = canvas.toDataURL("image/png");
+      link.click();
     }
 
     function closeQr(e) {

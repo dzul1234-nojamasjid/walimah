@@ -30,6 +30,12 @@
       border: 1px solid #475569; background: #0f172a; color: #ffffff;
       font-size: 13px; font-family: inherit;
     }
+    input.auto-field {
+      background: #162032;
+      color: #94a3b8;
+      border-color: #334155;
+      cursor: not-allowed;
+    }
     .ymd-row {
       display: grid;
       grid-template-columns: 1fr 1.35fr 1fr;
@@ -61,7 +67,7 @@
   <div class="wrap">
     <h1>Wedding Invitation E-Card Maker</h1>
     <p class="sub">
-      Full calendar date dropdowns (Mon–Sun across whole years) and HH:MM (every 5 mins) time dropdowns. Image filenames auto-append <strong>.jpg</strong> if omitted (e.g. <code>wedding</code> → <code>wedding.jpg</code>).
+      Pilih tarikh (2026–2030, Isnin–Ahad) dan masa (HH:MM setiap 5 minit) melalui drop-down. Kotak berwarna kelabu dikemas kini automatik.
     </p>
 
     <div class="card">
@@ -84,7 +90,7 @@
         </div>
 
         <div class="grp">
-          <label>5. Pilih Tarikh Penuh Kalendar (Tahun / Bulan / Hari)</label>
+          <label>5. Pilih Tarikh Penuh Kalendar (2026–2030)</label>
           <div class="ymd-row">
             <select id="selYear" onchange="populateDaysAndSync()"></select>
             <select id="selMonth" onchange="populateDaysAndSync()"></select>
@@ -93,13 +99,13 @@
         </div>
 
         <div class="grp">
-          <label>6. Hari &amp; Tarikh (BM — Auto / Boleh Ubah)</label>
-          <input type="text" id="wDayDateMs" value="Sabtu, 16 Januari 2027" />
+          <label>6. Hari &amp; Tarikh (BM — Auto)</label>
+          <input type="text" id="wDayDateMs" class="auto-field" readonly tabindex="-1" value="Sabtu, 16 Januari 2027" />
         </div>
 
         <div class="grp">
-          <label>7. Day &amp; Date (EN — Auto / Boleh Ubah)</label>
-          <input type="text" id="wDayDateEn" value="Saturday, 16 January 2027" />
+          <label>7. Day &amp; Date (EN — Auto)</label>
+          <input type="text" id="wDayDateEn" class="auto-field" readonly tabindex="-1" value="Saturday, 16 January 2027" />
         </div>
 
         <div class="grp">
@@ -117,13 +123,13 @@
         </div>
 
         <div class="grp">
-          <label>9. Masa / Sesi (BM — Auto / Boleh Ubah)</label>
-          <input type="text" id="wTimeMs" value="Petang • 4:00 PTG – 8:00 MLM" />
+          <label>9. Masa / Sesi (BM — Auto)</label>
+          <input type="text" id="wTimeMs" class="auto-field" readonly tabindex="-1" value="Petang • 4:00 PTG – 8:00 MLM" />
         </div>
 
         <div class="grp">
-          <label>10. Time / Session (EN — Auto / Boleh Ubah)</label>
-          <input type="text" id="wTimeEn" value="Evening • 4:00 PM – 8:00 PM" />
+          <label>10. Time / Session (EN — Auto)</label>
+          <input type="text" id="wTimeEn" class="auto-field" readonly tabindex="-1" value="Evening • 4:00 PM – 8:00 PM" />
         </div>
 
         <div class="grp">
@@ -135,8 +141,8 @@
           <input type="text" id="wLocEn" value="Community Centre Hall, 12 Jalan Harmoni (Not void deck)" />
         </div>
         <div class="grp">
-          <label>13. Tarikh &amp; Masa Countdown (ISO +08:00)</label>
-          <input type="text" id="wIso" value="2027-01-16T16:00:00+08:00" />
+          <label>13. Tarikh &amp; Masa Countdown (ISO +08:00 — Auto)</label>
+          <input type="text" id="wIso" class="auto-field" readonly tabindex="-1" value="2027-01-16T16:00:00+08:00" />
         </div>
         <div class="grp">
           <label>14. Pautan Google Maps</label>
@@ -195,7 +201,7 @@
       const selHour = document.getElementById("selHour");
       const selMin = document.getElementById("selMin");
 
-      for (let y = 2026; y <= 2028; y++) {
+      for (let y = 2026; y <= 2030; y++) {
         const opt = document.createElement("option");
         opt.value = String(y);
         opt.textContent = String(y);

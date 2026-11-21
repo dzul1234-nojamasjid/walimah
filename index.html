@@ -13,7 +13,6 @@
       --border-col: #d4af37;
       --shadow-col: rgba(212, 175, 55, 0.28);
       --soft-box: rgba(229, 190, 106, 0.09);
-      --highlight-box: rgba(229, 190, 106, 0.16);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
@@ -31,7 +30,7 @@
 
     .card {
       width: 100%;
-      max-width: 440px;
+      max-width: 430px;
       background: var(--card-bg);
       color: var(--text-main);
       border: 2px solid var(--border-col);
@@ -45,7 +44,7 @@
       display: flex;
       justify-content: flex-end;
       gap: 6px;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
 
     .lang-btn {
@@ -79,105 +78,7 @@
       letter-spacing: 2px;
       text-transform: uppercase;
       color: var(--text-accent);
-      margin-bottom: 10px;
-    }
-
-    /* Kotak Hari, Tarikh, Masa & Lokasi diletakkan menonjol di atas */
-    .event-spotlight {
-      background: var(--highlight-box);
-      border: 1.5px solid var(--border-col);
-      border-radius: 16px;
-      padding: 14px 12px;
-      margin-bottom: 16px;
-      text-align: left;
-      font-family: system-ui, -apple-system, sans-serif;
-    }
-
-    .spotlight-title {
-      text-align: center;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 1.4px;
-      text-transform: uppercase;
-      color: var(--text-accent);
-      margin-bottom: 10px;
-    }
-
-    .event-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 8px;
-      font-size: 13px;
-      line-height: 1.45;
-      padding: 5px 0;
-      border-bottom: 1px dashed rgba(229, 190, 106, 0.22);
-    }
-
-    .event-item:last-child {
-      border-bottom: none;
-      padding-bottom: 0;
-    }
-
-    .event-label {
-      min-width: 78px;
-      font-weight: 700;
-      color: var(--text-accent);
-    }
-
-    .event-val {
-      flex: 1;
-      font-weight: 600;
-      color: var(--text-main);
-    }
-
-    .countdown-box {
-      background: var(--soft-box);
-      border: 1px solid rgba(212, 175, 55, 0.35);
-      border-radius: 14px;
-      padding: 12px 10px;
-      margin-bottom: 16px;
-      font-family: system-ui, -apple-system, sans-serif;
-    }
-
-    .cd-heading {
-      font-size: 11px;
-      letter-spacing: 1.2px;
-      text-transform: uppercase;
-      color: var(--text-accent);
-      margin-bottom: 8px;
-    }
-
-    .cd-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 6px;
-    }
-
-    .cd-cell {
-      background: rgba(0, 0, 0, 0.28);
-      border: 1px solid rgba(229, 190, 106, 0.28);
-      border-radius: 10px;
-      padding: 7px 4px;
-    }
-
-    .cd-num {
-      font-size: 17px;
-      font-weight: 700;
-      color: var(--text-accent);
-      line-height: 1.2;
-    }
-
-    .cd-unit {
-      font-size: 10px;
-      opacity: 0.85;
-      margin-top: 2px;
-    }
-
-    .cd-done {
-      font-size: 12.5px;
-      color: var(--text-accent);
-      font-weight: 600;
-      padding: 4px 0;
+      margin-bottom: 12px;
     }
 
     .hosts {
@@ -188,7 +89,7 @@
     }
 
     .couple {
-      font-size: 26px;
+      font-size: 27px;
       font-weight: bold;
       color: var(--text-accent);
       line-height: 1.25;
@@ -238,6 +139,72 @@
       margin-bottom: 14px;
     }
 
+    .details-box {
+      background: var(--soft-box);
+      border: 1px solid rgba(212, 175, 55, 0.35);
+      border-radius: 14px;
+      padding: 12px;
+      margin-bottom: 14px;
+      font-family: system-ui, -apple-system, sans-serif;
+      font-size: 12.5px;
+      line-height: 1.65;
+    }
+
+    .countdown-box {
+      background: var(--soft-box);
+      border: 1px solid rgba(212, 175, 55, 0.35);
+      border-radius: 14px;
+      padding: 12px 10px;
+      margin-bottom: 16px;
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+
+    .cd-heading {
+      font-size: 11px;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--text-accent);
+      margin-bottom: 8px;
+    }
+
+    .cd-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 5px;
+    }
+
+    @media (max-width: 380px) {
+      .cd-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    .cd-cell {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(229, 190, 106, 0.28);
+      border-radius: 10px;
+      padding: 6px 3px;
+    }
+
+    .cd-num {
+      font-size: 14.5px;
+      font-weight: 700;
+      color: var(--text-accent);
+      line-height: 1.2;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .cd-unit {
+      font-size: 9.5px;
+      opacity: 0.85;
+      margin-top: 2px;
+    }
+
+    .cd-done {
+      font-size: 12.5px;
+      color: var(--text-accent);
+      font-weight: 600;
+      padding: 4px 0;
+    }
+
     .doa-box {
       border-top: 1px dashed rgba(212, 175, 55, 0.45);
       border-bottom: 1px dashed rgba(212, 175, 55, 0.45);
@@ -262,7 +229,7 @@
     .btn-row {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
+      gap: 8px;
       justify-content: center;
       margin-top: 10px;
     }
@@ -272,13 +239,13 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 6px;
+      gap: 5px;
       background: transparent;
       border: 1px solid var(--border-col);
       color: var(--text-accent);
-      padding: 8px 14px;
+      padding: 8px 12px;
       border-radius: 20px;
-      font-size: 12px;
+      font-size: 11.5px;
       font-family: system-ui, -apple-system, sans-serif;
       cursor: pointer;
     }
@@ -295,7 +262,7 @@
       font-family: system-ui, -apple-system, sans-serif;
     }
 
-    .env-overlay {
+    .env-overlay, .qr-modal {
       position: fixed;
       inset: 0;
       background: rgba(0, 0, 0, 0.88);
@@ -307,17 +274,24 @@
       transition: opacity 0.35s ease;
     }
 
-    .env-box {
+    .qr-modal {
+      display: none;
+      z-index: 60;
+    }
+
+    .env-box, .qr-box {
       width: 100%;
       max-width: 345px;
       background: var(--card-bg);
       border: 2px solid var(--border-col);
       border-radius: 20px;
-      padding: 28px 20px;
+      padding: 24px 20px;
       text-align: center;
-      cursor: pointer;
       box-shadow: 0 22px 55px rgba(0, 0, 0, 0.65);
+      font-family: system-ui, -apple-system, sans-serif;
     }
+
+    .env-box { cursor: pointer; font-family: Georgia, 'Times New Roman', serif; }
 
     .env-label {
       font-family: system-ui, -apple-system, sans-serif;
@@ -340,6 +314,21 @@
       color: var(--text-accent);
       opacity: 0.9;
     }
+
+    .qr-canvas-wrap {
+      background: #ffffff;
+      padding: 12px;
+      border-radius: 14px;
+      display: inline-block;
+      margin: 12px 0;
+    }
+
+    .qr-link-txt {
+      font-size: 11px;
+      word-break: break-all;
+      opacity: 0.85;
+      margin-bottom: 14px;
+    }
   </style>
 </head>
 <body>
@@ -351,6 +340,17 @@
     </div>
   </div>
 
+  <div class="qr-modal" id="qrModal" onclick="closeQr(event)">
+    <div class="qr-box" onclick="event.stopPropagation()">
+      <div class="env-label" id="qrTitle">Imbas QR Code Kad</div>
+      <div class="qr-canvas-wrap">
+        <canvas id="qrCanvas" width="210" height="210"></canvas>
+      </div>
+      <div class="qr-link-txt" id="qrUrlText"></div>
+      <button class="action-btn" id="closeQrBtn" onclick="closeQr()">Tutup</button>
+    </div>
+  </div>
+
   <div class="card">
     <div class="top-bar">
       <button class="lang-btn active" id="btnMs" onclick="setLang('ms')">BM</button>
@@ -359,38 +359,6 @@
 
     <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
     <div class="badge" id="badgeText">Jemputan Walimatulurus • Wedding Invitation</div>
-
-    <!-- Bahagian Hari, Tarikh, Masa & Lokasi diletakkan jelas di bahagian atas -->
-    <div class="event-spotlight">
-      <div class="spotlight-title" id="spotTitle">Penting: Hari, Tarikh, Masa &amp; Lokasi</div>
-
-      <div class="event-item">
-        <span class="event-label" id="lblDayDate">Hari/Tarikh:</span>
-        <span class="event-val" id="valDayDate">Sabtu, 16 Januari 2027</span>
-      </div>
-
-      <div class="event-item">
-        <span class="event-label" id="lblTime">Masa:</span>
-        <span class="event-val" id="valTime">Petang • 4:00 PTG – 8:00 MLM</span>
-      </div>
-
-      <div class="event-item">
-        <span class="event-label" id="lblLoc">Lokasi:</span>
-        <span class="event-val" id="valLoc">Dewan Serbaguna Community Centre, 12 Jalan Harmoni (Bukan di kolong blok)</span>
-      </div>
-    </div>
-
-    <!-- Kiraan Detik Hari Majlis -->
-    <div class="countdown-box">
-      <div class="cd-heading" id="cdHeading">Kiraan Detik Ke Majlis</div>
-      <div class="cd-grid" id="cdGrid">
-        <div class="cd-cell"><div class="cd-num" id="cdDays">00</div><div class="cd-unit" id="uDays">Hari</div></div>
-        <div class="cd-cell"><div class="cd-num" id="cdHours">00</div><div class="cd-unit" id="uHours">Jam</div></div>
-        <div class="cd-cell"><div class="cd-num" id="cdMins">00</div><div class="cd-unit" id="uMins">Minit</div></div>
-        <div class="cd-cell"><div class="cd-num" id="cdSecs">00</div><div class="cd-unit" id="uSecs">Saat</div></div>
-      </div>
-      <div class="cd-done" id="cdDone" style="display:none;"></div>
-    </div>
 
     <div class="hosts" id="hostsText">
       Dengan penuh kesyukuran ke hadrat Ilahi,<br />
@@ -413,6 +381,24 @@
       Semoga kehadiran dan doa restu anda menyerikan lagi majlis serta diberkati Allah SWT.
     </p>
 
+    <div class="details-box" id="detailsBox">
+      <div><strong id="lblDayDate">Hari &amp; Tarikh:</strong> <span id="valDayDate">Sabtu, 16 Januari 2027</span></div>
+      <div><strong id="lblTime">Masa:</strong> <span id="valTime">Petang • 4:00 PTG – 8:00 MLM</span></div>
+      <div><strong id="lblLoc">Lokasi:</strong> <span id="valLoc">Dewan Serbaguna Community Centre, 12 Jalan Harmoni (Bukan kolong blok)</span></div>
+    </div>
+
+    <div class="countdown-box">
+      <div class="cd-heading" id="cdHeading">Kiraan Detik Ke Majlis</div>
+      <div class="cd-grid" id="cdGrid">
+        <div class="cd-cell"><div class="cd-num" id="cdDays">00</div><div class="cd-unit" id="uDays">Hari</div></div>
+        <div class="cd-cell"><div class="cd-num" id="cdHours">00</div><div class="cd-unit" id="uHours">Jam</div></div>
+        <div class="cd-cell"><div class="cd-num" id="cdMins">00</div><div class="cd-unit" id="uMins">Minit</div></div>
+        <div class="cd-cell"><div class="cd-num" id="cdSecs">00</div><div class="cd-unit" id="uSecs">Saat</div></div>
+        <div class="cd-cell"><div class="cd-num" id="cdMs">000</div><div class="cd-unit" id="uMs">Milisaat</div></div>
+      </div>
+      <div class="cd-done" id="cdDone" style="display:none;"></div>
+    </div>
+
     <div class="doa-box">
       <div class="doa-arab">بَارَكَ اللَّهُ لَكُمَا وَبَارَكَ عَلَيْكُمَا وَجَمَعَ بَيْنَكُمَا فِي خَيْرٍ</div>
       <div class="doa-text" id="doaText">
@@ -421,15 +407,15 @@
     </div>
 
     <div class="btn-row">
-      <a class="action-btn" id="mapBtn" href="https://maps.google.com/?q=Community+Centre+12+Jalan+Harmoni" target="_blank" rel="noopener">📍 Buka Peta Lokasi</a>
-      <button class="sound-btn" id="soundBtn" onclick="playWeddingMelody()">♪ Mainkan Melodi</button>
+      <a class="action-btn" id="mapBtn" href="https://maps.google.com/?q=Community+Centre+12+Jalan+Harmoni" target="_blank" rel="noopener">📍 Peta</a>
+      <button class="action-btn" id="qrBtn" onclick="openQr()">▦ QR Code</button>
+      <button class="sound-btn" id="soundBtn" onclick="playWeddingMelody()">♪ Melodi</button>
     </div>
 
     <div class="footer-note" id="footerText">Kad Digital oleh Dzul Arts</div>
   </div>
 
   <script>
-    // Tetapkan tarikh & masa sebenar majlis di sini (YYYY-MM-DDTHH:MM:SS+08:00)
     const EVENT_ISO = "2027-01-16T16:00:00+08:00";
 
     const COPY = {
@@ -437,48 +423,54 @@
         envLabel: "✦ Jemputan Walimatulurus ✦",
         envSub: "Tekan untuk membuka kad jemputan",
         badge: "Jemputan Walimatulurus • Wedding Invitation",
-        spotTitle: "Penting: Hari, Tarikh, Masa & Lokasi",
-        lblDayDate: "Hari/Tarikh:",
+        hosts: "Dengan penuh kesyukuran ke hadrat Ilahi,<br /><strong>Hj. Rahman &amp; Hjh. Salmah</strong> serta <strong>En. Halim &amp; Pn. Faridah</strong><br />mempersilakan tuan/puan ke majlis perkahwinan putera &amp; puteri kami:",
+        intro: "Semoga kehadiran dan doa restu anda menyerikan lagi majlis serta diberkati Allah SWT.",
+        lblDayDate: "Hari &amp; Tarikh:",
         valDayDate: "Sabtu, 16 Januari 2027",
         lblTime: "Masa:",
         valTime: "Petang • 4:00 PTG – 8:00 MLM",
         lblLoc: "Lokasi:",
-        valLoc: "Dewan Serbaguna Community Centre, 12 Jalan Harmoni (Bukan di kolong blok)",
+        valLoc: "Dewan Serbaguna Community Centre, 12 Jalan Harmoni (Bukan kolong blok)",
         cdHeading: "Kiraan Detik Ke Majlis",
         uDays: "Hari",
         uHours: "Jam",
         uMins: "Minit",
         uSecs: "Saat",
+        uMs: "Milisaat",
         cdDone: "Majlis telah berlangsung — Semoga diberkati Allah SWT.",
-        hosts: "Dengan penuh kesyukuran ke hadrat Ilahi,<br /><strong>Hj. Rahman &amp; Hjh. Salmah</strong> serta <strong>En. Halim &amp; Pn. Faridah</strong><br />mempersilakan tuan/puan ke majlis perkahwinan putera &amp; puteri kami:",
-        intro: "Semoga kehadiran dan doa restu anda menyerikan lagi majlis serta diberkati Allah SWT.",
         doa: "\"Semoga Allah memberkati kalian berdua dan melimpahkan keberkatan atas kalian, serta menghimpunkan kalian berdua dalam kebaikan.\"",
-        mapBtn: "📍 Buka Peta Lokasi",
-        soundBtn: "♪ Mainkan Melodi",
+        mapBtn: "📍 Peta",
+        qrBtn: "▦ QR Code",
+        soundBtn: "♪ Melodi",
+        qrTitle: "Imbas QR Code Kad",
+        closeQrBtn: "Tutup",
         footer: "Kad Digital oleh Dzul Arts"
       },
       en: {
         envLabel: "✦ Wedding Invitation ✦",
         envSub: "Tap to open the invitation card",
         badge: "Wedding Invitation • Walimatulurus",
-        spotTitle: "Important: Day, Date, Time & Venue",
-        lblDayDate: "Day/Date:",
+        hosts: "With gratitude to the Almighty,<br /><strong>Hj. Rahman &amp; Hjh. Salmah</strong> and <strong>En. Halim &amp; Pn. Faridah</strong><br />cordially invite you to the wedding of our children:",
+        intro: "May your presence and prayers bring joy to our celebration and blessings from Allah SWT.",
+        lblDayDate: "Day &amp; Date:",
         valDayDate: "Saturday, 16 January 2027",
         lblTime: "Time:",
         valTime: "Evening • 4:00 PM – 8:00 PM",
         lblLoc: "Venue:",
-        valLoc: "Community Centre Hall, 12 Jalan Harmoni (Not at HDB void deck)",
+        valLoc: "Community Centre Hall, 12 Jalan Harmoni (Not void deck)",
         cdHeading: "Countdown to the Wedding",
         uDays: "Days",
         uHours: "Hours",
         uMins: "Mins",
         uSecs: "Secs",
+        uMs: "Millisecs",
         cdDone: "The celebration has taken place — May Allah bless the couple.",
-        hosts: "With gratitude to the Almighty,<br /><strong>Hj. Rahman &amp; Hjh. Salmah</strong> and <strong>En. Halim &amp; Pn. Faridah</strong><br />cordially invite you to the wedding of our children:",
-        intro: "May your presence and prayers bring joy to our celebration and blessings from Allah SWT.",
         doa: "\"May Allah bless you both, shower His blessings upon you, and unite you both in goodness.\"",
-        mapBtn: "📍 Open Map Venue",
-        soundBtn: "♪ Play Melody",
+        mapBtn: "📍 Map",
+        qrBtn: "▦ QR Code",
+        soundBtn: "♪ Melody",
+        qrTitle: "Scan Card QR Code",
+        closeQrBtn: "Close",
         footer: "Digital Card by Dzul Arts"
       }
     };
@@ -495,36 +487,39 @@
       document.getElementById("envLabel").textContent = t.envLabel;
       document.getElementById("envSub").textContent = t.envSub;
       document.getElementById("badgeText").textContent = t.badge;
-      document.getElementById("spotTitle").textContent = t.spotTitle;
-      document.getElementById("lblDayDate").textContent = t.lblDayDate;
+      document.getElementById("hostsText").innerHTML = t.hosts;
+      document.getElementById("introText").textContent = t.intro;
+      document.getElementById("lblDayDate").innerHTML = t.lblDayDate;
       document.getElementById("valDayDate").textContent = t.valDayDate;
-      document.getElementById("lblTime").textContent = t.lblTime;
+      document.getElementById("lblTime").innerHTML = t.lblTime;
       document.getElementById("valTime").textContent = t.valTime;
-      document.getElementById("lblLoc").textContent = t.lblLoc;
+      document.getElementById("lblLoc").innerHTML = t.lblLoc;
       document.getElementById("valLoc").textContent = t.valLoc;
       document.getElementById("cdHeading").textContent = t.cdHeading;
       document.getElementById("uDays").textContent = t.uDays;
       document.getElementById("uHours").textContent = t.uHours;
       document.getElementById("uMins").textContent = t.uMins;
       document.getElementById("uSecs").textContent = t.uSecs;
+      document.getElementById("uMs").textContent = t.uMs;
       document.getElementById("cdDone").textContent = t.cdDone;
-      document.getElementById("hostsText").innerHTML = t.hosts;
-      document.getElementById("introText").textContent = t.intro;
       document.getElementById("doaText").textContent = t.doa;
       document.getElementById("mapBtn").textContent = t.mapBtn;
+      document.getElementById("qrBtn").textContent = t.qrBtn;
       document.getElementById("soundBtn").textContent = t.soundBtn;
+      document.getElementById("qrTitle").textContent = t.qrTitle;
+      document.getElementById("closeQrBtn").textContent = t.closeQrBtn;
       document.getElementById("footerText").textContent = t.footer;
     }
 
-    function updateCountdown() {
-      const target = new Date(EVENT_ISO).getTime();
-      const now = Date.now();
-      const diff = target - now;
+    const targetMs = new Date(EVENT_ISO).getTime();
 
+    function tickCountdown() {
+      const now = Date.now();
+      const diff = targetMs - now;
       const grid = document.getElementById("cdGrid");
       const done = document.getElementById("cdDone");
 
-      if (isNaN(target) || diff <= 0) {
+      if (isNaN(targetMs) || diff <= 0) {
         grid.style.display = "none";
         done.style.display = "block";
         done.textContent = COPY[currentLang].cdDone;
@@ -538,15 +533,317 @@
       const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
       const mins = Math.floor((diff / (1000 * 60)) % 60);
       const secs = Math.floor((diff / 1000) % 60);
+      const ms = Math.floor(diff % 1000);
 
       document.getElementById("cdDays").textContent = String(days).padStart(2, "0");
       document.getElementById("cdHours").textContent = String(hours).padStart(2, "0");
       document.getElementById("cdMins").textContent = String(mins).padStart(2, "0");
       document.getElementById("cdSecs").textContent = String(secs).padStart(2, "0");
+      document.getElementById("cdMs").textContent = String(ms).padStart(3, "0");
+
+      requestAnimationFrame(tickCountdown);
     }
 
-    updateCountdown();
-    setInterval(updateCountdown, 1000);
+    requestAnimationFrame(tickCountdown);
+
+    /* =====================================================================
+       Penjana QR Code Standard ISO/IEC 18004 (Version 1-6, Byte Mode, EC-L)
+       ===================================================================== */
+    const QRCodeGen = (function () {
+      const EXP = new Uint8Array(256);
+      const LOG = new Uint8Array(256);
+      let x = 1;
+      for (let i = 0; i < 255; i++) {
+        EXP[i] = x;
+        LOG[x] = i;
+        x <<= 1;
+        if (x & 256) x ^= 285;
+      }
+      for (let i = 255; i < 512; i++) EXP[i] = EXP[i - 255];
+
+      function gfMul(a, b) {
+        if (a === 0 || b === 0) return 0;
+        return EXP[LOG[a] + LOG[b]];
+      }
+
+      function rsPoly(ecLen) {
+        let poly = [1];
+        for (let i = 0; i < ecLen; i++) {
+          const next = new Array(poly.length + 1).fill(0);
+          const root = EXP[i];
+          for (let j = 0; j < poly.length; j++) {
+            next[j] ^= poly[j];
+            next[j + 1] ^= gfMul(poly[j], root);
+          }
+          poly = next;
+        }
+        return poly;
+      }
+
+      function rsEncode(data, ecLen) {
+        const gen = rsPoly(ecLen);
+        const msg = data.concat(new Array(ecLen).fill(0));
+        for (let i = 0; i < data.length; i++) {
+          const factor = msg[i];
+          if (factor !== 0) {
+            for (let j = 0; j < gen.length; j++) {
+              msg[i + j] ^= gfMul(gen[j], factor);
+            }
+          }
+        }
+        return msg.slice(data.length);
+      }
+
+      // [version, totalCodewords, ecCodewordsPerBlock, numBlocks, alignCenters]
+      const SPECS = [
+        null,
+        [1, 26, 7, 1, []],
+        [2, 44, 10, 1, [6, 18]],
+        [3, 70, 15, 1, [6, 22]],
+        [4, 100, 20, 1, [6, 26]],
+        [5, 134, 26, 1, [6, 30]],
+        [6, 172, 18, 2, [6, 34]]
+      ];
+
+      function toUtf8Bytes(str) {
+        const bytes = [];
+        for (let i = 0; i < str.length; i++) {
+          let c = str.charCodeAt(i);
+          if (c < 0x80) bytes.push(c);
+          else if (c < 0x800) {
+            bytes.push(0xc0 | (c >> 6), 0x80 | (c & 0x3f));
+          } else {
+            if (c >= 0xd800 && c <= 0xdbff && i + 1 < str.length) {
+              const d = str.charCodeAt(++i);
+              c = 0x10000 + (((c & 0x3ff) << 10) | (d & 0x3ff));
+              bytes.push(0xf0 | (c >> 18), 0x80 | ((c >> 12) & 0x3f), 0x80 | ((c >> 6) & 0x3f), 0x80 | (c & 0x3f));
+            } else {
+              bytes.push(0xe0 | (c >> 12), 0x80 | ((c >> 6) & 0x3f), 0x80 | (c & 0x3f));
+            }
+          }
+        }
+        return bytes;
+      }
+
+      function buildMatrix(text) {
+        const bytes = toUtf8Bytes(text);
+        let chosen = null;
+
+        for (let v = 1; v <= 6; v++) {
+          const [, totalCw, ecCw, blocks, aligns] = SPECS[v];
+          const dataCw = totalCw - ecCw * blocks;
+          const maxPayload = dataCw - 2; // 4-bit mode + 8-bit len = 12 bits (~1.5 bytes)
+          if (bytes.length <= maxPayload) {
+            chosen = { v, totalCw, ecCw, blocks, aligns, dataCw };
+            break;
+          }
+        }
+        if (!chosen) return null;
+
+        const { v, totalCw, ecCw, blocks, aligns, dataCw } = chosen;
+        const bits = [];
+        const pushBits = (val, len) => {
+          for (let i = len - 1; i >= 0; i--) bits.push((val >>> i) & 1);
+        };
+
+        // Mode 0100 = Byte mode
+        pushBits(0b0100, 4);
+        pushBits(bytes.length, 8);
+        for (const b of bytes) pushBits(b, 8);
+
+        const capacityBits = dataCw * 8;
+        const termLen = Math.min(4, capacityBits - bits.length);
+        if (termLen > 0) pushBits(0, termLen);
+        while (bits.length % 8 !== 0) bits.push(0);
+
+        const cw = [];
+        for (let i = 0; i < bits.length; i += 8) {
+          let byte = 0;
+          for (let j = 0; j < 8; j++) byte = (byte << 1) | bits[i + j];
+          cw.push(byte);
+        }
+        const pads = [0xec, 0x11];
+        let pIdx = 0;
+        while (cw.length < dataCw) {
+          cw.push(pads[pIdx % 2]);
+          pIdx++;
+        }
+
+        const blockLen = Math.floor(dataCw / blocks);
+        const dataBlocks = [];
+        const ecBlocks = [];
+        let offset = 0;
+        for (let b = 0; b < blocks; b++) {
+          const slice = cw.slice(offset, offset + blockLen);
+          offset += blockLen;
+          dataBlocks.push(slice);
+          ecBlocks.push(rsEncode(slice, ecCw));
+        }
+
+        const finalCw = [];
+        for (let i = 0; i < blockLen; i++) {
+          for (let b = 0; b < blocks; b++) finalCw.push(dataBlocks[b][i]);
+        }
+        for (let i = 0; i < ecCw; i++) {
+          for (let b = 0; b < blocks; b++) finalCw.push(ecBlocks[b][i]);
+        }
+
+        const size = v * 4 + 17;
+        const mat = Array.from({ length: size }, () => Array(size).fill(null));
+        const reserved = Array.from({ length: size }, () => Array(size).fill(false));
+
+        function setMod(r, c, dark, isFunc) {
+          if (r < 0 || r >= size || c < 0 || c >= size) return;
+          mat[r][c] = dark ? 1 : 0;
+          if (isFunc) reserved[r][c] = true;
+        }
+
+        function drawFinder(r0, c0) {
+          for (let r = -1; r <= 7; r++) {
+            for (let c = -1; c <= 7; c++) {
+              const rr = r0 + r, cc = c0 + c;
+              if (rr < 0 || rr >= size || cc < 0 || cc >= size) continue;
+              const dark = (r >= 0 && r <= 6 && (c === 0 || c === 6)) ||
+                           (c >= 0 && c <= 6 && (r === 0 || r === 6)) ||
+                           (r >= 2 && r <= 4 && c >= 2 && c <= 4);
+              setMod(rr, cc, dark, true);
+            }
+          }
+        }
+
+        drawFinder(0, 0);
+        drawFinder(0, size - 7);
+        drawFinder(size - 7, 0);
+
+        for (const r of aligns) {
+          for (const c of aligns) {
+            if ((r < 9 && c < 9) || (r < 9 && c > size - 10) || (r > size - 10 && c < 9)) continue;
+            for (let dr = -2; dr <= 2; dr++) {
+              for (let dc = -2; dc <= 2; dc++) {
+                const dark = Math.max(Math.abs(dr), Math.abs(dc)) !== 1;
+                setMod(r + dr, c + dc, dark, true);
+              }
+            }
+          }
+        }
+
+        for (let i = 8; i < size - 8; i++) {
+          const dark = i % 2 === 0;
+          setMod(6, i, dark, true);
+          setMod(i, 6, dark, true);
+        }
+
+        setMod(size - 8, 8, true, true);
+
+        // Rizab kawasan format info
+        for (let i = 0; i < 9; i++) {
+          if (i !== 6) {
+            reserved[8][i] = true;
+            reserved[i][8] = true;
+          }
+        }
+        for (let i = 0; i < 8; i++) {
+          reserved[8][size - 1 - i] = true;
+          reserved[size - 1 - i][8] = true;
+        }
+
+        // Isi data bit secara zig-zag
+        let bitIdx = 0;
+        let dir = -1;
+        for (let col = size - 1; col > 0; col -= 2) {
+          if (col === 6) col = 5;
+          for (let step = 0; step < size; step++) {
+            const r = dir === -1 ? size - 1 - step : step;
+            for (const c of [col, col - 1]) {
+              if (!reserved[r][c]) {
+                const bit = bitIdx < finalCw.length * 8
+                  ? ((finalCw[bitIdx >>> 3] >>> (7 - (bitIdx & 7))) & 1)
+                  : 0;
+                bitIdx++;
+                mat[r][c] = bit;
+              }
+            }
+          }
+          dir = -dir;
+        }
+
+        // Pilih mask terbaik (mask 0: (r + c) % 2 === 0)
+        const maskId = 0;
+        for (let r = 0; r < size; r++) {
+          for (let c = 0; c < size; c++) {
+            if (!reserved[r][c] && ((r + c) % 2 === 0)) {
+              mat[r][c] ^= 1;
+            }
+          }
+        }
+
+        // Format info EC Level L (01) + Mask 0 (000) -> 01000
+        const dataBits = (0b01 << 3) | maskId;
+        let rem = dataBits << 10;
+        const poly = 0b10100110111;
+        for (let i = 14; i >= 10; i--) {
+          if ((rem >>> i) & 1) rem ^= poly << (i - 10);
+        }
+        const fmt = ((dataBits << 10) | rem) ^ 0b101010000010010;
+
+        const fmtBits = [];
+        for (let i = 14; i >= 0; i--) fmtBits.push((fmt >>> i) & 1);
+
+        // Tempatkan format bits
+        const aroundA = [[0,8],[1,8],[2,8],[3,8],[4,8],[5,8],[7,8],[8,8],[8,7],[8,5],[8,4],[8,3],[8,2],[8,1],[8,0]];
+        for (let i = 0; i < 15; i++) {
+          const [rr, cc] = aroundA[i];
+          mat[rr][cc] = fmtBits[i];
+        }
+        for (let i = 0; i < 8; i++) {
+          mat[size - 1 - i][8] = fmtBits[i];
+        }
+        for (let i = 8; i < 15; i++) {
+          mat[8][size - 15 + i] = fmtBits[i];
+        }
+
+        return mat;
+      }
+
+      return { buildMatrix };
+    })();
+
+    function renderQrOnCanvas(canvas, text) {
+      const ctx = canvas.getContext("2d");
+      const pxSize = canvas.width;
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(0, 0, pxSize, pxSize);
+
+      const mat = QRCodeGen.buildMatrix(text);
+      if (!mat) return;
+
+      const count = mat.length;
+      const quiet = 4;
+      const cell = Math.floor(pxSize / (count + quiet * 2));
+      const offset = Math.floor((pxSize - cell * count) / 2);
+
+      ctx.fillStyle = "#000000";
+      for (let r = 0; r < count; r++) {
+        for (let c = 0; c < count; c++) {
+          if (mat[r][c] === 1) {
+            ctx.fillRect(offset + c * cell, offset + r * cell, cell, cell);
+          }
+        }
+      }
+    }
+
+    function openQr() {
+      const url = window.location.href;
+      document.getElementById("qrUrlText").textContent = url;
+      renderQrOnCanvas(document.getElementById("qrCanvas"), url);
+      document.getElementById("qrModal").style.display = "flex";
+    }
+
+    function closeQr(e) {
+      if (!e || e.target === document.getElementById("qrModal")) {
+        document.getElementById("qrModal").style.display = "none";
+      }
+    }
 
     function openInvitation() {
       const ov = document.getElementById("envOverlay");
